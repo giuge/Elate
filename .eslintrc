@@ -1,0 +1,23 @@
+{
+  "ecmaFeatures": {
+    "blockBindings": true,
+    "jsx": true,
+    "modules": true,
+    "arrowFunctions": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "spread": true,
+    "superInFunctions": true,
+    "templateStrings": true,
+    "parser": "babel-eslint"
+  },
+  "rules": {
+    "quotes": [2, "single"],
+    "semi": [2, "never"]
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  }
+}
