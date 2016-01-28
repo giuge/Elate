@@ -38,11 +38,8 @@ module.exports = {
         loader: 'file?name=[name].[ext]'
       },
       {
-        test: /\.json$/,
-        loader: 'json?name=[name].[ext]'
-      },
-      {
         test: /\.scss$/,
+        exclude: /node_modules/,
         loaders: ['style', 'css', 'sass']
       }
     ]
