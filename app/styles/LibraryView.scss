@@ -1,0 +1,48 @@
+.listView {
+  flex: 1 1 auto;
+  overflow-y: scroll;
+  margin: 0;
+  padding: 0;
+	flex-direction: column;
+	flex-wrap: wrap;
+
+  > .container {
+    display: inline;
+  }
+
+  .date {
+    width: 100%;
+    color: #000;
+    padding: 10px 13px;
+    font-size: 12px;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+
+    &:first-child {
+      border: none;
+    }
+  }
+
+  li {
+    display: inline-block;
+    list-style: none;
+    width: 16%;
+    text-align: center;
+    margin: 15px;
+    vertical-align: middle;
+
+    &.landscape {
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    &.portrait {
+      img {
+        height: auto;
+        width: 70%;
+      }
+    }
+
+  }
+}

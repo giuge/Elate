@@ -12,6 +12,15 @@ html, body {
   overflow: hidden;
   margin: 0;
   padding: 0;
+  background: #fff;
   font-family: -apple-system, Helvetica, Arial, sans-serif;
+  color: #222;
   font-weight: 100;
+}
+
+#app > .container {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }

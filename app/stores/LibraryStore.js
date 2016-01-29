@@ -7,6 +7,7 @@ class LibraryStore {
     this.bindListeners({
       handleGetLibrary: LibraryActions.GET_LIBRARY
     })
+    
     this.state = {
       library: []
     }

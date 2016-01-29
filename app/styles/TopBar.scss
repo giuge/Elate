@@ -1,0 +1,19 @@
+.topBar {
+  flex: 0 0 auto;
+  height: 42px;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+  background: #fff;
+  text-align: center;
+
+  .title {
+    text-align: center;
+    display: inline-block;
+    margin: 15px 0 0 0;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(213, 216, 224, .4);
+  }
+}

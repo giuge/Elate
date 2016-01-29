@@ -4,6 +4,9 @@ import connectToStores from 'alt-utils/lib/connectToStores'
 import LibraryStore from 'stores/LibraryStore'
 import LibraryActions from 'actions/LibraryActions'
 
+import LibraryView from 'components/LibraryView'
+import Spinner from 'components/Spinner'
+
 import 'styles/App.scss'
 
 
@@ -25,10 +28,8 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props.library)
-    return(
-      <h1>Hello World</h1>
-    )
+    if(this.props.library.length > 0) return <LibraryView library={this.props.library}/>
+    else return <Spinner />
   }
 }
 
