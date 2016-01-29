@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+
 import TopBar from 'components/TopBar'
 import SingleMedia from 'components/SingleMedia'
 
 import 'styles/LibraryView.scss'
+
 
 export default class LibraryView extends Component {
 
@@ -13,7 +15,7 @@ export default class LibraryView extends Component {
   renderImage() {
     var date
     return this.props.library.map((media) => {
-      if(media.media_info.time_taken == date) {
+      if(media.sortDate == date) {
         return(
           <li key={media.id}
           className={media.className}>
@@ -21,12 +23,12 @@ export default class LibraryView extends Component {
           </li>
         )
       } else {
-        date = media.media_info.time_taken
+        date = media.sortDate
         return(
           <div key={media.id} className="container">
             <div className='date'>{date}</div>
             <li key={media.id} className={media.className}>
-              <SingleMedia photo={media} />
+              <SingleMedia media={media} />
             </li>
           </div>
         )

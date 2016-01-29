@@ -1,4 +1,5 @@
 import alt from 'lib/alt'
+import moment from 'moment'
 
 let API_ROOT = 'https://api.dropboxapi.com/2'
 let TOKEN = 'bm8ZZaJQVKsAAAAAAAEG1HhI4ZVGbgYfwUWhy3mdi6at3A_GbjGB_Udmz3UYcM1f'
@@ -29,6 +30,7 @@ class LibraryActions {
               let height = parseInt(media.media_info.metadata.dimensions.height)
               let aspectRatio = (width / height * 10)
 
+              media.sortDate = moment(media.media_info.metadata.time_taken).format('MMMM YYYY')
               media.thumbnail = URL.createObjectURL(data)
               media.className = aspectRatio >= 10 ? 'landscape' : 'portrait'
 
