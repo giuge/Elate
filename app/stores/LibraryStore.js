@@ -15,9 +15,9 @@ class LibraryStore {
     }
   }
 
-  handleGetLibrary(unorderedLibrary) {
-    let library = _.union(this.state.library, unorderedLibrary)
-    library = _.orderBy(library, 'media.media_info.metadata.time_taken', 'asc')
+  handleGetLibrary(library) {
+    library = _.orderBy(library, 'sortDate', 'desc')
+    console.log(library)
     this.setState({ library })
   }
 }

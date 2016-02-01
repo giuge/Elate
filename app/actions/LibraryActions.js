@@ -40,7 +40,8 @@ class LibraryActions {
         }).then((response) => {
           return response.blob().then((data) => {
             let media = files[i]
-            media.sortDate = moment(media.media_info.metadata.time_taken).format('MMMM YYYY')
+            media.displayDate = moment(media.media_info.metadata.time_taken).format('DD MMM YYYY')
+            media.sortDate = parseInt(moment(media.media_info.metadata.time_taken).format('X'))
             media.thumbnail = URL.createObjectURL(data)
 
             if(media.media_info.metadata.dimensions !== undefined) {
