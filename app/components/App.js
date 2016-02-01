@@ -24,7 +24,8 @@ class App extends Component {
   }
 
   componentWillMount() {
-    LibraryActions.getLibrary()
+    //LibraryActions.importLibrary()
+    LibraryActions.syncLibraryDB()
   }
 
   render() {
