@@ -3,31 +3,34 @@ import AppActions from 'actions/AppActions'
 
 
 class AppStore {
+  
   constructor() {
     this.bindListeners({
       handleShowPreview: AppActions.SHOW_PREVIEW,
-      handleHidePreview: AppActions.HIDE_PREVIEW
+      handleHidePreview: AppActions.HIDE_PREVIEW,
     })
 
     this.state = {
       shoudShowPreview: false,
-      item: null
+      previewItem: null,
+      selectedItems: []
     }
   }
 
   handleShowPreview(item) {
     this.setState({
       shoudShowPreview: true,
-      item: item
+      previewItem: item
     })
   }
 
   handleHidePreview() {
     this.setState({
       shoudShowPreview: false,
-      item: null
+      previewItem: null
     })
   }
+
 }
 
 
