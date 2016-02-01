@@ -4,7 +4,7 @@ import _ from 'lodash'
 const TOKEN = 'bm8ZZaJQVKsAAAAAAAEG2eJqd-pgpYsEEDtK8tolxiPacwGP3QKm7ZxaGrrq2tlI'
 const API_ROOT = 'https://api.dropboxapi.com/2'
 const CONTENT_ROOT = 'https://content.dropboxapi.com/2'
-const MEDIA_FOLDER = '/test'
+const MEDIA_FOLDER = '/Camera Uploads'
 
 
 export default class Dropbox {
