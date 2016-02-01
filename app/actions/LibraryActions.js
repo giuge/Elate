@@ -12,6 +12,7 @@ class LibraryActions {
     return ((dispatch) => {
       db.find({}, (err, library) => {
         if(err) console.log(err)
+        library = _.orderBy(library, 'sortDate', 'desc')
         dispatch(library)
       })
     })

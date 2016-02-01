@@ -16,7 +16,6 @@ class LibraryStore {
   }
 
   handleLoadDatabase(library) {
-    library = _.orderBy(library, 'sortDate', 'desc')
     this.setState({
       library: library,
       loading: false
