@@ -97,8 +97,15 @@ export default class Dropbox {
       delete media.media_info['.tag']
       delete media.media_info.metadata['.tag']
 
-      media.displayDate = moment(media.media_info.metadata.time_taken).format('DD MMM YYYY')
-      media.sortDate = parseInt(moment(media.media_info.metadata.time_taken).format('X'))
+      if(media.media_info.metadata.time_taken) {
+        media.displayDate = moment(media.media_info.metadata.time_taken).format('DD MMM YYYY')
+        media.sortDate = parseInt(moment(media.media_info.metadata.time_taken).format('X'))
+      } else {
+        media.displayDate = moment('1970-01-01T00:00:00Z').format('DD MMM YYYY')
+        console.log(media.sortDate)
+        media.sortDate = moment('1970-01-01T00:00:00Z').format('X')
+      }
+
 
       if(media.media_info.metadata.dimensions !== undefined) {
         let width = parseInt(media.media_info.metadata.dimensions.width)

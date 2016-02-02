@@ -12,9 +12,9 @@ export default class LibraryView extends Component {
   }
 
   renderImage() {
-    var date
+    let date = ''
     return this.props.library.map((media) => {
-      if(media.displayDate == date) {
+      if(media.displayDate === date) {
         return(
           <li key={media._id}
           className={media.className}>
@@ -25,7 +25,7 @@ export default class LibraryView extends Component {
         date = media.displayDate
         return(
           <div key={media._id} className="container">
-            <div className='date'>{media.displayDate}</div>
+            <div className='date'>{date === '01 Jan 1970' ? 'Undefined Date' : media.displayDate}</div>
             <li key={media.id} className={media.className}>
               <SingleMedia media={media} />
             </li>
