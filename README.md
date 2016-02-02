@@ -1,5 +1,3 @@
-A Minimal Electron + React + ES6 boilerplate with builtin packaging.
-
 ## Getting started:
 
 After you clone the repo just:
@@ -15,16 +13,6 @@ You are ready to code with hot code reloading and automatic updates.
 
 
 ## Packaging
-
-Edit your app name in the package.json, under the scripts/build section:
-
-```
-"scripts": {
-  ...,
-  "build": "node_modules/.bin/webpack . && node_modules/.bin/electron-packager ./dist YOUR_APP_NAME_HERE --platform=darwin --arch=x64 --version=0.36.5 --asar=true",
-  ...
-}
-```
 
 You can package a Mac OSX app by running the following command:
 
