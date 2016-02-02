@@ -9,7 +9,7 @@
     "start": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch\" \"npm run electron\"",
     "electron": "node_modules/electron-prebuilt/dist/Electron.app/Contents/MacOS/Electron .",
     "watch": "node_modules/.bin/webpack-dev-server --hot --quiet --progress --colors",
-    "build": "node_modules/.bin/webpack . && node_modules/.bin/electron-packager ./dist Mediabox --platform=darwin --arch=x64 --version=0.36.5 --asar=true && rm -rf ./dist"
+    "build": "node_modules/.bin/webpack . && node_modules/.bin/electron-packager ./dist Elate --platform=darwin --arch=x64 --version=0.36.5 --asar=true && rm -rf ./dist"
   },
   "devDependencies": {
     "babel-eslint": "^5.0.0-beta6",

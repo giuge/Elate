@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
 import _ from 'lodash'
+import React, { Component } from 'react'
 import AppActions from 'actions/AppActions'
 
 import 'styles/PreviewView.scss'
@@ -10,73 +10,48 @@ export default class PreviewView extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      previewItem: this.props.media
+      media: props.media,
+      library: props.library
     }
+    this.handleKeyDown = this.handleKeyDown.bind(this)
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown.bind(this), true)
+    window.addEventListener('keydown', this.handleKeyDown)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown.bind(this), true)
+    window.removeEventListener('keydown', this.handleKeyDown)
   }
 
   handleKeyDown(event) {
-    const item = this.props.media
+    const item = this.state.media
+    const index = _.findIndex(this.state.library, o => { return o.id === item.id })
     switch(event.keyCode) {
+      // Esc button pressed
       case 27:
-        this.handleEscDownKey()
+        AppActions.hidePreview()
         break
+      // Left arrow pressed
       case 37:
-        this.handleLeftArrowDown()
+        if(index - 1 < 0) break
+        this.setState({ media: this.state.library[index - 1]})
         break
+      // Right arrow pressed
       case 39:
-        this.handleRightArrowDown()
+      if(index + 1 >= this.state.library.length) break
+        this.setState({ media: this.state.library[index + 1]})
         break
     }
   }
-
-  handleLeftArrowDown () {
-    //if(this.state.previewItem === this.props.library[0]) return
-
-    for(let i in this.props.library) {
-      if(this.state.previewItem === this.props.library[i]) {
-        this.setState({
-          previewItem: this.props.library[i - 1]
-        })
-        return
-      }
-    }
-  }
-
-  handleRightArrowDown () {
-    if(this.state.previewItem === this.props.library[this.props.library.length - 1]) return
-    let found = false
-    for(let i in this.props.library) {
-      if(found) {
-        this.setState({
-          previewItem: this.props.library[i]
-        })
-        return
-      }
-      if(this.state.previewItem === this.props.library[i]) {
-        found = true
-      }
-    }
-  }
-
-  handleEscDownKey() {
-    AppActions.hidePreview()
-  }
-
 
   render () {
     return (
       <div className='mediaPreview'>
-        <img src={this.state.previewItem.thumbnail} />
+        <img src={this.state.media.thumbnail} />
         <a onClick={() => { AppActions.hidePreview() }}>Back</a>
       </div>
     )
   }
+
 }
