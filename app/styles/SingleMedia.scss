@@ -1,0 +1,31 @@
+.video {
+  position: relative;
+  display: inline;
+
+  &:after {
+    position: absolute;
+    content: '▶';
+    position: absolute;
+    z-index: 999;
+    color: white;
+    left: 0;
+    bottom: 0;
+    padding: 2px 5px;
+    margin: 7px 3px;
+    font-size: 10px;
+  }
+
+  p {
+    position: absolute;
+    z-index: 999;
+    color: white;
+    right: 0;
+    bottom: 0;
+    padding: 2px 5px;
+    margin: 7px 3px;
+    font-size: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 2px;
+    cursor: default;
+  }
+}

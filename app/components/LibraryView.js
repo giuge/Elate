@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
 import TopBar from 'components/TopBar'
 import SingleMedia from 'components/SingleMedia'
@@ -9,6 +10,10 @@ export default class LibraryView extends Component {
 
   constructor(props) {
     super(props)
+  }
+
+  componentDidMount() {
+    console.log(`Finished render: ${new Date()}`)
   }
 
   renderImage() {
@@ -36,6 +41,7 @@ export default class LibraryView extends Component {
   }
 
   render() {
+    console.log(`Starting render: ${new Date()}`)
     return(
       <div className='container'>
         <TopBar />
