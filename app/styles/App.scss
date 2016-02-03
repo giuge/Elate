@@ -24,3 +24,7 @@ html, body {
   display: flex;
   flex-direction: column;
 }
+
+img, video {
+  max-width: 100%
+}

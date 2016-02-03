@@ -36,13 +36,16 @@ class LibraryActions {
   syncLibraryDB() {
     let library = []
     let allMedia = []
+
     db.find({}, (err, dbLibrary) => { library = dbLibrary })
-
-    dropbox.getFileList((results) => {
+    dropbox.getFileList().then(results => {
       let missingMedia = _.differenceBy(results, library, 'id')
-      let promises = dropbox.getUnsyncedMedia(missingMedia)
-
+      let promises = dropbox.getAllMedia(missingMedia)
+      console.log(`Existing library: ${library.length}`)
+      console.log(`Missing media: ${missingMedia.length}`)
+      console.log(`Promises: ${promises.length}`)
       Promise.all(promises).then((values) => {
+        console.log(`Promises results: ${values.length}`)
         for(let i in values) {
           allMedia.push(values[i])
         }
