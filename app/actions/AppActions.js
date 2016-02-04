@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import alt from 'lib/alt'
 
 class AppActions {
@@ -8,6 +9,10 @@ class AppActions {
 
   hidePreview() {
     return true
+  }
+
+  selectItem(item) {
+    return item
   }
 
 }

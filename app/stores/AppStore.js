@@ -7,11 +7,13 @@ class AppStore {
     this.bindListeners({
       handleShowPreview: AppActions.SHOW_PREVIEW,
       handleHidePreview: AppActions.HIDE_PREVIEW,
+      handleSelectItem: AppActions.SELECT_ITEM
     })
 
     this.state = {
       shouldShowPreview: false,
       previewItem: null,
+      selectedItem: {},
       selectedItems: []
     }
   }
@@ -27,6 +29,12 @@ class AppStore {
     this.setState({
       shouldShowPreview: false,
       previewItem: null
+    })
+  }
+
+  handleSelectItem(item) {
+    this.setState({
+      selectedItem: item
     })
   }
 

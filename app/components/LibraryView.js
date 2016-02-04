@@ -1,7 +1,9 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
+import ReactList from 'react-list'
 import TopBar from 'components/TopBar'
 import SingleMedia from 'components/SingleMedia'
+import LibraryChunk from 'components/LibraryChunk'
 
 import 'styles/LibraryView.scss'
 
@@ -10,62 +12,44 @@ export default class LibraryView extends Component {
 
   constructor(props) {
     super(props)
-  }
 
-  componentDidMount() {
-    console.log(`Finished render: ${new Date()}`)
-  }
-
-  renderLocation(media) {
-    if(media.location === undefined) return
-    let location = `${media.location.address.locality} - ${media.location.address.countryRegion}`
-    return (
-      <p className='location'>{location}</p>
-    )
-  }
-
-  renderDate(date) {
-    if(date === '01 Jan 1970') {
-      return <p className='date'>Sometime in the past</p>
+    this.state = {
+      splittedLibrary: _.groupBy(props.library, 'displayDate'),
+      chunks: []
     }
-    return <p className='date'>{date}</p>
   }
 
-  renderList() {
-    let date = ''
-    return this.props.library.map((media) => {
-      if(media.displayDate === date) {
-        return(
-          <li key={media._id}
-          className={media.className}>
-            <SingleMedia media={media} />
-          </li>
-        )
-      } else {
-        date = media.displayDate
-        return(
-          <div key={media._id} className="container">
-            <div className='meta'>
-              {this.renderLocation(media)}
-              {this.renderDate(date)}
-            </div>
-            <li key={media.id} className={media.className}>
-              <SingleMedia media={media} />
-            </li>
-          </div>
-        )
-      }
+  componentWillMount() {
+    let chunks = []
+    _.forEach(this.state.splittedLibrary, (value, key) => {
+      chunks.push(<LibraryChunk chunk={value} date={key} key={key} />)
     })
+    this.setState({chunks: chunks})
+  }
+
+  renderChunk(index, key) {
+    return this.state.chunks[index]
   }
 
   render() {
-    console.log(`Starting render: ${new Date()}`)
-    return(
+    return (
       <div className='container'>
         <TopBar />
-        <ul className='listView'>{this.renderList()}</ul>
+        <div className='listView'>
+          <ReactList
+            itemRenderer={::this.renderChunk}
+            length={this.state.chunks.length}
+            initialIndex={0}
+            pageSize={6}
+            threshold={1500}
+            useTranslate3d={true}
+          />
+        </div>
       </div>
     )
   }
 
 }
+
+
+//{this.renderChunks()}

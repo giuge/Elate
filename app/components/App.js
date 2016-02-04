@@ -42,7 +42,7 @@ class App extends Component {
           media={this.props.previewItem} />
       )
     }
-    if(this.props.library.length > 0) return <LibraryView library={this.props.library}/>
+    if(this.props.library.length > 0) return <LibraryView library={this.props.library} selectedItem={this.props.selectedItem}/>
     else return <Spinner />
   }
 }

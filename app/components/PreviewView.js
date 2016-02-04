@@ -31,16 +31,19 @@ export default class PreviewView extends Component {
       // Esc button pressed
       case 27:
         AppActions.hidePreview()
+        AppActions.selectItem(this.state.media)
         break
       // Left arrow pressed
       case 37:
         if(index - 1 < 0) break
         this.setState({ media: this.state.library[index - 1]})
+        AppActions.selectItem(this.state.library[index - 1])
         break
       // Right arrow pressed
       case 39:
       if(index + 1 >= this.state.library.length) break
         this.setState({ media: this.state.library[index + 1]})
+        AppActions.selectItem(this.state.library[index + 1])
         break
     }
   }
