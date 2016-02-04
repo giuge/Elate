@@ -23,7 +23,7 @@ app.on('ready', () => {
     minWidth: 800,
     minHeight: 600,
     titleBarStyle: 'hidden-inset',
-    title: 'Photobox',
+    title: 'Elate',
     disablewebsecurity: true,
     // Avoid the white background flash
     show: false
@@ -57,7 +57,7 @@ app.on('activate', () => {
       minWidth: 800,
       minHeight: 600,
       titleBarStyle: 'hidden-inset',
-      title: 'Photobox',
+      title: 'Elate',
       disablewebsecurity: true,
       show: false
     })

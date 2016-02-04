@@ -1,7 +1,7 @@
-import alt from 'lib/alt'
-import dropbox from 'lib/dropbox'
-import Datastore from 'nedb'
 import _ from 'lodash'
+import alt from 'lib/alt'
+import Datastore from 'nedb'
+import dropbox from 'lib/dropbox'
 
 const db = new Datastore({ filename: 'data/library.db', autoload: true })
 
@@ -41,11 +41,11 @@ class LibraryActions {
     dropbox.getFileList().then(results => {
       let missingMedia = _.differenceBy(results, library, 'id')
       let promises = dropbox.getAllMedia(missingMedia)
-      console.log(`Existing library: ${library.length}`)
-      console.log(`Missing media: ${missingMedia.length}`)
-      console.log(`Promises: ${promises.length}`)
+      // console.log(`Existing library: ${library.length}`)
+      // console.log(`Missing media: ${missingMedia.length}`)
+      // console.log(`Promises: ${promises.length}`)
       Promise.all(promises).then((values) => {
-        console.log(`Promises results: ${values.length}`)
+        // console.log(`Promises results: ${values.length}`)
         for(let i in values) {
           allMedia.push(values[i])
         }

@@ -1,5 +1,6 @@
-import moment from 'moment'
 import _ from 'lodash'
+import moment from 'moment'
+import geocoder from 'lib/geocoder'
 
 const TOKEN = 'bm8ZZaJQVKsAAAAAAAEG2eJqd-pgpYsEEDtK8tolxiPacwGP3QKm7ZxaGrrq2tlI'
 const API_ROOT = 'https://api.dropboxapi.com/2'
@@ -7,24 +8,11 @@ const CONTENT_ROOT = 'https://content.dropboxapi.com/2'
 const MEDIA_FOLDER = '/Camera Uploads'
 
 const SUPPORTED_MIME_TYPES = [
-  'bmp',
-  'gif',
-  'jpg',
-  'jpeg',
-  'png',
-  'pjpeg',
-  'tiff',
-  'webp',
-  'x-tiff',
-  'avi',
-  'mp4',
-  'mov',
-  'moov',
-  'pdf',
-  'jpe',
-  'mpeg'
+  'bmp', 'gif', 'jpg', 'jpeg', 'png',
+  'pjpeg', 'tiff', 'webp', 'x-tiff',
+  'avi', 'mp4', 'mov', 'moov', 'pdf',
+  'jpe', 'mpeg'
 ]
-
 
 export default class Dropbox {
 
@@ -58,7 +46,7 @@ export default class Dropbox {
     })
   }
 
-  static getFromCursor(cursor, entries, callback) {
+  static getFromCursor(cursor, entries) {
     return new Promise((resolve, reject) => {
       let allEntries = []
       if(entries) allEntries.push(entries)
@@ -140,6 +128,15 @@ export default class Dropbox {
           media.media_info.metadata.tag = media.media_info.metadata['.tag']
           delete media.media_info.metadata['.tag']
 
+          if(media.media_info && media.media_info.metadata && media.media_info.metadata.location) {
+            let lat = media.media_info.metadata.location.latitude
+            let long = media.media_info.metadata.location.longitude
+
+            geocoder.lookUp(lat, long).then(res => {
+              media.location = res.resourceSets[0].resources[0]
+            })
+          }
+
           if(media.media_info.metadata.time_taken) {
             media.displayDate = moment(media.media_info.metadata.time_taken).format('DD MMM YYYY')
             media.sortDate = parseInt(moment(media.media_info.metadata.time_taken).format('X'))
@@ -165,6 +162,7 @@ export default class Dropbox {
         media.thumbnail = reader.result
         resolve(media)
       }
+
     })
   }
 

@@ -3,7 +3,7 @@ var path = require('path')
 
 module.exports = {
   // This enables access to node methods (like fs to access filesystem)
-  target: 'atom',
+  target: 'electron',
   context: __dirname + '/app',
   devtool: 'source-map',
   entry: {
@@ -22,10 +22,18 @@ module.exports = {
     progress: true
   },
   resolve: {
-    root: path.resolve(__dirname, 'app'),
+    root: path.resolve(__dirname, 'node_modules'),
+    alias: {
+      lib: path.resolve(__dirname, 'app/lib'),
+      components: path.resolve(__dirname, 'app/components'),
+      stores: path.resolve(__dirname, 'app/stores'),
+      actions: path.resolve(__dirname, 'app/actions'),
+      styles: path.resolve(__dirname, 'app/styles'),
+    },
     extensions: ['', '.js', '.jsx', '.css', '.json', '.scss']
   },
   module: {
+    noParse: /node_modules\/json-schema\/lib\/validate\.js/,
     loaders: [
       {
         test: /\.js/,
@@ -51,7 +59,8 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       { from: './../prod.html', to: './../app/index.html' },
-      { from: './main.js', to: './../app/main.js' },
+      { from: './assets', to: './../app/assets' },
+      //{ from: './main.js', to: './../app/main.js' },
       { from: './../package.json', to: './../package.json'}
     ])
   ],

@@ -16,7 +16,22 @@ export default class LibraryView extends Component {
     console.log(`Finished render: ${new Date()}`)
   }
 
-  renderImage() {
+  renderLocation(media) {
+    if(media.location === undefined) return
+    let location = `${media.location.address.locality} - ${media.location.address.countryRegion}`
+    return (
+      <p className='location'>{location}</p>
+    )
+  }
+
+  renderDate(date) {
+    if(date === '01 Jan 1970') {
+      return <p className='date'>Sometime in the past</p>
+    }
+    return <p className='date'>{date}</p>
+  }
+
+  renderList() {
     let date = ''
     return this.props.library.map((media) => {
       if(media.displayDate === date) {
@@ -30,7 +45,10 @@ export default class LibraryView extends Component {
         date = media.displayDate
         return(
           <div key={media._id} className="container">
-            <div className='date'>{date === '01 Jan 1970' ? 'Undefined Date' : media.displayDate}</div>
+            <div className='meta'>
+              {this.renderLocation(media)}
+              {this.renderDate(date)}
+            </div>
             <li key={media.id} className={media.className}>
               <SingleMedia media={media} />
             </li>
@@ -45,7 +63,7 @@ export default class LibraryView extends Component {
     return(
       <div className='container'>
         <TopBar />
-        <ul className='listView'>{this.renderImage()}</ul>
+        <ul className='listView'>{this.renderList()}</ul>
       </div>
     )
   }
