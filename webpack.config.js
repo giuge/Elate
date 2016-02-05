@@ -1,3 +1,4 @@
+var webpack = require('webpack')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var path = require('path')
 
@@ -32,6 +33,9 @@ module.exports = {
     },
     extensions: ['', '.js', '.jsx', '.css', '.json', '.scss']
   },
+  node: {
+    __dirname: true,
+  },
   module: {
     noParse: /node_modules\/json-schema\/lib\/validate\.js/,
     loaders: [
@@ -57,6 +61,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({ 'global.GENTLY': false }),
     new CopyWebpackPlugin([
       { from: './../prod.html', to: './../app/index.html' },
       { from: './assets', to: './../app/assets' },

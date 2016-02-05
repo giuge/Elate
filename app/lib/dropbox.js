@@ -111,6 +111,24 @@ export default class Dropbox {
     return array
   }
 
+  static downloadMedia(path) {
+    return new Promise((resolve, reject) => {
+      fetch(`${CONTENT_ROOT}/files/download`, {
+        method: 'post',
+        headers: {
+          'Authorization': `Bearer ${TOKEN}`,
+          'Dropbox-API-Arg': JSON.stringify({
+            'path': `${path}`,
+          })
+        }
+      }).then(response => {
+        return response.blob()
+      }).then(blob => {
+        resolve(blob)
+      })
+    })
+  }
+
   static createMediaObj(json, blob) {
     return new Promise((resolve, reject) => {
       let media = json

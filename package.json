@@ -1,6 +1,6 @@
 {
   "name": "Elate",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "description": "",
   "main": "./app/main.js",
   "author": "Giuseppe Germinaro",
@@ -40,8 +40,10 @@
     "lodash": "^4.0.1",
     "moment": "^2.11.1",
     "nedb": "^1.7.2",
+    "rc-progress": "^1.0.4",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
-    "react-list": "^0.7.13"
+    "react-list": "^0.7.13",
+    "superagent": "^1.7.2"
   }
 }

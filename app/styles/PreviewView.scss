@@ -5,6 +5,24 @@
   width: 100vw;
   height: 100vh;
 
+  > div {
+    display: inline-block;
+    height: 85vh;
+    width: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .circularProgress {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    bottom: 10px;
+    right: 10px;
+    z-index: 999;
+    border-radius: 100%;
+  }
 
   a {
     cursor: pointer;
@@ -17,7 +35,7 @@
     text-transform: uppercase;
   }
 
-  img {
+  img, video {
     height: 85vh;
     width: auto;
     position: relative;
