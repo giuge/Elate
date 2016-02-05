@@ -135,8 +135,6 @@ export default class PreviewView extends Component {
   }
 
   render () {
-    console.log(this.state.media.thumbnail)
-    console.log(this.state.mediaFile)
     return (
       <div className='mediaPreview'>
         <div>

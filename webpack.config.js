@@ -70,18 +70,9 @@ module.exports = {
     ])
   ],
   externals: {
-    commonjs: [
-      'desktop-capturer',
-      'electron',
-      'ipc',
-      'ipc-renderer',
-      'native-image',
-      'remote',
-      'web-frame',
-      'clipboard',
-      'crash-reporter',
-      'screen',
-      'shell'
-    ]
+    'electron': 'require("electron")',
+    'remote': 'require("remote")',
+    'app': 'require("app")',
+    'ipc': 'require("ipc")'
   }
 }
