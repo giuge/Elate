@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import alt from 'lib/alt'
 
 class AppActions {

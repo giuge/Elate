@@ -1,11 +1,10 @@
-const API_KEY = 'AthmNCikQpDVlLZZ_8QV4nNJaLq7bLnolOPnQgd5pJK23nyV0WT6FX7XFiUSPxQI'
-const API_ROOT = `http://dev.virtualearth.net/REST/v1/Locations/`
+import { GEOCODER_API_KEY, GEOCODER_API_ROOT } from 'lib/costants'
 
 export default class Geocoder {
 
   static lookUp(lat, long) {
     return new Promise((resolve, reject) => {
-      fetch(`${API_ROOT}${lat},${long}?&key=${API_KEY}`).then((response) => {
+      fetch(`${GEOCODER_API_ROOT}${lat},${long}?&key=${GEOCODER_API_KEY}`).then((response) => {
         return response.json()
       }).then(json => {
         resolve(json)

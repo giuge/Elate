@@ -3,6 +3,7 @@ import request from 'superagent'
 import React, { Component } from 'react'
 import AppActions from 'actions/AppActions'
 import { Circle } from 'rc-progress'
+import { CONTENT_ROOT, TOKEN } from 'lib/costants'
 
 import 'styles/PreviewView.scss'
 
@@ -32,7 +33,7 @@ export default class PreviewView extends Component {
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown)
-    this.downloadMedia(this.state)
+    this.downloadMedia()
   }
 
   componentWillUnmount() {
@@ -40,8 +41,6 @@ export default class PreviewView extends Component {
   }
 
   downloadMedia() {
-    const CONTENT_ROOT = 'https://content.dropboxapi.com/2'
-    const TOKEN = 'bm8ZZaJQVKsAAAAAAAEG2eJqd-pgpYsEEDtK8tolxiPacwGP3QKm7ZxaGrrq2tlI'
     let data = []
     let contentLength = 0
     let dataLength = 0
@@ -83,10 +82,10 @@ export default class PreviewView extends Component {
     this.req.abort()
     this.setState({ loading: false })
     setTimeout(() => { this.setState({ mediaFile: ''})}, 0)
-    const item = this.state.media
-    const index = _.findIndex(this.state.library, o => { return o.id === item.id })
     URL.revokeObjectURL(this.state.mediaFile)
 
+    const item = this.state.media
+    const index = _.findIndex(this.state.library, o => { return o.id === item.id })
     switch(event.keyCode) {
       // Esc button pressed
       case 27:

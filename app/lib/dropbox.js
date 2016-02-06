@@ -1,18 +1,8 @@
 import _ from 'lodash'
-import moment from 'moment'
-import geocoder from 'lib/geocoder'
+import utils from 'lib/utils'
 
-const TOKEN = 'bm8ZZaJQVKsAAAAAAAEG2eJqd-pgpYsEEDtK8tolxiPacwGP3QKm7ZxaGrrq2tlI'
-const API_ROOT = 'https://api.dropboxapi.com/2'
-const CONTENT_ROOT = 'https://content.dropboxapi.com/2'
-const MEDIA_FOLDER = '/Camera Uploads'
+import { TOKEN, API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from 'lib/costants'
 
-const SUPPORTED_MIME_TYPES = [
-  'bmp', 'gif', 'jpg', 'jpeg', 'png',
-  'pjpeg', 'tiff', 'webp', 'x-tiff',
-  'avi', 'mp4', 'mov', 'moov', 'pdf',
-  'jpe', 'mpeg'
-]
 
 export default class Dropbox {
 
@@ -100,7 +90,7 @@ export default class Dropbox {
           })
         }).then(data => {
           let {json, blob} = data
-          return this.createMediaObj(json, blob).then((media) => {
+          return utils.createMediaObj(json, blob).then((media) => {
             return media
           })
         })
@@ -126,61 +116,6 @@ export default class Dropbox {
       }).then(blob => {
         resolve(blob)
       })
-    })
-  }
-
-  static createMediaObj(json, blob) {
-    return new Promise((resolve, reject) => {
-      let media = json
-      let reader = new FileReader()
-      reader.readAsDataURL(blob)
-
-      media.tag = media['.tag']
-      delete media['.tag']
-
-      if(media.media_info) {
-        media.media_info.tag = media.media_info['.tag']
-        delete media.media_info['.tag']
-
-        if(media.media_info.metadata) {
-          media.media_info.metadata.tag = media.media_info.metadata['.tag']
-          delete media.media_info.metadata['.tag']
-
-          if(media.media_info && media.media_info.metadata && media.media_info.metadata.location) {
-            let lat = media.media_info.metadata.location.latitude
-            let long = media.media_info.metadata.location.longitude
-
-            geocoder.lookUp(lat, long).then(res => {
-              media.location = res.resourceSets[0].resources[0]
-            })
-          }
-
-          if(media.media_info.metadata.time_taken) {
-            media.displayDate = moment(media.media_info.metadata.time_taken).format('DD MMM YYYY')
-            media.sortDate = parseInt(moment(media.media_info.metadata.time_taken).format('X'))
-          } else {
-            media.displayDate = moment('1970-01-01T00:00:00Z').format('DD MMM YYYY')
-            media.sortDate = moment('1970-01-01T00:00:00Z').format('X')
-          }
-
-          if(media.media_info.metadata.dimensions) {
-            let width = parseInt(media.media_info.metadata.dimensions.width)
-            let height = parseInt(media.media_info.metadata.dimensions.height)
-            media.className = (width / height * 10) >= 10 ? 'landscape' : 'portrait'
-          }
-        }
-
-      } else {
-        media.displayDate = moment('1970-01-01T00:00:00Z').format('DD MMM YYYY')
-        media.sortDate = moment('1970-01-01T00:00:00Z').format('X')
-        media.className = 'portrait'
-      }
-
-      reader.onloadend = () => {
-        media.thumbnail = reader.result
-        resolve(media)
-      }
-
     })
   }
 

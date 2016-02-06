@@ -19,8 +19,10 @@ class LibraryActions {
   }
 
   importLibrary() {
+    let library = []
     let allMedia = []
-    dropbox.getFileList((results) => {
+
+    dropbox.getFileList().then(results => {
       let promises = dropbox.getAllMedia(results)
       Promise.all(promises).then((values) => {
         for(let i in values) {
@@ -53,6 +55,11 @@ class LibraryActions {
         this.loadDatabase()
       })
     })
+    return false
+  }
+
+  saveAfterImport(importedMedia) {
+    db.insert(importedMedia)
     return false
   }
 
