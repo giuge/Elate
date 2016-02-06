@@ -5,28 +5,20 @@ import AccountActions from 'actions/AccountActions'
 class AccountStore {
   constructor() {
     this.bindListeners({
-      handleGetUserInfo: AccountActions.GET_USER_INFO,
-      handleSaveUserInfo: AccountActions.SAVE_USER_INFO
+      handleGetUserInfo: AccountActions.GET_USER_INFO
     })
 
     this.state = {
-      token: null,
-      accountInfo: null
+      has_token: true,
+      has_imported_library: true,
+      account_info: null
     }
   }
 
   handleGetUserInfo(account) {
-    let { token, accountInfo} = account
-    this.setState({
-      token: token,
-      accountInfo: accountInfo
-    })
+    this.setState({ ...account })
+    console.log(account)
   }
-
-  handleSaveUserInfo(token) {
-    this.setState({token})
-  }
-
 
 }
 

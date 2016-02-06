@@ -54,8 +54,8 @@ class App extends Component {
           media={this.props.previewItem} />
       )
     }
-    if(this.props.token && this.props.library.length === 0) return <ImportLibrary />
-    if(!this.props.token) return <DropboxConnect />
+    if(this.props.has_token && !this.props.has_imported_library) return <ImportLibrary />
+    if(!this.props.has_token) return <DropboxConnect />
     if(this.props.library.length > 0) return <LibraryView library={this.props.library} selectedItem={this.props.selectedItem}/>
     else return <Spinner />
   }

@@ -6,7 +6,8 @@ import LibraryActions from 'actions/LibraryActions'
 class LibraryStore {
   constructor() {
     this.bindListeners({
-      handleLoadDatabase: LibraryActions.LOAD_DATABASE
+      handleLoadDatabase: LibraryActions.LOAD_DATABASE,
+      handleSaveAfterImport: LibraryActions.SAVE_AFTER_IMPORT
     })
 
     this.state = {
@@ -16,6 +17,13 @@ class LibraryStore {
   }
 
   handleLoadDatabase(library) {
+    this.setState({
+      library: library,
+      loading: false
+    })
+  }
+
+  handleSaveAfterImport(library) {
     this.setState({
       library: library,
       loading: false

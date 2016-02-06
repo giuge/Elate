@@ -20,8 +20,13 @@ export default class DropboxConnect extends Component {
     let state = /state=([^&]+)/.exec(url)[1] || null
 
     if(state === this.state.session) {
-      let accessToken = { token }
-      AccountActions.saveUserInfo(accessToken)
+      let data = {
+        token: token,
+        has_token: true,
+        has_imported_library: false,
+        account_info: null
+      }
+      AccountActions.saveUserInfo(data)
     }
 
     return
@@ -36,7 +41,6 @@ export default class DropboxConnect extends Component {
       height: 600,
       minWidth: 800,
       minHeight: 600,
-      titleBarStyle: 'hidden-inset',
       title: 'Elate',
       disablewebsecurity: false,
       nodeIntegration: false,

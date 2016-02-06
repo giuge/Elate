@@ -43,16 +43,11 @@ class LibraryActions {
     dropbox.getFileList().then(results => {
       let missingMedia = _.differenceBy(results, library, 'id')
       let promises = dropbox.getAllMedia(missingMedia)
-      // console.log(`Existing library: ${library.length}`)
-      // console.log(`Missing media: ${missingMedia.length}`)
-      // console.log(`Promises: ${promises.length}`)
       Promise.all(promises).then((values) => {
-        // console.log(`Promises results: ${values.length}`)
         for(let i in values) {
           allMedia.push(values[i])
         }
         db.insert(allMedia)
-        this.loadDatabase()
       })
     })
     return false
@@ -60,7 +55,7 @@ class LibraryActions {
 
   saveAfterImport(importedMedia) {
     db.insert(importedMedia)
-    return false
+    return importedMedia
   }
 
 }

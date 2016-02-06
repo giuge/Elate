@@ -10,17 +10,24 @@ class AccountActions {
   getUserInfo() {
     return ((dispatch) => {
       db.find({}, (err, account) => {
+        localStorage.clear('token')
         if(err) console.log(err)
-        let data = {
-          token: null,
-          accountInfo: null,
-        }
+        let data = {}
         if(account[0]) {
-          if(account[0].token) {
-            data.token = account[0].token
+          if(account[0].token && account[0].has_token) {
+            data.has_token = true
             localStorage.setItem('token', account[0].token)
+            console.log(localStorage.getItem('token'))
+          } else {
+            data.has_token = false
           }
-          if(account[0].accountInfo) data.accountInfo = account[0].accountInfo
+          if(account[0].has_imported_library) {
+            data.has_imported_library = true
+          } else data.has_imported_library = false
+        } else {
+          data.has_token = false
+          data.has_imported_library = false
+          data.account_info = null
         }
         dispatch(data)
       })
@@ -28,10 +35,15 @@ class AccountActions {
   }
 
   saveUserInfo(info) {
-    return ((dispatch) => {
-      db.insert(info)
-      dispatch(info)
-    })
+    db.insert(info)
+    this.getUserInfo()
+    return false
+  }
+
+  hasImportedLibrary(bool) {
+    db.update({}, { $set: { has_imported_library: true } })
+    this.getUserInfo()
+    return false
   }
 
 

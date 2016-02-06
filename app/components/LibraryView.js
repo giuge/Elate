@@ -14,14 +14,16 @@ export default class LibraryView extends Component {
     super(props)
 
     this.state = {
-      splittedLibrary: _.groupBy(props.library, 'displayDate'),
       chunks: []
     }
   }
 
   componentWillMount() {
     let chunks = []
-    _.forEach(this.state.splittedLibrary, (value, key) => {
+    let sorteLibrary = _.orderBy(this.props.library, 'sortDate', 'desc' )
+    let splittedLibrary = _.groupBy(sorteLibrary, 'displayDate')
+
+    _.forEach(splittedLibrary, (value, key) => {
       chunks.push(<LibraryChunk chunk={value} date={key} key={key} />)
     })
     this.setState({chunks: chunks})

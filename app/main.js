@@ -11,6 +11,7 @@ require('crash-reporter').start()
 
 app.on('window-all-closed', () => {
   if (process.platform != 'darwin') {
+    localStorage.clear()
     app.quit()
   }
 })
