@@ -1,6 +1,6 @@
 {
   "name": "Elate",
-  "version": "0.23.6-alpha",
+  "version": "0.23.7-alpha",
   "url": "https://github.com/giuge/Elate.git",
   "description": "",
   "main": "./app/main.js",
