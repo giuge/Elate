@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { APP_KEY, APP_SECRET, OAUTH_REDIRECT_URL } from 'lib/costants'
 import remote from 'remote'
 
+import 'styles/DropboxConnect.scss'
 import AccountActions from 'actions/AccountActions'
+
 
 let BrowserWinow = remote.BrowserWindow
 
@@ -15,11 +17,21 @@ export default class DropboxConnect extends Component {
     }
   }
 
+  componentWillMount() {
+    let currentWindow = remote.getCurrentWindow()
+    currentWindow.setBounds({
+      width: 450,
+      height: 400,
+      x: (screen.width / 2 - 200),
+      y: (screen.height / 2 - 225)
+    })
+  }
+
   handleCallback(url) {
     let token = /access_token=([^&]+)/.exec(url)[1] || null
     let state = /state=([^&]+)/.exec(url)[1] || null
 
-    if(state === this.state.session) {
+    if(state === this.state.session && token !== null) {
       let data = {
         token: token,
         has_token: true,
@@ -36,7 +48,7 @@ export default class DropboxConnect extends Component {
     let currentWindow = remote.getCurrentWindow()
     let baseURL = 'https://www.dropbox.com/1/oauth2/authorize'
     let loginWindow = new BrowserWinow({
-      backgroundColor: '#fff',
+      backgroundColor: '#1E1E1E',
       width: 800,
       height: 600,
       minWidth: 800,
@@ -68,8 +80,11 @@ export default class DropboxConnect extends Component {
 
   render () {
     return (
-      <a onClick={() => { this.handleClick() }}>
-      Login to Dropbox</a>
+      <div className='container'>
+        <h2>Ready to get started?</h2>
+        <a onClick={() => { this.handleClick() }} className='button'>
+        Connect to Dropbox</a>
+      </div>
     )
   }
 }

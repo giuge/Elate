@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
+import remote from 'remote'
 import dropbox from 'lib/dropbox'
 import utils from 'lib/utils'
+
 import LibraryActions from 'actions/LibraryActions'
 import AccountActions from 'actions/AccountActions'
 import { TOKEN, API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from 'lib/costants'
+
+import 'styles/ImportLibrary.scss'
 
 
 export default class ImportLibrary extends Component {
@@ -12,7 +16,16 @@ export default class ImportLibrary extends Component {
 
     this.state = {
       importedMedia: [],
-      mediaToImport: []
+      mediaToImport: [],
+      isImporting: false
+    }
+  }
+
+  componentWillMount() {
+    let currentWindow = remote.getCurrentWindow()
+    let currentBounds = currentWindow.getBounds()
+    if(currentBounds.x !== 450 && currentBounds.y !== 400) {
+      currentWindow.setBounds({width: 450, height: 400, y: (screen.height / 2 - 225), x: (screen.width / 2 - 200)})
     }
   }
 
@@ -30,7 +43,13 @@ export default class ImportLibrary extends Component {
     })
   }
 
+  componentWillUnmount() {
+    let currentWindow = remote.getCurrentWindow()
+    currentWindow.setBounds({width: 800, height: 600, y: (screen.height / 2 - 400), x: (screen.width / 2 - 300)})
+  }
+
   handleClick() {
+    this.setState({isImporting: true})
     let finishAt = this.state.mediaToImport.length
     for(let i in this.state.mediaToImport) {
       let data = []
@@ -69,15 +88,41 @@ export default class ImportLibrary extends Component {
     }
   }
 
+  renderButton() {
+    if(!this.state.isImporting && this.state.mediaToImport.length > 0) {
+      return <a onClick={() => { this.handleClick() }} className='button'>Import Library</a>
+    } else if (!this.state.isImporting && this.state.mediaToImport.length <= 0) {
+      return <p>Fetching file list</p>
+    } else return
+  }
+
+  renderProgressText() {
+    if (this.state.isImporting) {
+      return <p>Downloading {this.state.importedMedia.length} of {this.state.mediaToImport.length}</p>
+    }
+    return <p>Total media: {this.state.mediaToImport.length}</p>
+  }
+
   render () {
+    let shouldWait = true
+    if(this.state.mediaToImport.length > 0) {
+      shouldWait = false
+    }
+
     return (
       <div className='container'>
-        <h1>Welcome to Elate</h1>
-        <a onClick={() => { this.handleClick() }}>Import Library</a>
-        <progress
-          value={this.state.importedMedia.length}
-          max={this.state.mediaToImport.length} />
-        <p>Downloading {this.state.importedMedia.length} of {this.state.mediaToImport.length}</p>
+        <div className='welcome'>
+          <h2 className={this.state.isImporting ? 'hidden' : ''}>Welcome to Elate</h2>
+          <h2 className={!this.state.isImporting ? 'hidden' : ''}>You're almost done</h2>
+          {this.renderButton()}
+        </div>
+        <div className={shouldWait ? 'hidden bottom-bar' : 'bottom-bar'}>
+          {this.renderProgressText()}
+          <progress
+            className={shouldWait ? 'hidden' : ''}
+            value={this.state.importedMedia.length}
+            max={this.state.mediaToImport.length} />
+        </div>
       </div>
     )
   }

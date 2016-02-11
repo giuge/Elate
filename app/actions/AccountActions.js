@@ -1,8 +1,9 @@
 import _ from 'lodash'
 import alt from 'lib/alt'
 import Datastore from 'nedb'
+import { USER_DATA } from 'lib/costants'
 
-const db = new Datastore({ filename: 'data/account.db', autoload: true })
+const db = new Datastore({ filename: `${USER_DATA}/account.db`, autoload: true })
 
 
 class AccountActions {
@@ -41,7 +42,7 @@ class AccountActions {
   }
 
   hasImportedLibrary(bool) {
-    db.update({}, { $set: { has_imported_library: true } })
+    db.update({}, { $set: { has_imported_library: bool } })
     this.getUserInfo()
     return false
   }

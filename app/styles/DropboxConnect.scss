@@ -1,0 +1,21 @@
+.container {
+  background: #1E1E1E;
+}
+
+h2 {
+  text-align: center;
+  color: #fff;
+  font-size: 25px;
+  font-weight: 400;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-top: -1em;
+}
+
+.button {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+}
