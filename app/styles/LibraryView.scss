@@ -1,10 +1,11 @@
 .listView {
-  flex: 1 1 auto;
+  flex: 1 100%;
   overflow-y: scroll;
   margin: 0;
   padding: 0;
-	flex-direction: column;
-	flex-wrap: wrap;
+  flex-direction: column;
+  flex-wrap: wrap;
+  order: 2;
 
   > .container {
     display: inline;
@@ -12,13 +13,13 @@
 
   .meta {
     width: 100%;
-    padding: 10px 13px;
     vertical-align: baseline;
+    padding: 0 0 0 15px;
 
     .location {
       display: inline-block;
       font-weight: 500;
-      font-size: 14px;
+      font-size: 15px;
 
       &:not(:empty) {
         margin-right: 10px;
@@ -28,7 +29,7 @@
     .date {
       display: inline-block;
       color: #989898;
-      font-size: 13px;
+      font-size: 14px;
 
       &:only-child {
         font-weight: 500;
@@ -50,9 +51,9 @@
   li {
     display: inline-block;
     list-style: none;
-    width: 16%;
+    width: 21%;
     text-align: center;
-    margin: 15px;
+    margin: 10px;
     vertical-align: middle;
 
     &.landscape {

@@ -50,23 +50,17 @@ export default class LibraryView extends Component {
 
   render() {
     return (
-      <div className='container'>
-        <TopBar />
-        <div className='listView'>
-          <ReactList
-            itemRenderer={::this.renderChunk}
-            length={this.state.chunks.length}
-            initialIndex={0}
-            pageSize={6}
-            threshold={1500}
-            useTranslate3d={true}
-          />
-        </div>
+      <div className='listView'>
+        <ReactList
+          itemRenderer={::this.renderChunk}
+          length={this.state.chunks.length}
+          initialIndex={0}
+          pageSize={6}
+          threshold={1500}
+          useTranslate3d={true}
+        />
       </div>
     )
   }
 
 }
-
-
-//{this.renderChunks()}

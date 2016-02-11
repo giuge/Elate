@@ -17,7 +17,8 @@ export default class PreviewView extends Component {
       library: props.library,
       mediaFile: '',
       loading: false,
-      loadingPercent: 0
+      loadingPercent: 0,
+      isClosingPreview: false
     }
 
     this.handleKeyDown = this.handleKeyDown.bind(this)
@@ -64,25 +65,24 @@ export default class PreviewView extends Component {
       res.on('end', () => {
         data = Buffer.concat(data)
         let blob = new Blob([data])
-        console.log('Calling set state')
-        this.setState({
-          mediaFile: URL.createObjectURL(blob),
-          loadingPercent: 100
-        })
-        // Let the animation finish before unloading the spinner
-        setTimeout(() => {
+        if(!this.state.isClosingPreview) {
           this.setState({
-            loading: false,
-            loadingPercent: 0
-        }) }, 300)
+            mediaFile: URL.createObjectURL(blob),
+            loadingPercent: 100
+          })
+          // Let the animation finish before unloading the spinner
+          setTimeout(() => {
+            this.setState({
+              loading: false,
+              loadingPercent: 0
+          }) }, 300)
+        }
       })
     })
   }
 
   handleKeyDown(event) {
-    this.req.abort()
     this.setState({ loading: false })
-    setTimeout(() => { this.setState({ mediaFile: ''})}, 0)
     URL.revokeObjectURL(this.state.mediaFile)
 
     const item = this.state.media
@@ -90,11 +90,15 @@ export default class PreviewView extends Component {
     switch(event.keyCode) {
       // Esc button pressed
       case 27:
+        this.setState({ isClosingPreview: true, mediaFile: '' })
+        this.req.abort()
         AppActions.hidePreview()
         AppActions.selectItem(this.state.media)
         break
       // Left arrow pressed
       case 37:
+        this.req.abort()
+        setTimeout(() => { this.setState({ mediaFile: ''})}, 0)
         if(index - 1 < 0) break
         this.setState({ media: this.state.library[index - 1]})
         AppActions.selectItem(this.state.library[index - 1])
@@ -102,7 +106,9 @@ export default class PreviewView extends Component {
         break
       // Right arrow pressed
       case 39:
-      if(index + 1 >= this.state.library.length) break
+        this.req.abort()
+        setTimeout(() => { this.setState({ mediaFile: ''})}, 0)
+        if(index + 1 >= this.state.library.length) break
         this.setState({ media: this.state.library[index + 1]})
         AppActions.selectItem(this.state.library[index + 1])
         this.downloadMedia()

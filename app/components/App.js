@@ -10,9 +10,8 @@ import AppActions from 'actions/AppActions'
 import AccountActions from 'actions/AccountActions'
 
 import DropboxConnect from 'components/DropboxConnect'
-import LibraryView from 'components/LibraryView'
 import ImportLibrary from 'components/ImportLibrary'
-import PreviewView from 'components/PreviewView'
+import MainWindow from 'components/MainWindow'
 import Spinner from 'components/Spinner'
 
 import 'styles/App.scss'
@@ -47,17 +46,16 @@ class App extends Component {
   }
 
   render() {
-    if(this.props.shouldShowPreview) {
-      return (
-        <PreviewView
-          library={this.props.library}
-          media={this.props.previewItem} />
-      )
-    }
-
     if(!this.props.has_token) return <DropboxConnect />
     if(this.props.has_token && !this.props.has_imported_library) return <ImportLibrary account_info={this.props.account_info} />
-    if(this.props.library.length > 0) return <LibraryView library={this.props.library} selectedItem={this.props.selectedItem}/>
+    if(this.props.library.length > 0) {
+      return (
+        <MainWindow
+          shouldShowPreview={this.props.shouldShowPreview}
+          library={this.props.library}
+          selectedItem={this.props.selectedItem} />
+      )
+    }
     else return <Spinner />
   }
 }

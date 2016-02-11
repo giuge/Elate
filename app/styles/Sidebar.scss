@@ -1,0 +1,41 @@
+.sidebar {
+  height: 100vh;
+  background: #DBE0E6;
+  flex: 1 200px;
+  order: 1;
+  padding-top: 50px;
+
+  ul {
+    padding: 0;
+    margin: 0 0 30px 0;
+    text-indent: 15px;
+
+    h6 {
+      font-size: 10px;
+      color: #222222;
+      line-height: 11px;
+      text-transform: uppercase;
+      margin: 0 0 15px 0;
+      font-weight: 600;
+    }
+
+    li {
+      font-size: 13px;
+      color: #222222;
+      line-height: 11px;
+      font-weight: 400;
+      margin: 0 0 15px 0px;
+      opacity: .3;
+
+      img {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 8px;
+      }
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+}
