@@ -1,11 +1,9 @@
+import ipc from 'ipc'
 import React, { Component } from 'react'
-import remote from 'remote'
 import LibraryView from 'components/LibraryView'
 import Sidebar from 'components/Sidebar'
 import PreviewView from 'components/PreviewView'
 import Spinner from 'components/Spinner'
-
-import Updater from 'electron-gh-updater'
 
 
 export default class MainWindow extends Component {
@@ -21,24 +19,8 @@ export default class MainWindow extends Component {
   }
 
   componentDidMount() {
-    let options = {
-      owner: 'giuge',
-      repo: 'Elate',
-      location: '/Applications',
-      appVersion: remote.app.getVersion()
-    }
-    const updater = new Updater(options)
-    updater.check()
-
-    updater.on('checked', updateAvailable => {
-      console.log(updateAvailable)
-      if(updateAvailable){
-        console.log('Abbiamo un update')
-        updater.download()
-      }
-    })
-
-    updater.on('download-ready', () => {
+    ipc.on('update-downloaded', () => {
+      alert('Updates ready to be installed')
       updater.install()
     })
   }

@@ -3,8 +3,14 @@
 const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
+const Updater = require('electron-gh-releases')
 
 let mainWindow
+let options = {
+  repo: 'giuge/Elate',
+  currentVersion: app.getVersion()
+}
+const updater = new Updater(options)
 
 require('crash-reporter').start()
 
@@ -32,6 +38,14 @@ app.on('ready', () => {
   })
 
   mainWindow.loadURL('file://' + __dirname + '/index.html')
+
+  updater.check((err, status) => {
+    console.log(status)
+    if (!err && status) {
+      // Download the update
+      updater.download()
+    }
+  })
 
   // Now we can show the window
   // mainWindow.webContents.on('did-finish-load', () => {

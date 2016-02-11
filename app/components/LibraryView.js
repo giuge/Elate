@@ -30,20 +30,6 @@ export default class LibraryView extends Component {
     this.setState({chunks: chunks})
   }
 
-  componentDidMount() {
-    let currentWindow = remote.getCurrentWindow()
-    let currentBounds = currentWindow.getBounds()
-    if(currentBounds.x !== 800 && currentBounds.y !== 600) {
-      currentWindow.setBounds({
-        width: 800,
-        height: 600,
-        x: (screen.width / 2 - 400),
-        y: (screen.height / 2 - 300),
-      })
-
-    }
-  }
-
   renderChunk(index, key) {
     return this.state.chunks[index]
   }
