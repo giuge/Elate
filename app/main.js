@@ -7,7 +7,10 @@ const BrowserWindow = electron.BrowserWindow
 let mainWindow
 
 
+
 require('crash-reporter').start()
+
+
 
 app.on('window-all-closed', () => {
   if (process.platform != 'darwin') {

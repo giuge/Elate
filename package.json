@@ -1,6 +1,7 @@
 {
   "name": "Elate",
-  "version": "0.23.2",
+  "version": "0.23.3",
+  "url" : "https://github.com/giuge/Elate.git",
   "description": "",
   "main": "./app/main.js",
   "author": "Giuseppe Germinaro",
@@ -9,7 +10,8 @@
     "start": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch\" \"npm run electron\"",
     "electron": "node_modules/.bin/electron .",
     "watch": "node_modules/.bin/webpack-dev-server --hot --quiet --progress --colors",
-    "build": "npm run webpack && node_modules/.bin/electron-packager ./dist Elate --platform=darwin --arch=x64 --version=0.36.5 --icon='./app/assets/icon.icns' --asar=true && rm -rf ./dist",
+    "build": "npm run webpack && node_modules/.bin/electron-packager ./dist Elate --platform=darwin --arch=x64 --version=0.36.5 --sign='JB29VD9G3E' --icon='./app/assets/icon.icns' --asar=true --out='./releases' && rm -rf ./dist",
+    "release": "electron-release --app='./releases/Elate-darwin-x64/Elate.app' --token='0c091197e859c36b86913cc51fc2462b17975d55' --repo='giuge/Elate'",
     "webpack": "node_modules/.bin/webpack ."
   },
   "devDependencies": {
@@ -37,6 +39,7 @@
   "dependencies": {
     "alt": "^0.18.2",
     "alt-utils": "^1.0.0",
+    "electron-gh-releases": "^2.0.2",
     "electron-prebuilt": "^0.36.5",
     "lodash": "^4.0.1",
     "moment": "^2.11.1",
