@@ -29,15 +29,15 @@ class App extends Component {
 
   static getPropsFromStores() {
     return {
+      ...AccountStore.getState(),
       ...LibraryStore.getState(),
-      ...AppStore.getState(),
-      ...AccountStore.getState()
+      ...AppStore.getState()
     }
   }
 
   componentWillMount() {
-    LibraryActions.loadDatabase()
     AccountActions.getUserInfo()
+    LibraryActions.loadDatabase()
   }
 
   componentDidMount() {
@@ -54,8 +54,9 @@ class App extends Component {
           media={this.props.previewItem} />
       )
     }
-    if(this.props.has_token && !this.props.has_imported_library) return <ImportLibrary />
+
     if(!this.props.has_token) return <DropboxConnect />
+    if(this.props.has_token && !this.props.has_imported_library) return <ImportLibrary account_info={this.props.account_info} />
     if(this.props.library.length > 0) return <LibraryView library={this.props.library} selectedItem={this.props.selectedItem}/>
     else return <Spinner />
   }

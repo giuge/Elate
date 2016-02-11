@@ -1,12 +1,13 @@
 import _ from 'lodash'
 import utils from 'lib/utils'
 
-import { TOKEN, API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from 'lib/costants'
+import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from 'lib/costants'
 
 
 export default class Dropbox {
 
   static getFileList() {
+    let TOKEN = localStorage.getItem('token')
     return new Promise((resolve, reject) => {
       let entries = []
       fetch(`${API_ROOT}/files/list_folder`, {
@@ -23,7 +24,6 @@ export default class Dropbox {
         return response.json()
       }).then((json) => {
         if(json.has_more) {
-          console.log(`Get file continue called`)
           this.getFromCursor(json.cursor).then(entries => {
             entries.push(json.entries)
             resolve(_.flattenDeep(entries))
@@ -37,6 +37,7 @@ export default class Dropbox {
   }
 
   static getFromCursor(cursor, entries) {
+    let TOKEN = localStorage.getItem('token')
     return new Promise((resolve, reject) => {
       let allEntries = []
       if(entries) allEntries.push(entries)
@@ -68,6 +69,7 @@ export default class Dropbox {
   }
 
   static getAllMedia(files) {
+    let TOKEN = localStorage.getItem('token')
     let array = []
     for(let i in files) {
       const nameComponents = files[i].name.split('.')
@@ -102,6 +104,7 @@ export default class Dropbox {
   }
 
   static downloadMedia(path) {
+    let TOKEN = localStorage.getItem('token')
     return new Promise((resolve, reject) => {
       fetch(`${CONTENT_ROOT}/files/download`, {
         method: 'post',
@@ -115,6 +118,23 @@ export default class Dropbox {
         return response.blob()
       }).then(blob => {
         resolve(blob)
+      })
+    })
+  }
+
+  // The token is not yet present in local storage
+  static getAccountInfo() {
+    return new Promise((resolve, reject) => {
+      let TOKEN = localStorage.getItem('token')
+      fetch(`${API_ROOT}/users/get_current_account`, {
+        method: 'post',
+        headers: {
+          'Authorization': `Bearer ${TOKEN}`
+        }
+      }).then(response => {
+        return response.json()
+      }).then(json => {
+        resolve(json)
       })
     })
   }

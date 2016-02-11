@@ -38,17 +38,16 @@ export default class DropboxConnect extends Component {
         has_imported_library: false,
         account_info: null
       }
-      AccountActions.saveUserInfo(data)
-    }
-
-    return
+      localStorage.setItem('token', data.token)
+      AccountActions.saveAfterConnect(data)
+    } else this.handleCallback(url)
   }
 
   handleClick() {
     let currentWindow = remote.getCurrentWindow()
     let baseURL = 'https://www.dropbox.com/1/oauth2/authorize'
     let loginWindow = new BrowserWinow({
-      backgroundColor: '#1E1E1E',
+      backgroundColor: '#fff',
       width: 800,
       height: 600,
       minWidth: 800,
@@ -80,10 +79,11 @@ export default class DropboxConnect extends Component {
 
   render () {
     return (
-      <div className='container'>
+      <div className='container dropboxConnect'>
         <h2>Ready to get started?</h2>
         <a onClick={() => { this.handleClick() }} className='button'>
         Connect to Dropbox</a>
+      <img src='assets/intro_logo.png' />
       </div>
     )
   }

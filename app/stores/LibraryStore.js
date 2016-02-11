@@ -11,15 +11,13 @@ class LibraryStore {
     })
 
     this.state = {
-      library: [],
-      loading: true
+      library: []
     }
   }
 
   handleLoadDatabase(library) {
     this.setState({
-      library: library,
-      loading: false
+      library: library
     })
   }
 

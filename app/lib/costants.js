@@ -1,7 +1,7 @@
 import AppDirectory from 'appdirectory'
 
+
 // Dropbox
-export let TOKEN = localStorage.getItem('token') || null
 export const API_ROOT = 'https://api.dropboxapi.com/2'
 export const CONTENT_ROOT = 'https://content.dropboxapi.com/2'
 export const APP_KEY = 'mn8nb1bz34sxpe3'

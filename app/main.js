@@ -18,7 +18,7 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-    backgroundColor: '#1E1E1E',
+    backgroundColor: '#fff',
     width: 800,
     height: 600,
     minWidth: 800,
@@ -52,7 +52,7 @@ app.on('ready', () => {
 app.on('activate', () => {
   if (mainWindow == null) {
     mainWindow = new BrowserWindow({
-      backgroundColor: '#1E1E1E',
+      backgroundColor: '#fff',
       width: 800,
       height: 600,
       minWidth: 800,

@@ -12,7 +12,7 @@ html, body {
   overflow: hidden;
   margin: 0;
   padding: 0;
-  background: #1E1E1E;
+  background: #fff;
   font-family: -apple-system, Helvetica, Arial, sans-serif;
   color: #222;
   font-weight: 100;
@@ -38,8 +38,8 @@ img, video {
 
 .button {
   background-color: #00B5FF;
-  border-radius: 2px;
-  padding: 8px 12px;
+  border-radius: 4px;
+  padding: 10px 12px;
   text-align: center;
   color: #fff;
   text-transform: uppercase;
@@ -47,4 +47,5 @@ img, video {
   font-weight: 500;
   width: inherit;
   display: inline-block;
+  line-height: 100%;
 }

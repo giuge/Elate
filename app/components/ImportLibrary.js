@@ -5,7 +5,7 @@ import utils from 'lib/utils'
 
 import LibraryActions from 'actions/LibraryActions'
 import AccountActions from 'actions/AccountActions'
-import { TOKEN, API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from 'lib/costants'
+import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from 'lib/costants'
 
 import 'styles/ImportLibrary.scss'
 
@@ -50,7 +50,9 @@ export default class ImportLibrary extends Component {
 
   handleClick() {
     this.setState({isImporting: true})
+    let TOKEN = localStorage.getItem('token')
     let finishAt = this.state.mediaToImport.length
+
     for(let i in this.state.mediaToImport) {
       let data = []
       const nameComponents = this.state.mediaToImport[i].name.split('.')
@@ -79,7 +81,7 @@ export default class ImportLibrary extends Component {
         utils.createMediaObj(json, blob).then((media) => {
           this.setState({importedMedia: this.state.importedMedia.concat(media)})
           if(this.state.importedMedia.length === finishAt) {
-            console.log('Saving to db')
+            localStorage.setItem('has_imported_library', true)
             AccountActions.hasImportedLibrary(true)
             LibraryActions.saveAfterImport(this.state.importedMedia)
           }
@@ -103,6 +105,27 @@ export default class ImportLibrary extends Component {
     return <p>Total media: {this.state.mediaToImport.length}</p>
   }
 
+  renderWelcomeIntro() {
+    if(this.props.account_info) {
+      return (
+        <div className='welcome'>
+          <img src={this.props.account_info.profile_photo_url} />
+          <h2 className={this.state.isImporting ? 'hidden' : ''}>Welcome, {this.props.account_info.name.given_name}</h2>
+          <h2 className={!this.state.isImporting ? 'hidden' : ''}>You're almost done</h2>
+          {this.renderButton()}
+        </div>
+      )
+    }
+
+    return (
+      <div className='welcome'>
+        <h2 className={this.state.isImporting ? 'hidden' : ''}>Welcome, stranger</h2>
+        <h2 className={!this.state.isImporting ? 'hidden' : ''}>You're almost done</h2>
+        {this.renderButton()}
+      </div>
+    )
+  }
+
   render () {
     let shouldWait = true
     if(this.state.mediaToImport.length > 0) {
@@ -111,11 +134,7 @@ export default class ImportLibrary extends Component {
 
     return (
       <div className='container'>
-        <div className='welcome'>
-          <h2 className={this.state.isImporting ? 'hidden' : ''}>Welcome to Elate</h2>
-          <h2 className={!this.state.isImporting ? 'hidden' : ''}>You're almost done</h2>
-          {this.renderButton()}
-        </div>
+        {this.renderWelcomeIntro()}
         <div className={shouldWait ? 'hidden bottom-bar' : 'bottom-bar'}>
           {this.renderProgressText()}
           <progress
