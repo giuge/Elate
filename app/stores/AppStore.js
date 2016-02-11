@@ -12,7 +12,6 @@ class AppStore {
 
     this.state = {
       shouldShowPreview: false,
-      previewItem: null,
       selectedItem: {},
       selectedItems: []
     }
@@ -21,7 +20,7 @@ class AppStore {
   handleShowPreview(item) {
     this.setState({
       shouldShowPreview: true,
-      previewItem: item
+      selectedItem: item
     })
   }
 

@@ -18,8 +18,8 @@
 
     .location {
       display: inline-block;
-      font-weight: 500;
-      font-size: 15px;
+      font-weight: 300;
+      font-size: 13px;
 
       &:not(:empty) {
         margin-right: 10px;
@@ -29,7 +29,7 @@
     .date {
       display: inline-block;
       color: #989898;
-      font-size: 14px;
+      font-size: 12px;
 
       &:only-child {
         font-weight: 500;
