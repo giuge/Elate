@@ -5,7 +5,7 @@ import Sidebar from 'components/Sidebar'
 import PreviewView from 'components/PreviewView'
 import Spinner from 'components/Spinner'
 
-import GhReleases from 'electron-gh-releases'
+import Updater from 'electron-gh-updater'
 
 
 export default class MainWindow extends Component {
@@ -22,28 +22,25 @@ export default class MainWindow extends Component {
 
   componentDidMount() {
     let options = {
-      repo: 'https://github.com/giuge/Elate.git',
-      currentVersion: remote.app.getVersion()
+      owner: 'giuge',
+      repo: 'Elate',
+      location: '/Applications',
+      appVersion: remote.app.getVersion()
     }
-    const updater = new GhReleases(options)
+    const updater = new Updater(options)
+    updater.check()
 
-    updater.check((err, status) => {
-      console.log(status)
-      console.log(err)
-      if (!err && status) {
-        alert(status)
+    updater.on('checked', updateAvailable => {
+      console.log(updateAvailable)
+      if(updateAvailable){
+        console.log('Abbiamo un update')
         updater.download()
       }
     })
 
-    // When an update has been downloaded
-    // updater.on('update-downloaded', (info) => {
-    //   // Restart the app and install the update
-    //   updater.install()
-    // })
-
-    // Access electrons autoUpdater
-    // updater.autoUpdater
+    updater.on('download-ready', () => {
+      updater.install()
+    })
   }
 
   render () {

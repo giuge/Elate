@@ -72,6 +72,7 @@ module.exports = {
     ])
   ],
   externals: {
+    'autoUpdater': 'require("electron").autoUpdater',
     'electron': 'require("electron")',
     'remote': 'require("remote")',
     'app': 'require("app")',
