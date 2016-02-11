@@ -53,7 +53,7 @@ export default class DropboxConnect extends Component {
       minWidth: 800,
       minHeight: 600,
       title: 'Elate',
-      disablewebsecurity: false,
+      disablewebsecurity: true,
       nodeIntegration: false,
       show: false
     })

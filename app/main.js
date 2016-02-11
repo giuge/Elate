@@ -27,17 +27,20 @@ app.on('ready', () => {
     title: 'Elate',
     disablewebsecurity: true,
     // Avoid the white background flash
-    show: false
+    // show: false
+    // Not needed since we use light theme
   })
 
   mainWindow.loadURL('file://' + __dirname + '/index.html')
+  mainWindow.openDevTools()
 
   // Now we can show the window
-  mainWindow.webContents.on('did-finish-load', () => {
-    setTimeout(function(){
-      mainWindow.show()
-    }, 40)
-  })
+  // mainWindow.webContents.on('did-finish-load', () => {
+  //   setTimeout(function(){
+  //     mainWindow.show()
+  //   }, 40)
+  // })
+  // Not needed since we use light theme
 
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows

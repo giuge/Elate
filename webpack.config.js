@@ -65,7 +65,9 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: './../prod.html', to: './../app/index.html' },
       { from: './assets', to: './../app/assets' },
-      //{ from: './main.js', to: './../app/main.js' },
+      // Don't let webpack mess with this file,
+      // we just copy it as is.
+      { from: './main.js', to: './../app/main.js' },
       { from: './../package.json', to: './../package.json'}
     ])
   ],
