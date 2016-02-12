@@ -1,16 +1,6 @@
-electron-boilerplate
+Elate
 ==============
-Comprehensive boilerplate application for [Electron runtime](http://electron.atom.io).  
-
-Scope of this project:
-
-- Provide basic structure of the application so you can much easier grasp what should go where.
-- Give you cross-platform development environment, which works the same way on OSX, Windows and Linux.
-- Generate ready for distribution installers of your app for all three operating systems.
-
-Not in the scope:
-
-- Imposing on you any framework (e.g. Angular, React). You can integrate the one which makes most sense for you.
+The Dropbox media browser!
 
 # Quick start
 The only development dependency of this project is [Node.js](https://nodejs.org). So just make sure you have it installed.
@@ -158,24 +148,4 @@ There are still a lot of 32-bit Windows installations in use. If you want to sup
 
 # License
 
-The MIT License (MIT)
-
-Copyright (c) 2015-2016 Jakub Szwacz
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copyright (c) 2016 Giuseppe Germinaro
