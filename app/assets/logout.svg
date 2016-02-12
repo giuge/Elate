@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="13px" height="15px" viewBox="0 0 13 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
     <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
-    <title>Shape</title>
+    <title>Logout</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="Desktop-HD-Copy-3" sketch:type="MSArtboardGroup" transform="translate(-225.000000, -545.000000)" fill="#222222">
-            <g id="Group-5-Copy-2" sketch:type="MSLayerGroup" transform="translate(223.000000, 519.000000)">
+        <g id="Desktop-HD-Copy" sketch:type="MSArtboardGroup" transform="translate(-225.000000, -549.000000)" fill="#FFFFFF">
+            <g id="Group-5-Copy-2" sketch:type="MSLayerGroup" transform="translate(223.000000, 523.000000)">
                 <g id="Group-4" transform="translate(2.000000, 26.000000)" sketch:type="MSShapeGroup">
-                    <path d="M13,7.3125 L8.66666667,3.25 L8.66666667,5.6875 L3.61111111,5.6875 L3.61111111,8.9375 L8.66666667,8.9375 L8.66666667,11.375 L13,7.3125 L13,7.3125 Z M1.44444444,1.625 L7.22222222,1.625 L7.22222222,0 L1.44444444,0 C0.65,0 0,0.73125 0,1.625 L0,13 C0,13.89375 0.65,14.625 1.44444444,14.625 L7.22222222,14.625 L7.22222222,13 L1.44444444,13 L1.44444444,1.625 L1.44444444,1.625 Z" id="Shape"></path>
+                    <path d="M13,7.3125 L8.66666667,3.25 L8.66666667,5.6875 L3.61111111,5.6875 L3.61111111,8.9375 L8.66666667,8.9375 L8.66666667,11.375 L13,7.3125 L13,7.3125 Z M1.44444444,1.625 L7.22222222,1.625 L7.22222222,0 L1.44444444,0 C0.65,0 0,0.73125 0,1.625 L0,13 C0,13.89375 0.65,14.625 1.44444444,14.625 L7.22222222,14.625 L7.22222222,13 L1.44444444,13 L1.44444444,1.625 L1.44444444,1.625 Z" id="Logout"></path>
                 </g>
             </g>
         </g>

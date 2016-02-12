@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import remote from 'remote'
-import dropbox from 'lib/dropbox'
-import utils from 'lib/utils'
+import dropbox from './../lib/dropbox'
+import utils from './../lib/utils'
 
-import LibraryActions from 'actions/LibraryActions'
-import AccountActions from 'actions/AccountActions'
-import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from 'lib/costants'
-
-import 'styles/ImportLibrary.scss'
+import LibraryActions from './../actions/LibraryActions'
+import AccountActions from './../actions/AccountActions'
+import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from './../lib/costants'
 
 
 export default class ImportLibrary extends Component {

@@ -1,6 +1,6 @@
-import alt from 'lib/alt'
+import alt from './../lib/alt'
 import _ from 'lodash'
-import LibraryActions from 'actions/LibraryActions'
+import LibraryActions from './../actions/LibraryActions'
 
 
 class LibraryStore {

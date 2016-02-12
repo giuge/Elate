@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { APP_KEY, APP_SECRET, OAUTH_REDIRECT_URL } from 'lib/costants'
+import { APP_KEY, APP_SECRET, OAUTH_REDIRECT_URL } from './../lib/costants'
 import remote from 'remote'
 
-import 'styles/DropboxConnect.scss'
-import AccountActions from 'actions/AccountActions'
+import AccountActions from './../actions/AccountActions'
 
 
 let BrowserWinow = remote.BrowserWindow

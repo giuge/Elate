@@ -1,9 +1,11 @@
-import ipc from 'ipc'
+import { ipcRenderer } from 'electron'
 import React, { Component } from 'react'
-import LibraryView from 'components/LibraryView'
-import Sidebar from 'components/Sidebar'
-import PreviewView from 'components/PreviewView'
-import Spinner from 'components/Spinner'
+
+import LibraryView from './LibraryView'
+import TopBar from './TopBar'
+import Sidebar from './Sidebar'
+import PreviewView from './PreviewView'
+import Spinner from './Spinner'
 
 
 export default class MainWindow extends Component {
@@ -19,7 +21,7 @@ export default class MainWindow extends Component {
   }
 
   componentDidMount() {
-    ipc.on('update-downloaded', () => {
+    ipcRenderer.on('update-downloaded', () => {
       alert('Updates ready to be installed')
       updater.install()
     })
@@ -28,6 +30,7 @@ export default class MainWindow extends Component {
   render () {
     return (
       <div className='container'>
+        <TopBar />
         {this.renderPreview()}
         <Sidebar />
         <LibraryView library={this.props.library} />

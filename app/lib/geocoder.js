@@ -1,4 +1,4 @@
-import { GEOCODER_API_KEY, GEOCODER_API_ROOT } from 'lib/costants'
+import { GEOCODER_API_KEY, GEOCODER_API_ROOT } from './costants'
 
 export default class Geocoder {
 

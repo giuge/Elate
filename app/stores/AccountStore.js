@@ -1,5 +1,5 @@
-import alt from 'lib/alt'
-import AccountActions from 'actions/AccountActions'
+import alt from './../lib/alt'
+import AccountActions from './../actions/AccountActions'
 
 
 class AccountStore {

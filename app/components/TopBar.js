@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import remote from 'remote'
 
-import 'styles/TopBar.scss'
 
 export default class TopBar extends Component {
   constructor(props) {

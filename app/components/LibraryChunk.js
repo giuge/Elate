@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SingleMedia from 'components/SingleMedia'
+import SingleMedia from './SingleMedia'
 
 
 export default class LibraryChunk extends Component {

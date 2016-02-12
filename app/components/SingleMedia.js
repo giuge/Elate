@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import AppActions from 'actions/AppActions'
-
-import 'styles/SingleMedia.scss'
+import AppActions from './../actions/AppActions'
 
 
 export default class SingleMedia extends Component {

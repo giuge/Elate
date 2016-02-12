@@ -1,4 +1,4 @@
-import geocoder from 'lib/geocoder'
+import geocoder from './geocoder'
 import moment from 'moment'
 
 export default class Utils {

@@ -1,0 +1,28 @@
+{
+  "name": "elate",
+  "productName": "Elate",
+  "identifier": "gs.germinaro.elate",
+  "description": "The Dropbox media browser.",
+  "version": "0.30.0-alpha",
+  "author": "Giuseppe Germinaro",
+  "copyright": "© 2016, Giuseppe Germinaro",
+  "main": "background.js",
+  "dependencies": {
+    "alt": "^0.18.2",
+    "alt-utils": "^1.0.0",
+    "appdirectory": "^0.1.0",
+    "electron-gh-updater": "^0.2.2",
+    "fs-jetpack": "^0.7.0",
+    "lodash": "^4.3.0",
+    "moment": "^2.11.2",
+    "nedb": "^1.7.4",
+    "rc-progress": "^1.0.4",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-list": "^0.7.13",
+    "superagent": "^1.7.2"
+  },
+  "scripts": {
+    "postinstall": "node ../tasks/rebuild_native_modules"
+  }
+}
