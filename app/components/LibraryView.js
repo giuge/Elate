@@ -42,7 +42,6 @@ export default class LibraryView extends Component {
   renderList() {
     if(this.state.chunks.length > 0) {
       return (
-        //this.state.chunks
         <ReactList
           itemRenderer={::this.renderChunk}
           length={this.state.chunks.length}

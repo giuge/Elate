@@ -16,6 +16,18 @@
     vertical-align: baseline;
     padding: 0 0 0 15px;
 
+    p {
+      margin-top: 10px;
+    }
+
+    &.sticky  {
+      position: absolute;
+      top: 0;
+      background: #181818;
+      opacity: .95;
+      z-index: 9999;
+    }
+
     .location {
       display: inline-block;
       font-weight: 300;
@@ -33,9 +45,10 @@
       font-size: 13px;
 
       &:only-child {
-        font-weight: 500;
-        font-size: 14px;
-        color: inherit;
+        display: inline-block;
+        font-weight: 300;
+        font-size: 15px;
+        color: rgba(255, 255, 255, .8);
       }
     }
 
