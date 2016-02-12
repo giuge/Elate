@@ -56,7 +56,8 @@ class LibraryActions {
 
   saveAfterImport(importedMedia) {
     db.insert(importedMedia)
-    return importedMedia
+    this.loadDatabase()
+    return false
   }
 
 }

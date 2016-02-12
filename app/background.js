@@ -3,20 +3,14 @@
 // It doesn't have any windows which you can see on screen, but we can open
 // window from here.
 
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, autoUpdater } from 'electron'
 import devHelper from './vendor/electron_boilerplate/dev_helper'
 import windowStateKeeper from './vendor/electron_boilerplate/window_state'
-import Updater from 'electron-gh-updater'
 
-let options = {
-  repo: 'giuge/Elate',
-  currentVersion: app.getVersion()
-}
-const updater = new Updater(options)
 
 // Special module holding environment variables which you declared
 // in config/env_xxx.json file.
-import env from './env'
+import env from './lib/env'
 
 var mainWindow
 
@@ -62,13 +56,10 @@ app.on('ready', () => {
     mainWindow.openDevTools()
   }
 
-  updater.check((err, status) => {
-    console.log(status)
-    if (!err && status) {
-      // Download the update
-      updater.download()
-    }
-  })
+  if (env.name === 'production') {
+    autoUpdater.setFeedURL('http://localhost:9393/')
+    autoUpdater.checkForUpdates()
+  }
 
   mainWindow.on('close', () => {
     mainWindowState.saveState(mainWindow)
