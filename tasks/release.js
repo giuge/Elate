@@ -27,12 +27,10 @@ var options = {
 var release = function() {
   packager(options, function done (err, appPath) {
     if(err) console.log(err)
-    else console.log('Release packages created!')
   })
 }
 
 
 gulp.task('release', ['build'], function () {
-  console.log('Building release packages')
   return release()
 })
