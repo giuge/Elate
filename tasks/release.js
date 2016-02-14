@@ -11,7 +11,8 @@ var iconDir = './resources/icon'
 var manifest = projectDir.read('app/package.json', 'json')
 
 var options = {
-  'all': true,
+  'platform': 'darwin',
+  'arch': 'all',
   'name': manifest.productName,
   'app-version': manifest.version,
   'app-bundle-id': manifest.identifier,

@@ -52,31 +52,37 @@ app.on('ready', () => {
 
   if (env.name !== 'production') {
     devHelper.setDevMenu()
-    mainWindow.openDevTools()
+    mainWindow.openDevTools({detached: true})
   }
+
+  mainWindow.openDevTools({detached: true})
 
   if (env.name === 'production' && process.platform === 'darwin') {
     let updateUrl = 'https://elate.herokuapp.com/update'
-    let platform = `${os.platform()}_${os.arch()}`
+    let platform = `${os.platform()}`
     let version = app.getVersion()
 
-    autoUpdater.setFeedURL(`${updateUrl}?version=${version}&platform=osx`)
+    autoUpdater.setFeedURL(`${updateUrl}?version=${version}&&platform=osx`)
     autoUpdater.checkForUpdates()
   }
 
   // An update is available inform renderer process
   autoUpdater.on('update-available', () => {
+    mainWindow.webContents.executeJavaScript("alert('Update available');")
+    mainWindow.webContents.executeJavaScript("console.log('Update available');")
     if(mainWindow)
       mainWindow.webContents.send('update-available')
   })
 
   autoUpdater.on('update-downloaded', () => {
     mainWindow.webContents.executeJavaScript("alert('Update downloaded');")
+    mainWindow.webContents.executeJavaScript("console.log('Update downloaded');")
     if(mainWindow)
       mainWindow.webContents.send('update-downloaded')
   })
 
   autoUpdater.on('error', (error) => {
+    mainWindow.webContents.executeJavaScript("console.log('Error');")
     mainWindow.webContents.executeJavaScript(`alert(${error})`)
   })
 
