@@ -1,13 +1,13 @@
 {
   "name": "elate",
   "productName": "Elate",
-  "url": "http://elateapp.com",
-  "repository": "https://github.com/giuge/Elate.git",
+  "repository": "https://github.com/giuge/Elate.git" ,
   "identifier": "gs.germinaro.elate",
   "description": "The Dropbox media browser.",
   "version": "0.30.2-alpha",
   "author": "Giuseppe Germinaro",
   "copyright": "© 2016, Giuseppe Germinaro",
+  "main": "background.js",
   "devDependencies": {
     "asar": "^0.7.2",
     "babel-preset-es2015-rollup": "^1.1.1",
@@ -16,6 +16,7 @@
     "electron-packager": "^5.2.1",
     "electron-prebuilt": "^0.36.0",
     "electron-rebuild": "^1.1.3",
+    "electron-release": "^2.2.0",
     "fs-jetpack": "^0.7.0",
     "gulp": "^3.9.0",
     "gulp-jsx": "^2.0.1",
@@ -34,7 +35,8 @@
   "scripts": {
     "postinstall": "cd app && npm install",
     "build": "gulp build",
-    "release": "gulp release --env=production",
+    "package": "gulp release --env=production",
+    "release": "npm run package && electron-release --app=./releases/Elate-darwin-x64/Elate.app,./releases/Elate-win32-ia32/Elate.exe  --token=2145d406d671a7b83039143bb865cdf3a03901df --repo=giuge/Elate",
     "start": "node ./tasks/start",
     "test": "node ./tasks/start --env=test",
     "install-native": "node ./tasks/install_native_module"

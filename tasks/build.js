@@ -1,4 +1,4 @@
-'use strict' 
+'use strict'
 
 var pathUtil = require('path')
 var Q = require('q')

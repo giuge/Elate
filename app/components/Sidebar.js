@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { remote } from 'electron'
 
 export default class Sidebar extends Component {
   render () {
@@ -22,6 +22,9 @@ export default class Sidebar extends Component {
           <h6>Account</h6>
           <li className=''><img src='assets/logout.svg'/>Logout</li>
         </ul>
+        <div className='bottom-info'>
+          <p>Version {remote.app.getVersion()}</p>
+        </div>
       </div>
     )
   }

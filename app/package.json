@@ -12,6 +12,7 @@
     "alt-utils": "^1.0.0",
     "appdirectory": "^0.1.0",
     "electron-gh-updater": "^0.2.2",
+    "electron-updater": "git+https://github.com/Vj3k0/electron-updater.git",
     "fs-jetpack": "^0.7.0",
     "lodash": "^4.3.0",
     "moment": "^2.11.2",
