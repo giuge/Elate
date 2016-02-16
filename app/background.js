@@ -21,6 +21,11 @@ var mainWindowState = windowStateKeeper('main', {
 })
 
 app.on('ready', () => {
+  let updateUrl = `http://updates.elateapp.com/updates/latest?${app.getVersion()}`
+
+  autoUpdater.setFeedURL(updateUrl)
+  autoUpdater.checkForUpdates()
+
   mainWindow = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
@@ -57,25 +62,14 @@ app.on('ready', () => {
 
   mainWindow.openDevTools({detached: true})
 
-  if (env.name === 'production' && process.platform === 'darwin') {
-    let updateUrl = 'https://elate.herokuapp.com/update'
-    let platform = `${os.platform()}`
-    let version = app.getVersion()
-
-    autoUpdater.setFeedURL(`${updateUrl}?version=${version}&&platform=osx`)
-    autoUpdater.checkForUpdates()
-  }
-
   // An update is available inform renderer process
   autoUpdater.on('update-available', () => {
-    mainWindow.webContents.executeJavaScript("alert('Update available');")
     mainWindow.webContents.executeJavaScript("console.log('Update available');")
     if(mainWindow)
       mainWindow.webContents.send('update-available')
   })
 
   autoUpdater.on('update-downloaded', () => {
-    mainWindow.webContents.executeJavaScript("alert('Update downloaded');")
     mainWindow.webContents.executeJavaScript("console.log('Update downloaded');")
     if(mainWindow)
       mainWindow.webContents.send('update-downloaded')
@@ -83,7 +77,6 @@ app.on('ready', () => {
 
   autoUpdater.on('error', (error) => {
     mainWindow.webContents.executeJavaScript("console.log('Error');")
-    mainWindow.webContents.executeJavaScript(`alert(${error})`)
   })
 
   ipcMain.on('updateRequired', () => {

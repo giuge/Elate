@@ -130,7 +130,11 @@ It will start the packaging process for every operating system (Mac, Windows and
 
 ### Building Windows apps from non-Windows platforms
 
-Building an Electron app for the Windows platform with a custom icon requires editing the Electron.exe file. Currently, electron-packager uses node-rcedit to accomplish this. A Windows executable is bundled in that node package and needs to be run in order for this functionality to work, so on non-Windows platforms, Wine needs to be installed. On OS X, it is installable via Homebrew.
+Building the  app and creating the installer for windows requires editing the Electron.exe file. On OS X, you can install what you need using Homebrew:
+
+```
+brew install wine makensis
+```
 
 # License
 
