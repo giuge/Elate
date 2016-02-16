@@ -53,12 +53,12 @@ var dmgOptions = {
 }
 
 var winConfig = {
-  "win" : {
-    "title" : manifest.productName,
-    "version" : manifest.version,
-    "publisher": manifest.author,
-    "icon" : iconDir + '.ico',
-    "verbosity": 1
+  'win' : {
+    'title' : manifest.productName,
+    'version' : manifest.version,
+    'publisher': manifest.author,
+    'icon' : iconDir + '.ico',
+    'verbosity': 1
   }
 }
 jetpack.write('./resources/windows/config.json', winConfig)
@@ -91,8 +91,6 @@ var makeDMG = function() {
     deferred.resolve()
     console.log('Created dmg file for ' + dmgOptions.title)
   })
-
-
 }
 
 // The dir needs to be named net45 for squirrel to work
