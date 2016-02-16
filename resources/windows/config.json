@@ -1,7 +1,7 @@
 {
   "win": {
     "title": "Elate",
-    "version": "0.30.3-alpha",
+    "version": "0.30.2-alpha",
     "publisher": "Giuseppe Germinaro",
     "icon": "./resources/icon.ico",
     "verbosity": 1

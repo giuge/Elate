@@ -7,4 +7,5 @@ data
 /app/spec.js
 /build/
 /releases/
+/resources/windows/config.json
 /tmp/

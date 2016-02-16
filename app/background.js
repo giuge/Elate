@@ -21,10 +21,14 @@ var mainWindowState = windowStateKeeper('main', {
 })
 
 app.on('ready', () => {
-  let updateUrl = `http://updates.elateapp.com/updates/latest?${app.getVersion()}`
 
-  autoUpdater.setFeedURL(updateUrl)
-  autoUpdater.checkForUpdates()
+  if(env.name == 'production') {
+    let platform = process.platform
+    let updateUrl = `http://updates.elateapp.com/updates/${platform}/latest?${app.getVersion()}`
+
+    autoUpdater.setFeedURL(updateUrl)
+    autoUpdater.checkForUpdates()
+  }
 
   mainWindow = new BrowserWindow({
     x: mainWindowState.x,
@@ -60,17 +64,8 @@ app.on('ready', () => {
     mainWindow.openDevTools({detached: true})
   }
 
-  mainWindow.openDevTools({detached: true})
-
   // An update is available inform renderer process
-  autoUpdater.on('update-available', () => {
-    mainWindow.webContents.executeJavaScript("console.log('Update available');")
-    if(mainWindow)
-      mainWindow.webContents.send('update-available')
-  })
-
   autoUpdater.on('update-downloaded', () => {
-    mainWindow.webContents.executeJavaScript("console.log('Update downloaded');")
     if(mainWindow)
       mainWindow.webContents.send('update-downloaded')
   })
