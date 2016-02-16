@@ -1,14 +1,4 @@
 {
-  "name": "elate",
-  "productName": "Elate",
-  "url": "http://elateapp.com",
-  "repository": "https://github.com/giuge/Elate.git",
-  "identifier": "gs.germinaro.elate",
-  "description": "The Dropbox media browser.",
-  "version": "0.30.5-alpha",
-  "author": "Giuseppe Germinaro",
-  "copyright": "© 2016, Giuseppe Germinaro",
-  "main": "background.js",
   "devDependencies": {
     "adm-zip": "^0.4.7",
     "appdmg": "^0.3.6",

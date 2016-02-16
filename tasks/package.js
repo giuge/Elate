@@ -38,7 +38,7 @@ var nugetOptions = {
   'iconUrl': iconDir + '.png',
   'copyright': manifest.copyright,
   'outputDir': releasesDir,
-  'baseDir': './releases/Elate-win32-ia32/'
+  'baseDir': './releases/Elate-win32-ia32'
 }
 
 var dmgOptions = {
@@ -92,11 +92,14 @@ var makeDMG = function() {
     console.log('Created dmg file for ' + dmgOptions.title)
   })
 
-  return deferred.promise
+
 }
 
+// The dir needs to be named net45 for squirrel to work
 var makeNuget = function() {
-  nuget(nugetOptions, ['./releases/Elate-win32-ia32/**/**'])
+  var deferred = Q.defer()
+  nuget(nugetOptions, [{src: './releases/Elate-win32-ia32', dest: 'lib/net45'}], deferred.resolve())
+  return deferred.promise
 }
 
 gulp.task('package', ['build'], function () {

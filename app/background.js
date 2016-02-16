@@ -176,8 +176,4 @@ let handleStartupEvent = () => {
       app.quit()
       return true
   }
-};
-
-if (handleStartupEvent()) {
-  return
 }
