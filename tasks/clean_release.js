@@ -8,24 +8,24 @@ var Q = require('q')
 var fs = require("fs")
 
 var fixNames = function() {
-  // Change the nuget name
-  var nugetURI = jetpack.find('./releases', { matching: '*.nupkg' })[0]
-  var nugetName = nugetURI.split('/').pop()
-
-  if(nugetName.indexOf('Elate.') !== -1) {
-    var newNugetName = nugetName.split('.')
-    newNugetName.shift()
-    newNugetName = newNugetName.join('.')
-    newNugetName = 'elate-' + newNugetName
-    jetpack.rename(nugetURI, newNugetName)
-  }
-
-  // Change win installer name
-  var exeURI = jetpack.find('./releases', { matching: '*.exe' })[0]
-  var exeName = exeURI.split('/').pop()
-  var newExeName = exeName.split(' ').join('')
-
-  jetpack.rename(exeURI, newExeName)
+  // // Change the nuget name
+  // var nugetURI = jetpack.find('./releases', { matching: '*.nupkg' })[0]
+  // var nugetName = nugetURI.split('/').pop()
+  //
+  // if(nugetName.indexOf('Elate.') !== -1) {
+  //   var newNugetName = nugetName.split('.')
+  //   newNugetName.shift()
+  //   newNugetName = newNugetName.join('.')
+  //   newNugetName = 'elate-' + newNugetName
+  //   jetpack.rename(nugetURI, newNugetName)
+  // }
+  //
+  // // Change win installer name
+  // var exeURI = jetpack.find('./releases', { matching: '*.exe' })[0]
+  // var exeName = exeURI.split('/').pop()
+  // var newExeName = exeName.split(' ').join('')
+  //
+  // jetpack.rename(exeURI, newExeName)
   return Q()
 }
 
@@ -57,7 +57,7 @@ var removeFolders = function() {
 }
 
 
-gulp.task('clean-release', function () {
+gulp.task('clean_release', function () {
   return fixNames()
   .then(zipMac)
   .then(zipWin)

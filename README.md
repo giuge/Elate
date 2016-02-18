@@ -121,7 +121,7 @@ You don't have to declare paths to spec files in any particular place. The runne
 
 To make ready for distribution installer use command:
 ```
-npm run release
+npm run package
 ```
 It will start the packaging process for every operating system (Mac, Windows and Linux).
 
@@ -133,7 +133,7 @@ It will start the packaging process for every operating system (Mac, Windows and
 Building the  app and creating the installer for windows requires editing the Electron.exe file. On OS X, you can install what you need using Homebrew:
 
 ```
-brew install wine makensis
+brew install wine makensis mono
 ```
 
 # License

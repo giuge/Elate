@@ -28,19 +28,6 @@ var options = {
   'sign': 'JB29VD9G3E'
 }
 
-var nugetOptions = {
-  'id': manifest.productName,
-  'version': manifest.version,
-  'authors': manifest.author,
-  'description': manifest.description,
-  'language': 'en-en',
-  'projectUrl': manifest.url,
-  'iconUrl': iconDir + '.png',
-  'copyright': manifest.copyright,
-  'outputDir': releasesDir,
-  'baseDir': './releases/Elate-win32-ia32'
-}
-
 var dmgOptions = {
   'title': manifest.productName,
   'icon': iconDir + '.icns',
@@ -52,30 +39,21 @@ var dmgOptions = {
   ]
 }
 
-var winConfig = {
-  'win' : {
-    'title' : manifest.productName,
-    'version' : manifest.version,
-    'publisher': manifest.author,
-    'icon' : iconDir + '.ico',
-    'verbosity': 1
-  }
-}
-jetpack.write('./resources/windows/config.json', winConfig)
-
 
 var pack = function() {
   var deferred = Q.defer()
-
   packager(options, function done (err, appPath) {
     if(err) deferred.reject(err)
-    else deferred.resolve()
+    else {
+      //jetpack.copy('./resources/windows/Squirrel.exe', './releases/Elate-win32-ia32/Squirrel.exe')
+      deferred.resolve()
+    }
   })
-
   return deferred.promise
 }
 
 var makeDMG = function() {
+  console.log('Creating dmg file')
   var deferred = Q.defer()
   var ee = appdmg({
     basepath: __dirname + '/../',
@@ -93,17 +71,11 @@ var makeDMG = function() {
   })
 }
 
-// The dir needs to be named net45 for squirrel to work
-var makeNuget = function() {
-  var deferred = Q.defer()
-  nuget(nugetOptions, [{src: './releases/Elate-win32-ia32', dest: 'lib/net45'}], deferred.resolve())
-  return deferred.promise
-}
 
 gulp.task('package', ['build'], function () {
   return pack()
   .then(makeDMG)
-  .then(makeNuget)
+  //.then(makeNuget)
   .catch(function(err) {
     console.log(err)
   })

@@ -5,14 +5,17 @@
 
 // Handle win startup events
 // This operation needs to be done asap!
-(function () {
-  if(require('electron-squirrel-startup')) return
-}())
+let start = () => {
+if (require('electron-squirrel-startup')) return
+// initialization
+// auto updater setup
+}
+
+start()
 
 import { app, BrowserWindow, autoUpdater, ipcMain } from 'electron'
 import devHelper from './vendor/electron_boilerplate/dev_helper'
 import windowStateKeeper from './vendor/electron_boilerplate/window_state'
-import os from 'os'
 
 // Special module holding environment variables which you declared
 // in config/env_xxx.json file.
