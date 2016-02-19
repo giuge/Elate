@@ -82,6 +82,11 @@ var pack = function() {
 
 
 var makeDMG = function() {
+  if(os.platform() != 'darwin') {
+    console.log('You can create DMGs on OSX only.')
+    return
+  }
+
   var deferred = Q.defer()
   var ee = appdmg({
     basepath: __dirname + '/../',
