@@ -1,23 +1,18 @@
 {
   "devDependencies": {
-    "adm-zip": "^0.4.7",
-    "appdmg": "^0.3.6",
     "asar": "^0.7.2",
     "babel-preset-es2015-rollup": "^1.1.1",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
-    "electron-builder": "^2.7.2",
-    "electron-installer-windows": "^0.2.0",
     "electron-packager": "^5.2.1",
     "electron-prebuilt": "^0.36.0",
     "electron-rebuild": "^1.1.3",
     "electron-release": "^2.2.0",
-    "electron-windows-installer": "^1.2.4",
     "fs-jetpack": "^0.7.0",
     "gulp": "^3.9.0",
     "gulp-jsx": "^2.0.1",
     "gulp-less": "^3.0.3",
-    "gulp-nuget-pack": "0.0.6",
+    "gulp-nuget-pack": "0.0.7",
     "gulp-util": "^3.0.6",
     "gulp-zip": "^3.1.0",
     "node-zip": "^1.1.1",
@@ -28,18 +23,18 @@
     "yargs": "^3.15.0"
   },
   "optionalDependencies": {
-    "appdmg": "^0.3.2",
+    "appdmg": "0.3.2",
     "rcedit": "^0.3.0"
   },
   "scripts": {
     "postinstall": "cd app && npm install",
     "build": "gulp build",
-    "prepackage": "rm -rf ./releases && rm -rf ./dist",
-    "package": "gulp package --env=production && gulp package_win",
-    "postpackage": "gulp clean_release",
-    "comment": "electron-builder ./releases/Elate-win32-ia32 --platform=win --out=./releases --config=./resources/windows/config.json",
+    "prerelease": "rm -rf ./releases && rm -rf ./dist",
+    "release": "gulp release --env=production",
+    "postrelease": "gulp clean_release",
     "start": "node ./tasks/start",
     "test": "node ./tasks/start --env=test",
     "install-native": "node ./tasks/install_native_module"
-  }
+  },
+  "dependencies": {}
 }

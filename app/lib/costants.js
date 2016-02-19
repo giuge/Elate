@@ -1,4 +1,4 @@
-import AppDirectory from 'appdirectory'
+import AppDirectory from 'appdirs'
 import env from './env'
 
 // Dropbox
@@ -10,19 +10,16 @@ export const OAUTH_REDIRECT_URL = 'http://localhost/oauth'
 export const MEDIA_FOLDER = '/Camera Uploads'
 
 // Data: we keep dev database locally
-export let USER_DATA = 'data'
-export let USER_CONFIG = 'data/config'
-export let APP_CACHE = 'data/cache'
+export let USER_DATA = AppDirectory.userDataDir('elate', '','v1', true)
+export let USER_CONFIG = AppDirectory.userConfigDir('elate', '', 'v1', true)
+export let APP_CACHE = AppDirectory.userCacheDir('elate', '', 'v1', true)
 
-if(env.name === 'production') {
-  var dirs = new AppDirectory({
-      appName: 'elate',
-      appAuthor: 'Giuseppe Germinaro',
-      appVersion: 'v1'
-  })
-  USER_DATA = dirs.userData()
-  USER_CONFIG = dirs.userConfig()
-  APP_CACHE = dirs.userCache()
+console.log(USER_DATA)
+
+if(env.name !== 'production') {
+  USER_DATA = 'data'
+  USER_CONFIG = 'data/config'
+  APP_CACHE = 'data/cache'
 }
 
 // Geocoder

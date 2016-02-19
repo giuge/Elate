@@ -8,24 +8,34 @@ var Q = require('q')
 var fs = require("fs")
 
 var fixNames = function() {
-  // // Change the nuget name
-  // var nugetURI = jetpack.find('./releases', { matching: '*.nupkg' })[0]
-  // var nugetName = nugetURI.split('/').pop()
-  //
-  // if(nugetName.indexOf('Elate.') !== -1) {
-  //   var newNugetName = nugetName.split('.')
-  //   newNugetName.shift()
-  //   newNugetName = newNugetName.join('.')
-  //   newNugetName = 'elate-' + newNugetName
-  //   jetpack.rename(nugetURI, newNugetName)
-  // }
-  //
-  // // Change win installer name
-  // var exeURI = jetpack.find('./releases', { matching: '*.exe' })[0]
-  // var exeName = exeURI.split('/').pop()
-  // var newExeName = exeName.split(' ').join('')
-  //
-  // jetpack.rename(exeURI, newExeName)
+  var projectDir = jetpack
+  var manifest = projectDir.read('app/package.json', 'json')
+
+  var oldNuget = './releases/Elate.' + manifest.version + '.nupkg'
+  var newNuget = jetpack.find('./releases/tmp', { matching: '*.nupkg' })[0]
+  var newNugetPath = './releases/Elate.' + manifest.version + '-full.nupkg'
+
+  jetpack.remove(oldNuget)
+  jetpack.copy('./releases/tmp/RELEASES', './releases/RELEASES')
+  jetpack.copy('./releases/tmp/Setup.exe', './releases/ElateSetup.exe')
+  jetpack.copy(newNuget, newNugetPath, { overwrite: true })
+  jetpack.remove('./releases/tmp')
+
+  // Change the nuget name
+  if(newNugetPath.indexOf('Elate.') !== -1) {
+    var newNugetName = newNugetPath.split('/').pop().split('.')
+    newNugetName.shift()
+    newNugetName = newNugetName.join('.')
+    newNugetName = 'elate-' + newNugetName
+    jetpack.rename(newNugetPath, newNugetName)
+  }
+
+  // Change win installer name
+  var exeURI = jetpack.find('./releases', { matching: '*.exe' })[0]
+  var exeName = exeURI.split('/').pop()
+  var newExeName = exeName.split(' ').join('')
+
+  jetpack.rename(exeURI, newExeName)
   return Q()
 }
 

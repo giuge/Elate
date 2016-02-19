@@ -6,9 +6,7 @@
 // Handle win startup events
 // This operation needs to be done asap!
 let start = () => {
-if (require('electron-squirrel-startup')) return
-// initialization
-// auto updater setup
+  if (require('electron-squirrel-startup')) return
 }
 
 start()
