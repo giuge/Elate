@@ -22,13 +22,20 @@ var options = {
   'name': manifest.productName,
   'app-version': manifest.version,
   'app-bundle-id': manifest.identifier,
+  'helper-bundle-id': manifest.identifier,
   'build-version': manifest.version,
   'icon': iconDir,
   'dir': buildDir,
   'out': releasesDir,
   'asar': true,
   'overwrite': true,
-  'sign': 'JB29VD9G3E'
+  'sign': 'JB29VD9G3E',
+  'app-copyright': manifest.copyright,
+  'version-string': {
+    'CompanyName': 'Elate',
+    'ProductName': manifest.productName,
+    'LegalCopyright': manifest.copyright
+  }
 }
 
 var dmgOptions = {

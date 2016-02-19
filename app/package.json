@@ -11,7 +11,6 @@
   "dependencies": {
     "alt": "^0.18.2",
     "alt-utils": "^1.0.0",
-    "appdirs": "^1.0.0",
     "electron-squirrel-startup": "^0.1.4",
     "fs-jetpack": "^0.7.0",
     "lodash": "^4.3.0",

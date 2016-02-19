@@ -19,10 +19,9 @@ import windowStateKeeper from './vendor/electron_boilerplate/window_state'
 // in config/env_xxx.json file.
 import env from './lib/env'
 
-var mainWindow
-
 // Preserver of the window size and position between app launches.
-var mainWindowState = windowStateKeeper('main', {
+let mainWindow
+let mainWindowState = windowStateKeeper('main', {
   width: 1024,
   height: 650
 })
