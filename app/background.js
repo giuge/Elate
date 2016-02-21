@@ -53,18 +53,37 @@ app.on('ready', () => {
 
   if (env.name === 'test') {
     mainWindow.loadURL('file://' + __dirname + '/spec.html')
+
+    ipcMain.on('test-logs', function (event, message) {
+      if(message.indexOf('✗') !== -1 ) {
+        console.log('\x1b[31m%s\x1b[0m', message)
+      } else if (message.indexOf('✓') !== -1) {
+        console.log('\x1b[32m%s\x1b[0m', message)
+      } else if (message.indexOf('#') !== -1) {
+        console.log('\x1b[2m%s\x1b[0m', message)
+      } else if (message.indexOf('-') !== -1) {
+        console.log('\x1b[33m%s\x1b[0m', message)
+      } else {
+        console.log(message)
+      }
+
+    })
+
   } else {
     mainWindow.loadURL('file://' + __dirname + '/app.html')
   }
 
-  // Now we can show the window
-  mainWindow.webContents.on('did-finish-load', () => {
-    setTimeout(function(){
-      mainWindow.show()
-    }, 40)
-  })
+  if (env.name !== 'test') {
+    // Now we can show the window
+    mainWindow.webContents.on('did-finish-load', () => {
+      setTimeout(function(){
+        mainWindow.show()
+      }, 40)
+    })
+  }
 
-  if (env.name !== 'production') {
+
+  if (env.name !== 'production' && env.name !== 'test') {
     devHelper.setDevMenu()
     mainWindow.openDevTools({detached: true})
   }
@@ -132,7 +151,6 @@ app.on('activate', () => {
     })
 
     if (env.name !== 'production') {
-      devHelper.setDevMenu()
       mainWindow.openDevTools()
     }
 

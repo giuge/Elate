@@ -1,8 +1,5 @@
 // Spec files are scattered through the whole project. Here we're searching
 // for them and generate one entry file which will run all the tests.
-
-'use strict'
-
 var jetpack = require('fs-jetpack')
 var srcDir = jetpack.cwd('app')
 
@@ -11,7 +8,7 @@ var fileBanner = "// This file is generated automatically.\n"
   + "// All your modifications to it will be lost (so don't do it).\n"
 var whatToInclude = [
   '*.spec.js',
-  '!node_modules/**',
+  '!node_modules/**'
 ]
 
 module.exports = function () {

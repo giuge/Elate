@@ -137,7 +137,7 @@ gulp.task('finalize', ['clean'], function () {
 
 
 gulp.task('watch', function () {
-  gulp.watch('app/**/*.js', ['bundle-watch'])
+  gulp.watch(['app/**/*.js', '!app/spec.js'], ['bundle-watch'])
   gulp.watch(paths.copyFromAppDir, { cwd: 'app' }, ['copy-watch'])
   gulp.watch('app/**/*.less', ['less-watch'])
 })

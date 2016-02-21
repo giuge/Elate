@@ -8,8 +8,13 @@
 
     <script src="vendor/jasmine/jasmine.js"></script>
     <script src="vendor/jasmine/jasmine-html.js"></script>
+    <script src="vendor/jasmine/electron-logger.js"></script>
     <script src="vendor/jasmine/boot.js"></script>
     <script src="spec.js"></script>
+
+    <script>
+      jasmine.getEnv().addReporter(new jasmineReporters.ElectronReporter())
+    </script>
 </head>
 <body>
 </body>

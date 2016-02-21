@@ -7,9 +7,7 @@
 
  [jasmine-gem]: http://github.com/pivotal/jasmine-gem
  */
-
 (function() {
-
   /**
    * ## Require &amp; Instantiate
    *

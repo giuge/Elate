@@ -1,4 +1,4 @@
-'use strict' 
+'use strict'
 
 var Q = require('q')
 var electron = require('electron-prebuilt')
@@ -18,7 +18,7 @@ var runBuild = function () {
     '--env=' + utils.getEnvName(),
     '--color'
   ], {
-    stdio: 'inherit'
+    stdio: ''
   })
 
   build.on('close', function (code) {
@@ -34,7 +34,7 @@ var runGulpWatch = function () {
     '--env=' + utils.getEnvName(),
     '--color'
   ], {
-    stdio: 'inherit'
+    stdio: ''
   })
 
   watch.on('close', function (code) {
