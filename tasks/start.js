@@ -10,6 +10,9 @@ var watch
 
 var gulpPath = pathUtil.resolve('./node_modules/.bin/gulp')
 
+var stdio = 'inherit'
+if (utils.getEnvName() == 'test') stdio = ''
+
 var runBuild = function () {
   var deferred = Q.defer()
 
@@ -18,7 +21,7 @@ var runBuild = function () {
     '--env=' + utils.getEnvName(),
     '--color'
   ], {
-    stdio: 'inherit'
+    stdio: stdio
   })
 
   build.on('close', function (code) {
@@ -34,7 +37,7 @@ var runGulpWatch = function () {
     '--env=' + utils.getEnvName(),
     '--color'
   ], {
-    stdio: ''
+    stdio: stdio
   })
 
   watch.on('close', function (code) {
