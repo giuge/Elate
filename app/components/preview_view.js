@@ -132,6 +132,7 @@ export default class PreviewView extends Component {
       if(this.state.loading || this.state.mediaFile === '') {
         return <img src={this.state.media.thumbnail} />
       } else {
+        // TODO: We need to create a better video component to use
         return <video src={this.state.mediaFile} controls poster={this.state.media.thumbnail} />
       }
     }

@@ -1,5 +1,9 @@
 import remote from 'remote'
 
+/**
+ * The menu template
+ * TODO: Make it work in the main process
+ */
 let template = [
   {
     label: 'Edit',

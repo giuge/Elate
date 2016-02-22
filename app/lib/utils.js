@@ -3,6 +3,12 @@ import moment from 'moment'
 
 export default class Utils {
 
+  /**
+   * Creates a media object that will be later saved
+   * to the database. It also fetches the media location.
+   * @param {Object} json: the media info
+   * @param {Binary} blob: the media file
+   */
   static createMediaObj(json, blob) {
     return new Promise((resolve, reject) => {
       let media = json
