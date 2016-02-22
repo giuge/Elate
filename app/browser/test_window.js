@@ -26,7 +26,7 @@ export default function handleTestWindow() {
       } else if (message.indexOf('-') !== -1) {
         console.log('\x1b[33m%s\x1b[0m', message)
       } else {
-        console.log(message)
+        console.log('\x1b[1m%s\x1b[0m', message)
       }
     })
 
