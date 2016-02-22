@@ -10,15 +10,19 @@ const db = new Datastore({ filename: `${USER_DATA}/account.db`, autoload: true }
 
 class AccountActions {
 
+  /**
+   * Retrieves the user account info from the database
+   * and fetches missing data from Dropbox.
+   * The db.find function always returns an array.
+   */
   getUserInfo() {
     return ((dispatch) => {
       db.find({}, (err, account) => {
         if(err) console.log(err)
         let data = {}
         if(account[0]) {
-          if(account[0].token && account[0].has_token) {
+          if(account[0].token) {
             data.has_token = true
-            localStorage.setItem('token', account[0].token)
           } else {
             data.has_token = false
           }
@@ -42,6 +46,12 @@ class AccountActions {
     })
   }
 
+  /**
+   * Saves the user account info to the database
+   * after the user has finished connecting his
+   * Dropbox account (dropbox_connect).
+   * @param {Object} info
+   */
   saveAfterConnect(info) {
     db.insert(info, () => {
       dropbox.getAccountInfo().then(user => {
@@ -53,13 +63,20 @@ class AccountActions {
     return false
   }
 
+  /**
+   * Updates the has_imported_library field in the database
+   * @param {Bool}
+   */
   hasImportedLibrary(bool) {
     db.update({}, { $set: { has_imported_library: bool } })
     this.getUserInfo()
     return false
   }
 
-
+  /**
+   * Logs the user out of the dropbox account account
+   * TODO: Delete the account database after logout
+   */
   logout() {
     localStorage.clear()
     return true

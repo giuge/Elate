@@ -20,13 +20,6 @@ export default class MainWindow extends Component {
     } return
   }
 
-  componentDidMount() {
-    ipcRenderer.on('update-downloaded', () => {
-      alert('Updates ready to be installed')
-      updater.install()
-    })
-  }
-
   render () {
     return (
       <div className='container'>

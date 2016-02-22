@@ -26,6 +26,11 @@ export default class DropboxConnect extends Component {
     })
   }
 
+  /**
+   * Dropbox redirects to a URL (OAuth2 flow)
+   * that contains the user token and various account info.
+   * @param {String} url
+   */
   handleCallback(url) {
     let token = /access_token=([^&]+)/.exec(url)[1] || null
     let state = /state=([^&]+)/.exec(url)[1] || null
@@ -33,15 +38,19 @@ export default class DropboxConnect extends Component {
     if(state === this.state.session && token !== null) {
       let data = {
         token: token,
-        has_token: true,
         has_imported_library: false,
         account_info: null
       }
-      localStorage.setItem('token', data.token)
       AccountActions.saveAfterConnect(data)
     } else this.handleCallback(url)
   }
 
+  /**
+   * On click we create a new browser window
+   * that opens the dropbox OAuth page that will
+   * let the user connects the app to his account and will redirect
+   * to the specified URL.
+   */
   handleClick() {
     let currentWindow = remote.getCurrentWindow()
     let baseURL = 'https://www.dropbox.com/1/oauth2/authorize'

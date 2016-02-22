@@ -73,7 +73,6 @@ export default class ImportLibrary extends Component {
         // We were not able to fetch this media due to
         // an unsupported format
         --finishAt
-        console.log(finishAt)
       }).then(data => {
         let {json, blob} = data
         utils.createMediaObj(json, blob).then((media) => {
