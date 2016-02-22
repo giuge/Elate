@@ -1,11 +1,11 @@
 import { ipcRenderer } from 'electron'
 import React, { Component } from 'react'
 
-import LibraryView from './LibraryView'
-import TopBar from './TopBar'
-import Sidebar from './Sidebar'
-import PreviewView from './PreviewView'
-import Spinner from './Spinner'
+import LibraryView from './library_view'
+import TopBar from './topbar'
+import Sidebar from './sidebar'
+import PreviewView from './preview_view'
+import Spinner from './spinner'
 
 
 export default class MainWindow extends Component {

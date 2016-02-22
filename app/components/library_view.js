@@ -2,9 +2,9 @@ import _ from 'lodash'
 import React, { Component } from 'react'
 import ReactList from 'react-list'
 import remote from 'remote'
-import SingleMedia from './SingleMedia'
-import Spinner from './Spinner'
-import LibraryChunk from './LibraryChunk'
+import SingleMedia from './single_media'
+import Spinner from './spinner'
+import LibraryChunk from './library_chunk'
 
 
 export default class LibraryView extends Component {

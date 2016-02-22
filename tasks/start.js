@@ -18,7 +18,7 @@ var runBuild = function () {
     '--env=' + utils.getEnvName(),
     '--color'
   ], {
-    stdio: ''
+    stdio: 'inherit'
   })
 
   build.on('close', function (code) {

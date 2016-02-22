@@ -3,8 +3,8 @@ import remote from 'remote'
 import dropbox from './../lib/dropbox'
 import utils from './../lib/utils'
 
-import LibraryActions from './../actions/LibraryActions'
-import AccountActions from './../actions/AccountActions'
+import LibraryActions from './../actions/library_actions'
+import AccountActions from './../actions/account_actions'
 import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from './../lib/constants'
 
 

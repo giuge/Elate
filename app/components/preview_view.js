@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import request from 'superagent'
 import React, { Component } from 'react'
-import AppActions from './../actions/AppActions'
+import AppActions from './../actions/app_actions'
 import { Circle } from 'rc-progress'
 import { CONTENT_ROOT } from './../lib/constants'
 
