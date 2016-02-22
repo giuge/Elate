@@ -42,7 +42,7 @@ Sits on path: `electron-boilerplate/app/package.json`. This is **real** manifest
 - `releases` - ready for distribution installers will land here.
 - `resources` - resources needed for particular operating system.
 - `tasks` - build and development environment scripts.
-
+- `data` - when developing databases and cofig files will be stored here.
 
 # Development
 
@@ -97,12 +97,12 @@ The build script copies files from `app` to `build` directory and the applicatio
 
 ```js
 var paths = {
-    copyFromAppDir: [
-        './node_modules/**',
-        './vendor/**',
-        './**/*.html',
-        './**/*.+(jpg|png|svg)'
-    ],
+  copyFromAppDir: [
+    './node_modules/**',
+    './vendor/**',
+    './**/*.html',
+    './**/*.+(jpg|png|svg)'
+  ],
 }
 ```
 
@@ -121,7 +121,7 @@ You don't have to declare paths to spec files in any particular place. The runne
 
 To make ready for distribution installer use command:
 ```
-npm run package
+npm run release
 ```
 It will start the packaging process for every operating system (Mac, Windows and Linux).
 
@@ -135,6 +135,11 @@ Building the  app and creating the installer for windows requires editing the El
 ```
 brew install wine makensis mono
 ```
+
+### Creating the app DMG
+
+This can only be done on osx at the moment.
+
 
 # License
 
