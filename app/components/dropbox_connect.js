@@ -16,6 +16,7 @@ export default class DropboxConnect extends Component {
     }
   }
 
+  // TODO: create a new window and don't mess with the main one
   componentWillMount() {
     let currentWindow = remote.getCurrentWindow()
     currentWindow.setBounds({

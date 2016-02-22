@@ -1,10 +1,11 @@
-// This is main process of Electron, started as first thing when your
-// app starts. This script is running through entire life of your application.
-// It doesn't have any windows which you can see on screen, but we can open
-// window from here.
+/**
+ * This is main process of Electron, started as first thing when your
+ * app starts. This script is running through entire life of your application.
+ * It doesn't have any windows which you can see on screen, but we can open
+ * window from here.
+ */
 
-// Handle win startup events
-// This operation needs to be done asap!
+// Handle win startup events asap
 let start = () => {
   if (require('electron-squirrel-startup')) return
 }
@@ -31,7 +32,6 @@ app.on('ready', () => {
     autoUpdater.checkForUpdates()
   }
 
-  // Show the right window
   if (env.name === 'test') {
     mainWindow = new BrowserWindow({
       width: 1000,
@@ -43,7 +43,7 @@ app.on('ready', () => {
 
     mainWindow.loadURL('file://' + __dirname + '/spec.html')
 
-    // Print test logs
+    // Pretty print test logs
     ipcMain.on('test-logs', function (event, message) {
       if(message.indexOf('✗') !== -1 ) {
         console.log('\x1b[31m%s\x1b[0m', message)
@@ -67,7 +67,7 @@ app.on('ready', () => {
       title: 'Elate',
       titleBarStyle: 'hidden-inset',
       background: '#181818',
-      // Avoid the white background flash
+      // Avoid the white background flash since it's a dark UI
       show: false
     })
 
@@ -77,7 +77,7 @@ app.on('ready', () => {
 
     mainWindow.loadURL('file://' + __dirname + '/app.html')
 
-    // Now we can show the window
+    // Avoid the white background flash since it's a dark UI
     mainWindow.webContents.on('did-finish-load', () => {
       setTimeout(function(){
         mainWindow.show()
@@ -118,8 +118,10 @@ app.on('window-all-closed', () => {
 })
 
 
-// OSX only callback - takes care of spawning
-// a new app window if needed
+/**
+ * OSX only callback - takes care of spawning
+ * a new app window if needed
+ */
 app.on('activate', () => {
   if (mainWindow == null) {
     mainWindow = new BrowserWindow({
@@ -130,7 +132,7 @@ app.on('activate', () => {
       title: 'Elate',
       titleBarStyle: 'hidden-inset',
       background: '#181818',
-      // Avoid the white background flash
+      // Avoid the white background flash since it's a dark UI
       show: false
     })
 
@@ -140,7 +142,7 @@ app.on('activate', () => {
 
     mainWindow.loadURL('file://' + __dirname + '/app.html')
 
-    // Now we can show the window
+    // Avoid the white background flash since it's a dark UI
     mainWindow.webContents.on('did-finish-load', () => {
       setTimeout(function(){
         mainWindow.show()

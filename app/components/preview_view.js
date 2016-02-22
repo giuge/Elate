@@ -3,7 +3,7 @@ import request from 'superagent'
 import React, { Component } from 'react'
 import AppActions from './../actions/app_actions'
 import { Circle } from 'rc-progress'
-import { CONTENT_ROOT } from './../lib/constants'
+import { CONTENT_ROOT, TOKEN } from './../lib/constants'
 
 
 export default class PreviewView extends Component {
@@ -43,7 +43,6 @@ export default class PreviewView extends Component {
     let data = []
     let contentLength = 0
     let dataLength = 0
-    let TOKEN = localStorage.getItem('token')
 
     this.req = request
     .post(`${CONTENT_ROOT}/files/download`)

@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import alt from './../lib/alt'
 
-import { USER_DATA } from './../lib/constants'
+import { USER_DATA, refreshToken } from './../lib/constants'
 import AccountActions from './../actions/account_actions'
 
 
@@ -14,19 +14,6 @@ class AccountStore {
     })
 
     /**
-     * If there is an account.db file and the file contains something
-     * (bigger than 0 bytes) the user has connected his account
-     * and has a token.
-     */
-    let has_token
-    try {
-      let stats = fs.statSync(path.join(USER_DATA, 'account.db'))
-      stats["size"] > 0 ? has_token = true : has_token = false
-    } catch(e) {
-      has_library = false
-    }
-
-    /**
      * If there is a library.db file and the file contains something
      * (bigger than 0 bytes) the user has imported library
      */
@@ -36,6 +23,16 @@ class AccountStore {
       stats["size"] > 0 ? has_library = true : has_library = false
     } catch(e) {
       has_library = false
+    }
+
+    // Check if we have a token saved in the account db
+    let accountDBPath = path.join(USER_DATA, 'account.db')
+    let has_token
+
+    try {
+      refreshToken() !== '' ? has_token = true : has_token = false
+    } catch(e) {
+      has_token: false
     }
 
     this.state = {

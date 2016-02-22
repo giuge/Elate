@@ -3,7 +3,7 @@ import Datastore from 'nedb'
 
 import alt from './../lib/alt'
 import dropbox from './../lib/dropbox'
-import { USER_DATA } from './../lib/constants'
+import { USER_DATA, refreshToken } from './../lib/constants'
 
 const db = new Datastore({ filename: `${USER_DATA}/account.db`, autoload: true })
 
@@ -27,8 +27,8 @@ class AccountActions {
             data.has_token = false
           }
           if(account[0].has_imported_library) {
-            data.has_imported_library = true
-          } else data.has_imported_library = false
+            data.has_imported_library = account[0].has_imported_library
+          }
           if(account[0].account_info) {
             data.account_info = account[0].account_info
             dispatch(data)
@@ -53,11 +53,13 @@ class AccountActions {
    * @param {Object} info
    */
   saveAfterConnect(info) {
+    refreshToken(info.token)
     db.insert(info, () => {
-      dropbox.getAccountInfo().then(user => {
+      dropbox.getAccountInfo(info.token).then(user => {
         delete user.account_type
-        db.update({token: info.token}, { $set: { account_info: user } })
-        this.getUserInfo()
+        db.update({}, { $set: { account_info: user } }, () => {
+          this.getUserInfo()
+        })
       })
     })
     return false
@@ -74,11 +76,10 @@ class AccountActions {
   }
 
   /**
-   * Logs the user out of the dropbox account account
+   * Logs the user out of the dropbox account
    * TODO: Delete the account database after logout
    */
   logout() {
-    localStorage.clear()
     return true
   }
 

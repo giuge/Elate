@@ -10,7 +10,7 @@ class AppActions {
     return item
   }
 
-  /* Hides the preview */
+  // Hides the preview
   hidePreview() {
     return true
   }

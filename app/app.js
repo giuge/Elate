@@ -1,5 +1,7 @@
-// This is the entry point for the renderer process.
-// The actual app code starts here.
+/**
+ * This is the entry point for the renderer process.
+ * The actual app code starts here.
+ */
 
 import { ipcRenderer, remote } from 'electron'
 import React from 'react'
@@ -7,6 +9,7 @@ import { render } from 'react-dom'
 import App from './components/app'
 import buildMenu from './lib/menu'
 
+// TODO: move this out of here and use main process instead
 buildMenu()
 
 

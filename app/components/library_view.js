@@ -17,6 +17,19 @@ export default class LibraryView extends Component {
     }
   }
 
+  // TODO: cwm and cwu use the same code, extrapolate a function to make it terser
+  componentWillMount() {
+    let chunks = []
+    let sortedLibrary = _.orderBy(this.props.library, 'sortDate', 'desc' )
+    let splittedLibrary = _.groupBy(sortedLibrary, 'displayDate')
+
+    _.forEach(splittedLibrary, (value, key) => {
+      chunks.push(<LibraryChunk chunk={value} date={key} key={key} />)
+    })
+
+    this.setState({ chunks })
+  }
+
   componentWillUpdate(nextProps, nextState) {
     if(this.props.library.length === 0 && this.state.chunks.length === 0 && nextProps.library.length > 0) {
       let chunks = []
@@ -32,7 +45,6 @@ export default class LibraryView extends Component {
     }
 
     return false
-
   }
 
   renderChunk(index, key) {
