@@ -5,7 +5,7 @@
   'use strict'
 
   var remote = require('electron').remote
-  var Menu = remote.Menu 
+  var Menu = remote.Menu
   var MenuItem = remote.MenuItem
 
   var cut = new MenuItem({
