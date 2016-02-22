@@ -5,7 +5,7 @@ import utils from './../lib/utils'
 
 import LibraryActions from './../actions/LibraryActions'
 import AccountActions from './../actions/AccountActions'
-import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from './../lib/costants'
+import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from './../lib/constants'
 
 
 export default class ImportLibrary extends Component {

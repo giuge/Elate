@@ -3,7 +3,7 @@ import request from 'superagent'
 import React, { Component } from 'react'
 import AppActions from './../actions/AppActions'
 import { Circle } from 'rc-progress'
-import { CONTENT_ROOT } from './../lib/costants'
+import { CONTENT_ROOT } from './../lib/constants'
 
 
 export default class PreviewView extends Component {

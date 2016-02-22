@@ -2,7 +2,7 @@ import _ from 'lodash'
 import alt from './../lib/alt'
 import Datastore from 'nedb'
 import dropbox from './../lib/dropbox'
-import { USER_DATA } from './../lib/costants'
+import { USER_DATA } from './../lib/constants'
 
 const db = new Datastore({ filename: `${USER_DATA}/library.db`, autoload: true })
 

@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import utils from './utils'
 
-import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from './costants'
+import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from './constants'
 
 
 export default class Dropbox {

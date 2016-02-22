@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { APP_KEY, APP_SECRET, OAUTH_REDIRECT_URL } from './../lib/costants'
+import { APP_KEY, APP_SECRET, OAUTH_REDIRECT_URL } from './../lib/constants'
 import remote from 'remote'
 
 import AccountActions from './../actions/AccountActions'
