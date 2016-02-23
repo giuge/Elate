@@ -2,4 +2,5 @@
 
 require('./tasks/build')
 require('./tasks/release')
-require('./tasks/clean_release')
+require('./tasks/release_mac')
+require('./tasks/release_win')
