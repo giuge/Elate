@@ -126,7 +126,7 @@ export default class Dropbox {
   /**
    * Fetch the user account info from Dropbox.
    * We need to pass the token at this moment
-   * since the user just connected is account
+   * since the user just connected his account
    * and the token is not present in the database.
    * @param {String} token: the user token
    */
