@@ -1,5 +1,5 @@
 import alt from './../lib/alt'
-import AppActions from './../actions/AppActions'
+import AppActions from './../actions/app_actions'
 
 
 class AppStore {

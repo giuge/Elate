@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import remote from 'remote'
 import dropbox from './../lib/dropbox'
 import utils from './../lib/utils'
+import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES, TOKEN, refreshToken } from './../lib/constants'
 
-import LibraryActions from './../actions/LibraryActions'
-import AccountActions from './../actions/AccountActions'
-import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES } from './../lib/costants'
+import LibraryActions from './../actions/library_actions'
+import AccountActions from './../actions/account_actions'
+
 
 
 export default class ImportLibrary extends Component {
@@ -19,6 +20,7 @@ export default class ImportLibrary extends Component {
     }
   }
 
+  // TODO: create a new window and don't mess with the main one
   componentWillMount() {
     let currentWindow = remote.getCurrentWindow()
     let currentBounds = currentWindow.getBounds()
@@ -48,7 +50,6 @@ export default class ImportLibrary extends Component {
 
   handleClick() {
     this.setState({isImporting: true})
-    let TOKEN = localStorage.getItem('token')
     let finishAt = this.state.mediaToImport.length
 
     for(let i in this.state.mediaToImport) {
@@ -58,7 +59,7 @@ export default class ImportLibrary extends Component {
       fetch(`${CONTENT_ROOT}/files/get_thumbnail`, {
         method: 'post',
         headers: {
-          'Authorization': `Bearer ${TOKEN}`,
+          'Authorization': `Bearer ${TOKEN || refreshToken()}`,
           'Dropbox-API-Arg': JSON.stringify({
             'path': `${this.state.mediaToImport[i].path_lower}`,
             'size': {'.tag': 'w640h480'}
@@ -70,16 +71,13 @@ export default class ImportLibrary extends Component {
           return {json, blob}
         })
       }).catch(reason => {
-        // We were not able to fetch this media due to
-        // an unsupported format
+        // We were not able to fetch this media due to an unsupported format
         --finishAt
-        console.log(finishAt)
       }).then(data => {
         let {json, blob} = data
         utils.createMediaObj(json, blob).then((media) => {
           this.setState({importedMedia: this.state.importedMedia.concat(media)})
           if(this.state.importedMedia.length === finishAt) {
-            localStorage.setItem('has_imported_library', true)
             AccountActions.hasImportedLibrary(true)
             LibraryActions.saveAfterImport(this.state.importedMedia)
           }

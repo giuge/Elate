@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AppActions from './../actions/AppActions'
+import AppActions from './../actions/app_actions'
 
 
 export default class SingleMedia extends Component {

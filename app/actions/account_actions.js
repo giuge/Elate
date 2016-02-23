@@ -3,28 +3,32 @@ import Datastore from 'nedb'
 
 import alt from './../lib/alt'
 import dropbox from './../lib/dropbox'
-import { USER_DATA } from './../lib/costants'
+import { USER_DATA, refreshToken } from './../lib/constants'
 
 const db = new Datastore({ filename: `${USER_DATA}/account.db`, autoload: true })
 
 
 class AccountActions {
 
+  /**
+   * Retrieves the user account info from the database
+   * and fetches missing data from Dropbox.
+   * The db.find function always returns an array.
+   */
   getUserInfo() {
     return ((dispatch) => {
       db.find({}, (err, account) => {
         if(err) console.log(err)
         let data = {}
         if(account[0]) {
-          if(account[0].token && account[0].has_token) {
+          if(account[0].token) {
             data.has_token = true
-            localStorage.setItem('token', account[0].token)
           } else {
             data.has_token = false
           }
           if(account[0].has_imported_library) {
-            data.has_imported_library = true
-          } else data.has_imported_library = false
+            data.has_imported_library = account[0].has_imported_library
+          }
           if(account[0].account_info) {
             data.account_info = account[0].account_info
             dispatch(data)
@@ -42,26 +46,40 @@ class AccountActions {
     })
   }
 
+  /**
+   * Saves the user account info to the database
+   * after the user has finished connecting his
+   * Dropbox account (dropbox_connect).
+   * @param {Object} info
+   */
   saveAfterConnect(info) {
+    refreshToken(info.token)
     db.insert(info, () => {
-      dropbox.getAccountInfo().then(user => {
+      dropbox.getAccountInfo(info.token).then(user => {
         delete user.account_type
-        db.update({token: info.token}, { $set: { account_info: user } })
-        this.getUserInfo()
+        db.update({}, { $set: { account_info: user } }, () => {
+          this.getUserInfo()
+        })
       })
     })
     return false
   }
 
+  /**
+   * Updates the has_imported_library field in the database
+   * @param {Bool}
+   */
   hasImportedLibrary(bool) {
     db.update({}, { $set: { has_imported_library: bool } })
     this.getUserInfo()
     return false
   }
 
-
+  /**
+   * Logs the user out of the dropbox account
+   * TODO: Delete the account database after logout
+   */
   logout() {
-    localStorage.clear()
     return true
   }
 

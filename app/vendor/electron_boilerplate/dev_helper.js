@@ -1,7 +1,7 @@
 import { app, Menu, BrowserWindow } from 'electron' 
 
-var setDevMenu = function () {
-  var devMenu = Menu.buildFromTemplate([{
+let setDevMenu = function () {
+  let devMenu = Menu.buildFromTemplate([{
     label: 'Development',
     submenu: [{
       label: 'Reload',

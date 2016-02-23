@@ -36,11 +36,12 @@
 
   /**
   * TAP (http://en.wikipedia.org/wiki/Test_Anything_Protocol) reporter.
-  * outputs spec results to the console.
+  * outputs spec results to the console. It sends a message to the main
+  * process with the string to print.
   *
   * Usage:
   *
-  * jasmine.getEnv().addReporter(new jasmineReporters.TapReporter());
+  * jasmine.getEnv().addReporter(new jasmineReporters.ElectronReporter());
   */
   exportObject.ElectronReporter = function() {
     var self = this;

@@ -2,9 +2,9 @@ import _ from 'lodash'
 import React, { Component } from 'react'
 import ReactList from 'react-list'
 import remote from 'remote'
-import SingleMedia from './SingleMedia'
-import Spinner from './Spinner'
-import LibraryChunk from './LibraryChunk'
+import SingleMedia from './single_media'
+import Spinner from './spinner'
+import LibraryChunk from './library_chunk'
 
 
 export default class LibraryView extends Component {
@@ -15,6 +15,19 @@ export default class LibraryView extends Component {
     this.state = {
       chunks: []
     }
+  }
+
+  // TODO: cwm and cwu use the same code, extrapolate a function to make it terser
+  componentWillMount() {
+    let chunks = []
+    let sortedLibrary = _.orderBy(this.props.library, 'sortDate', 'desc' )
+    let splittedLibrary = _.groupBy(sortedLibrary, 'displayDate')
+
+    _.forEach(splittedLibrary, (value, key) => {
+      chunks.push(<LibraryChunk chunk={value} date={key} key={key} />)
+    })
+
+    this.setState({ chunks })
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -32,7 +45,6 @@ export default class LibraryView extends Component {
     }
 
     return false
-
   }
 
   renderChunk(index, key) {

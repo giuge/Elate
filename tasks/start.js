@@ -10,6 +10,10 @@ var watch
 
 var gulpPath = pathUtil.resolve('./node_modules/.bin/gulp')
 
+var stdio = 'inherit'
+if (utils.getEnvName() == 'test') stdio = ''
+
+
 var runBuild = function () {
   var deferred = Q.defer()
 
@@ -18,7 +22,7 @@ var runBuild = function () {
     '--env=' + utils.getEnvName(),
     '--color'
   ], {
-    stdio: ''
+    stdio: stdio
   })
 
   build.on('close', function (code) {
@@ -34,7 +38,7 @@ var runGulpWatch = function () {
     '--env=' + utils.getEnvName(),
     '--color'
   ], {
-    stdio: ''
+    stdio: stdio
   })
 
   watch.on('close', function (code) {
@@ -46,6 +50,7 @@ var runGulpWatch = function () {
 
 var runApp = function () {
   var app = childProcess.spawn(electron, ['./build'], {
+    // Always listen to what the app has to say :)
     stdio: 'inherit'
   })
 

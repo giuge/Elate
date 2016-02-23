@@ -1,25 +1,22 @@
-// This is main process of Electron, started as first thing when your
-// app starts. This script is running through entire life of your application.
-// It doesn't have any windows which you can see on screen, but we can open
-// window from here.
+/**
+ * This is main process of Electron, started as first thing when your
+ * app starts. This script is running through entire life of your application.
+ * It doesn't have any windows which you can see on screen, but we can open
+ * window from here.
+ */
 
-// Handle win startup events
-// This operation needs to be done asap!
+// Handle win startup events asap
 let start = () => {
   if (require('electron-squirrel-startup')) return
 }
-
 start()
 
 import { app, BrowserWindow, autoUpdater, ipcMain } from 'electron'
-import devHelper from './vendor/electron_boilerplate/dev_helper'
 import windowStateKeeper from './vendor/electron_boilerplate/window_state'
-
-// Special module holding environment variables which you declared
-// in config/env_xxx.json file.
+import devHelper from './vendor/electron_boilerplate/dev_helper'
 import env from './lib/env'
 
-// Preserver of the window size and position between app launches.
+// Create a reference to the main window
 let mainWindow
 let mainWindowState = windowStateKeeper('main', {
   width: 1024,
@@ -35,25 +32,18 @@ app.on('ready', () => {
     autoUpdater.checkForUpdates()
   }
 
-  mainWindow = new BrowserWindow({
-    x: mainWindowState.x,
-    y: mainWindowState.y,
-    width: mainWindowState.width,
-    height: mainWindowState.height,
-    title: 'Elate',
-    titleBarStyle: 'hidden-inset',
-    background: '#181818',
-    // Avoid the white background flash
-    show: false
-  })
-
-  if (mainWindowState.isMaximized) {
-    mainWindow.maximize()
-  }
-
   if (env.name === 'test') {
+    mainWindow = new BrowserWindow({
+      width: 1000,
+      height: 600,
+      title: 'Elate',
+      background: '#fff',
+      show: false
+    })
+
     mainWindow.loadURL('file://' + __dirname + '/spec.html')
 
+    // Pretty print test logs
     ipcMain.on('test-logs', function (event, message) {
       if(message.indexOf('✗') !== -1 ) {
         console.log('\x1b[31m%s\x1b[0m', message)
@@ -64,50 +54,61 @@ app.on('ready', () => {
       } else if (message.indexOf('-') !== -1) {
         console.log('\x1b[33m%s\x1b[0m', message)
       } else {
-        console.log(message)
+        console.log('\x1b[1m%s\x1b[0m', message)
       }
+    })
+  } else {
 
+    mainWindow = new BrowserWindow({
+      x: mainWindowState.x,
+      y: mainWindowState.y,
+      width: mainWindowState.width,
+      height: mainWindowState.height,
+      title: 'Elate',
+      titleBarStyle: 'hidden-inset',
+      background: '#181818',
+      // Avoid the white background flash since it's a dark UI
+      show: false
     })
 
-  } else {
-    mainWindow.loadURL('file://' + __dirname + '/app.html')
-  }
+    if (mainWindowState.isMaximized) {
+      mainWindow.maximize()
+    }
 
-  if (env.name !== 'test') {
-    // Now we can show the window
+    mainWindow.loadURL('file://' + __dirname + '/app.html')
+
+    // Avoid the white background flash since it's a dark UI
     mainWindow.webContents.on('did-finish-load', () => {
       setTimeout(function(){
         mainWindow.show()
       }, 40)
     })
+
+
+    if (env.name !== 'production' && env.name !== 'test') {
+      devHelper.setDevMenu()
+      mainWindow.openDevTools({detached: true})
+    }
+
+    // An update is available inform renderer process
+    autoUpdater.on('update-downloaded', () => {
+      if(mainWindow)
+        mainWindow.webContents.send('update-downloaded')
+    })
+
+    autoUpdater.on('error', (error) => {
+      mainWindow.webContents.executeJavaScript("console.log('Error');")
+    })
+
+    ipcMain.on('updateRequired', () => {
+      autoUpdater.quitAndInstall()
+    })
+
+    mainWindow.on('close', () => {
+      mainWindowState.saveState(mainWindow)
+      mainWindow = null
+    })
   }
-
-
-  if (env.name !== 'production' && env.name !== 'test') {
-    devHelper.setDevMenu()
-    mainWindow.openDevTools({detached: true})
-  }
-
-  // An update is available inform renderer process
-  autoUpdater.on('update-downloaded', () => {
-    if(mainWindow)
-      mainWindow.webContents.send('update-downloaded')
-  })
-
-  autoUpdater.on('error', (error) => {
-    mainWindow.webContents.executeJavaScript("console.log('Error');")
-  })
-
-  ipcMain.on('updateRequired', () => {
-    autoUpdater.quitAndInstall()
-  })
-
-  mainWindow.on('close', () => {
-    mainWindowState.saveState(mainWindow)
-    mainWindow = null
-  })
-
-
 })
 
 app.on('window-all-closed', () => {
@@ -117,8 +118,10 @@ app.on('window-all-closed', () => {
 })
 
 
-// OSX only callback - takes care of spawning
-// a new app window if needed
+/**
+ * OSX only callback - takes care of spawning
+ * a new app window if needed
+ */
 app.on('activate', () => {
   if (mainWindow == null) {
     mainWindow = new BrowserWindow({
@@ -129,7 +132,7 @@ app.on('activate', () => {
       title: 'Elate',
       titleBarStyle: 'hidden-inset',
       background: '#181818',
-      // Avoid the white background flash
+      // Avoid the white background flash since it's a dark UI
       show: false
     })
 
@@ -137,13 +140,9 @@ app.on('activate', () => {
       mainWindow.maximize()
     }
 
-    if (env.name === 'test') {
-      mainWindow.loadURL('file://' + __dirname + '/spec.html')
-    } else {
-      mainWindow.loadURL('file://' + __dirname + '/app.html')
-    }
+    mainWindow.loadURL('file://' + __dirname + '/app.html')
 
-    // Now we can show the window
+    // Avoid the white background flash since it's a dark UI
     mainWindow.webContents.on('did-finish-load', () => {
       setTimeout(function(){
         mainWindow.show()

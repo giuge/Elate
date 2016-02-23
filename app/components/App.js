@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 
 import connectToStores from 'alt-utils/lib/connectToStores'
-import LibraryStore from './../stores/LibraryStore'
-import AppStore from './../stores/AppStore'
-import AccountStore from './../stores/AccountStore'
+import LibraryStore from './../stores/library_store'
+import AppStore from './../stores/app_store'
+import AccountStore from './../stores/account_store'
 
-import LibraryActions from './../actions/LibraryActions'
-import AppActions from './../actions/AppActions'
-import AccountActions from './../actions/AccountActions'
+import LibraryActions from './../actions/library_actions'
+import AppActions from './../actions/app_actions'
+import AccountActions from './../actions/account_actions'
 
-import DropboxConnect from './DropboxConnect'
-import ImportLibrary from './ImportLibrary'
-import MainWindow from './MainWindow'
-import Spinner from './Spinner'
+import DropboxConnect from './dropbox_connect'
+import ImportLibrary from './import_library'
+import MainWindow from './main_window'
+import Spinner from './spinner'
 
 
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props)
   }
