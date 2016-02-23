@@ -7,6 +7,7 @@ import { App } from './../components/app'
 
 
 describe('Elate', () => {
+  
   it('uses the correct Dropbox folder', () => {
     expect(MEDIA_FOLDER).toBe('/Camera Uploads')
   })

@@ -26,9 +26,7 @@ class AccountStore {
     }
 
     // Check if we have a token saved in the account db
-    let accountDBPath = path.join(USER_DATA, 'account.db')
     let has_token
-
     try {
       refreshToken() ? has_token = true : has_token = false
     } catch(e) {
