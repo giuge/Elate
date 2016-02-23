@@ -35,9 +35,8 @@
     "build": "gulp build",
     "install-native": "node ./tasks/install_native_module",
     "test": "node ./tasks/start --env=test",
-    "release": "gulp release --env=production",
-      "prerelease": "rm -rf ./releases && rm -rf ./dist",
-      "postrelease": "gulp clean_release"
+    "prerelease": "rm -rf ./releases && rm -rf ./dist",
+    "release": "gulp release --env=production"
   },
   "dependencies": {}
 }
