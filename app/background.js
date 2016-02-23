@@ -33,20 +33,29 @@ app.on('ready', () => {
   }
 
   if (env.name === 'test') {
+
     mainWindow = new BrowserWindow({
       width: 1000,
       height: 600,
       title: 'Elate',
       background: '#fff',
-      show: false
+      show: true
     })
 
     mainWindow.loadURL('file://' + __dirname + '/spec.html')
 
-    // Pretty print test logs
-    ipcMain.on('test-logs', function (event, message) {
+    // In a test env we hide every window that gets created
+    ipcMain.on('tests-finished', () => {
+      //app.quit()
+    })
+
+    // Pretty print test logs and update dock on errors
+    let tests = 0
+    ipcMain.on('test-logs', (event, message) => {
       if(message.indexOf('✗') !== -1 ) {
         console.log('\x1b[31m%s\x1b[0m', message)
+        tests++
+        app.dock.setBadge(`${tests}`)
       } else if (message.indexOf('✓') !== -1) {
         console.log('\x1b[32m%s\x1b[0m', message)
       } else if (message.indexOf('#') !== -1) {
@@ -58,7 +67,6 @@ app.on('ready', () => {
       }
     })
   } else {
-
     mainWindow = new BrowserWindow({
       x: mainWindowState.x,
       y: mainWindowState.y,

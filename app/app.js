@@ -6,7 +6,7 @@
 import { ipcRenderer, remote } from 'electron'
 import React from 'react'
 import { render } from 'react-dom'
-import App from './components/app'
+import WindowLoader from './components/window_loader'
 import buildMenu from './lib/menu'
 
 // TODO: move this out of here and use main process instead
@@ -19,4 +19,4 @@ ipcRenderer.on('update-downloaded', () => {
   return
 })
 
-render(<App />, document.getElementById('app'))
+render(<WindowLoader />, document.getElementById('app'))

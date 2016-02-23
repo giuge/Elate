@@ -15,7 +15,7 @@ import MainWindow from './main_window'
 import Spinner from './spinner'
 
 
-export class App extends Component {
+export class WindowLoader extends Component {
   constructor(props) {
     super(props)
   }
@@ -56,4 +56,4 @@ export class App extends Component {
 }
 
 
-export default connectToStores(App)
+export default connectToStores(WindowLoader)
