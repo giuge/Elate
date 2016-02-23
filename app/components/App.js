@@ -15,7 +15,7 @@ import MainWindow from './main_window'
 import Spinner from './spinner'
 
 
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props)
   }

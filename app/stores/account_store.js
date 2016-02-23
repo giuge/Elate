@@ -30,7 +30,7 @@ class AccountStore {
     let has_token
 
     try {
-      refreshToken() !== '' ? has_token = true : has_token = false
+      refreshToken() ? has_token = true : has_token = false
     } catch(e) {
       has_token: false
     }
