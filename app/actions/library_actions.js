@@ -63,7 +63,7 @@ class LibraryActions {
   /**
    * Saves the user library to the database after
    * it has been imported
-   * @param {Object} importedMedia: the whole user library
+   * @param {Array} importedMedia: the whole user library
    */
   saveAfterImport(importedMedia) {
     db.insert(importedMedia, () => {
