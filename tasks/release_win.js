@@ -160,7 +160,6 @@ var zipWin = function() {
 
 
 var removeFolders = function() {
-  console.log('Cleaning up')
   let dirs = jetpack.find('./releases', { matching: 'Elate-*' })
   for(var i in dirs) {
     jetpack.remove(dirs[i])
