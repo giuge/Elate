@@ -149,6 +149,10 @@ var fixNames = function() {
 
 
 var zipWin = function() {
+  if(os.platform() != 'darwin') {
+    console.log('You can create zips on OSX only atm.')
+    return
+  }
   var deferred = Q.defer()
   var cmd = 'ditto -c -k --sequesterRsrc --keepParent ' +  './releases/Elate-win32-ia32 ./releases/elate-win.zip'
   childProcess.exec(cmd, function(err, out, code){

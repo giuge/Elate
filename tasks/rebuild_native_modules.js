@@ -23,6 +23,9 @@ rebuild.shouldRebuildNativeModules(electron)
   .then(function () {
     return rebuild.rebuildNativeModules(electronPackage.version, pathToElectronNativeModules)
   })
+  .then(function () {
+    return rebuild.preGypFixRun(pathToElectronNativeModules, true, electron)
+  })
 })
 .then(function () {
   console.log('Rebuilding complete.')

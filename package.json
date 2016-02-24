@@ -4,6 +4,7 @@
     "babel-preset-es2015-rollup": "^1.1.1",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
+    "electron-builder": "^2.8.2",
     "electron-mocha": "^0.8.0",
     "electron-packager": "^5.2.1",
     "electron-prebuilt": "^0.36.0",
@@ -35,7 +36,7 @@
     "build": "gulp build",
     "install-native": "node ./tasks/install_native_module",
     "test": "node ./tasks/start --env=test",
-    "prerelease": "rm -rf ./releases && rm -rf ./dist",
+    "prerelease": "rm -rf ./releases && rm -rf ./build",
     "release": "gulp release --env=production"
   },
   "dependencies": {}
