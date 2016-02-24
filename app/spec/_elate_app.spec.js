@@ -30,7 +30,7 @@ describe('Elate', () => {
 
   it('shows the login window', () => {
     const wrapper = render(
-      <WindowLoader has_token = {false}
+      <WindowLoader token = {null}
         has_imported_library = {false} />
     )
     const login = wrapper.find('.dropboxConnect')
@@ -40,7 +40,7 @@ describe('Elate', () => {
 
   it('shows the import library window', () => {
     const wrapper = render(
-      <WindowLoader has_token = {true}
+      <WindowLoader token = '123'
         has_imported_library = {false} />
     )
     const library = wrapper.find('.welcome')
@@ -50,7 +50,7 @@ describe('Elate', () => {
 
   it('shows the user media window', () => {
     const wrapper = render(
-      <WindowLoader has_token = {true}
+      <WindowLoader token = '123'
         has_imported_library = {true} />
     )
     const mediaView = wrapper.find('.listView')

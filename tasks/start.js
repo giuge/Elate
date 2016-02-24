@@ -11,7 +11,7 @@ var watch
 var gulpPath = pathUtil.resolve('./node_modules/.bin/gulp')
 
 var stdio = 'inherit'
-if (utils.getEnvName() == 'test') stdio = ''
+if (utils.getEnvName() == 'test') stdio = 'inherit'
 
 
 var runBuild = function () {
