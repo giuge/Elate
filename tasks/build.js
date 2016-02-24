@@ -42,12 +42,13 @@ var copyTask = function () {
 gulp.task('copy', ['clean'], copyTask)
 gulp.task('copy-watch', copyTask)
 
-
+var silence = function() {}
 var bundle = function (src, dest) {
   var deferred = Q.defer()
 
   rollup.rollup({
     entry: src,
+    onwarn: silence,
     plugins: [
      babel({
       exclude: 'node_modules/**'

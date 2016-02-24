@@ -14,6 +14,9 @@ describe('Library view', () => {
     wrapper.setProps({ library: fakeLibrary })
   })
 
+  afterAll(() => {
+    wrapper.unmount()
+  })
 
   it('shows a given library', () => {
     let media = wrapper.find('.picture').children()
