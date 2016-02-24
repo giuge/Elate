@@ -21,10 +21,9 @@ describe('Dropbox login', () => {
 
     wrapper.find('.button').simulate('click')
 
-    let title = ''
     let win = remote.BrowserWindow.getAllWindows()
-
     expect(win.length).toBe(2)
+
     win[0].destroy()
   })
 
