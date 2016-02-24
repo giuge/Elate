@@ -6,6 +6,7 @@ import { fakeLibrary } from './fixtures/fake_library'
 import ImportLibrary from './../components/import_library'
 import dropbox from './../lib/dropbox'
 
+
 describe('Library importer', () => {
 
   it('fetches the user media list', () => {

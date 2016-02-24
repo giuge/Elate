@@ -43,8 +43,8 @@ describe('Elate', () => {
       <WindowLoader token = '123'
         has_imported_library = {false} />
     )
-    const library = wrapper.find('.welcome')
-    expect(library.length).toBeGreaterThan(0)
+    const welcome = wrapper.find('.welcome')
+    expect(welcome.length).toBeGreaterThan(0)
   })
 
 

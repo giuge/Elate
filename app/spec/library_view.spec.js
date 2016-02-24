@@ -5,7 +5,6 @@ import { fakeLibrary } from './fixtures/fake_library'
 import LibraryView from './../components/library_view'
 
 
-
 describe('Library view', () => {
 
   let wrapper

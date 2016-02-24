@@ -5,7 +5,6 @@ import { fakeLibrary } from './fixtures/fake_library'
 import MainWindow from './../components/main_window'
 
 
-
 describe('Main window', () => {
 
   it('shows the preview view', () => {
