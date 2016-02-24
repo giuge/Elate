@@ -41,7 +41,7 @@ var nugetOptions = {
   'id': 'elate',
   'title': manifest.productName,
   'version': manifest.version,
-  'authors': manifest.author,
+  'authors': 'Elate',
   'description': manifest.description,
   'language': 'en-en',
   'projectUrl': manifest.url,
@@ -154,7 +154,10 @@ var zipWin = function() {
     return
   }
   var deferred = Q.defer()
-  var cmd = 'ditto -c -k --sequesterRsrc --keepParent ' +  './releases/Elate-win32-ia32 ./releases/elate-win.zip'
+  var from = path.join(__dirname, '..', 'releases', 'Elate-win32-ia32')
+  var to = path.join(__dirname, '..', 'releases', 'elate-win.zip')
+
+  var cmd = 'ditto -c -k --sequesterRsrc ' +  from + ' ' + to
   childProcess.exec(cmd, function(err, out, code){
     if(err) deferred.reject(err)
     else deferred.resolve()

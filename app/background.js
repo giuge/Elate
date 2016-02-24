@@ -6,10 +6,8 @@
  */
 
 // Handle win startup events asap
-let start = () => {
-  if (require('electron-squirrel-startup')) return
-}
-start()
+setTimeout(() => { if (require('electron-squirrel-startup')) return }, 1)
+
 
 import { app, BrowserWindow, autoUpdater, ipcMain } from 'electron'
 import windowStateKeeper from './vendor/electron_boilerplate/window_state'
@@ -91,7 +89,6 @@ app.on('ready', () => {
         mainWindow.show()
       }, 40)
     })
-
 
     if (env.name !== 'production' && env.name !== 'test') {
       devHelper.setDevMenu()

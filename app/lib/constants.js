@@ -9,15 +9,10 @@ export let USER_DATA = remote.app.getPath('userData')
 // Dropbox token stuff
 export function refreshToken() {
   let accountDBPath = path.join(USER_DATA, 'account.db')
-  try {
-    /**
-     * Nedb adds lines to the database when adding new data.
-     * We need to make sure we get the token even after a save.
-     */
-    let accountDB = JSON.parse(`${jetpack.read(accountDBPath)}`.split('\n').filter(Boolean).slice(-1)[0])
-    return accountDB.token != '' ? accountDB.token : null
-  } catch(e) {
-    return null
+  let accountDB = jetpack.read(accountDBPath, 'json')
+
+  if(accountDB) {
+    return accountDB.token || null
   }
 }
 export let TOKEN = refreshToken()
@@ -28,7 +23,7 @@ export const CONTENT_ROOT = 'https://content.dropboxapi.com/2'
 export const APP_KEY = 'mn8nb1bz34sxpe3'
 export const APP_SECRET = '0lpmbxuiiy4qe42'
 export const OAUTH_REDIRECT_URL = 'http://localhost/oauth'
-export const MEDIA_FOLDER = '/Camera Uploads'
+export const MEDIA_FOLDER = '/test'
 
 // Geocoder
 export const GEOCODER_API_KEY = 'AthmNCikQpDVlLZZ_8QV4nNJaLq7bLnolOPnQgd5pJK23nyV0WT6FX7XFiUSPxQI'

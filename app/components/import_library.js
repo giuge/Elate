@@ -23,10 +23,12 @@ export default class ImportLibrary extends Component {
   // TODO: create a new window and don't mess with the main one
   componentWillMount() {
     let currentWindow = remote.getCurrentWindow()
-    let currentBounds = currentWindow.getBounds()
-    if(currentBounds.x !== 450 && currentBounds.y !== 400) {
-      currentWindow.setBounds({width: 450, height: 400, y: (screen.height / 2 - 225), x: (screen.width / 2 - 200)})
-    }
+    currentWindow.setBounds({
+      width: 450,
+      height: 400,
+      y: parseInt(screen.height / 2 - 200),
+      x: parseInt(screen.width / 2 - 225)
+    })
   }
 
   componentDidMount() {
@@ -45,7 +47,12 @@ export default class ImportLibrary extends Component {
 
   componentWillUnmount() {
     let currentWindow = remote.getCurrentWindow()
-    currentWindow.setBounds({width: 1024, height: 650, y: (screen.height / 2 - 325), x: (screen.width / 2 - 512)})
+    currentWindow.setBounds({
+      width: 1024,
+      height: 650,
+      y: parseInt(screen.height / 2 - 325),
+      x: parseInt(screen.width / 2 - 512)
+    })
   }
 
   handleClick() {

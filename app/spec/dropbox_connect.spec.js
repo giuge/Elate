@@ -15,7 +15,7 @@ describe('Dropbox login', () => {
   })
 
 
-  it('shows the dropbox login page on click', (done) => {
+  it('shows the dropbox login page on click', () => {
     const onButtonClick = sinon.spy()
     const wrapper = mount(<DropboxConnect />)
 
@@ -24,13 +24,8 @@ describe('Dropbox login', () => {
     let title = ''
     let win = remote.BrowserWindow.getAllWindows()
 
-    setTimeout(() => {
-      title = win[0].getTitle()
-      expect(title).toBe('Dropbox - API Request Authorization - Sign in')
-      win[0].destroy()
-      done()
-    }, 3000)
-
+    expect(win.length).toBe(2)
+    win[0].destroy()
   })
 
 })

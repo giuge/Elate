@@ -92,7 +92,9 @@ var zipMac = function() {
     return
   }
   var deferred = Q.defer()
-  var cmd = 'ditto -c -k --sequesterRsrc ' +  './releases/Elate-darwin-x64/Elate.app ./releases/elate-mac.zip'
+  var from = path.join(__dirname, '..', 'releases', 'Elate-darwin-x64', 'Elate.app')
+  var to = path.join(__dirname, '..', 'releases', 'elate-mac.zip')
+  var cmd = 'ditto -c -k --sequesterRsrc --keepParent ' +  from + ' ' + to
   exec(cmd, function(err, out, code){
     if(err) deferred.reject(err)
     else deferred.resolve()
