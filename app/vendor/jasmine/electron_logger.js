@@ -167,12 +167,13 @@
 
       printMsg(diagStr);
       printMsg(' # NOTE: disabled specs are usually a result of xdescribe.');
+      printMsg('\n')
 
       self.finished = true;
       // this is so phantomjs-testrunner.js can tell if we're done executing
       exportObject.endTime = endTime;
       // Quit the electron app
-      remote.app.quit();
+      ipcRenderer.send('tests-finished');
     };
   };
 })(this);

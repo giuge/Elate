@@ -6,10 +6,8 @@
  */
 
 // Handle win startup events asap
-let start = () => {
-  if (require('electron-squirrel-startup')) return
-}
-start()
+setTimeout(() => { if (require('electron-squirrel-startup')) return }, 1)
+
 
 import { app, BrowserWindow, autoUpdater, ipcMain } from 'electron'
 import windowStateKeeper from './vendor/electron_boilerplate/window_state'
@@ -33,6 +31,7 @@ app.on('ready', () => {
   }
 
   if (env.name === 'test') {
+
     mainWindow = new BrowserWindow({
       width: 1000,
       height: 600,
@@ -43,8 +42,13 @@ app.on('ready', () => {
 
     mainWindow.loadURL('file://' + __dirname + '/spec.html')
 
-    // Pretty print test logs
-    ipcMain.on('test-logs', function (event, message) {
+    // In a test env we hide every window that gets created
+    ipcMain.on('tests-finished', () => {
+      app.quit()
+    })
+
+    // Pretty print test logs and update dock on errors
+    ipcMain.on('test-logs', (event, message) => {
       if(message.indexOf('✗') !== -1 ) {
         console.log('\x1b[31m%s\x1b[0m', message)
       } else if (message.indexOf('✓') !== -1) {
@@ -58,7 +62,6 @@ app.on('ready', () => {
       }
     })
   } else {
-
     mainWindow = new BrowserWindow({
       x: mainWindowState.x,
       y: mainWindowState.y,
@@ -83,7 +86,6 @@ app.on('ready', () => {
         mainWindow.show()
       }, 40)
     })
-
 
     if (env.name !== 'production' && env.name !== 'test') {
       devHelper.setDevMenu()

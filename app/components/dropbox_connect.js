@@ -22,8 +22,8 @@ export default class DropboxConnect extends Component {
     currentWindow.setBounds({
       width: 450,
       height: 400,
-      x: (screen.width / 2 - 200),
-      y: (screen.height / 2 - 225)
+      y: parseInt(screen.height / 2 - 200),
+      x: parseInt(screen.width / 2 - 225)
     })
   }
 

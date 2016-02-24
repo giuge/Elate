@@ -9,15 +9,10 @@ export let USER_DATA = remote.app.getPath('userData')
 // Dropbox token stuff
 export function refreshToken() {
   let accountDBPath = path.join(USER_DATA, 'account.db')
-  try {
-    /**
-     * Nedb adds lines to the database when adding new data.
-     * We need to make sure we get the token even after a save.
-     */
-    let accountDB = JSON.parse(`${jetpack.read(accountDBPath)}`.split('\n').filter(Boolean).slice(-1)[0])
-    return accountDB.token != '' ? accountDB.token : null
-  } catch(e) {
-    return null
+  let accountDB = jetpack.read(accountDBPath, 'json')
+
+  if(accountDB) {
+    return accountDB.token || null
   }
 }
 export let TOKEN = refreshToken()

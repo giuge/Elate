@@ -1,0 +1,148 @@
+export const fakeLibrary = [
+  {
+    "name":"2015-12-31 16.34.56.jpg",
+    "path_lower":"/test/2015-12-31 16.34.56.jpg",
+    "id":"id:vVXYLb218yAAAAAAAAAAAQ",
+    "client_modified":"2015-12-31T15:34:56Z",
+    "server_modified":"2016-01-30T20:27:57Z",
+    "rev":"b394d009b3c46",
+    "size":2181275,
+    "displayDate":"31 Dec 2015",
+    "sortDate":1451579696,
+    "className":"landscape",
+    "thumbnail":"data:application/octet-stream;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gJESUNDX1BST0ZJTEUAAQEAAAI0AAABn//Z",
+    "media_info":{
+      "metadata":{
+        "dimensions":{
+          "height":3024,
+          "width":4032
+        },
+        "location":{
+          "latitude":41.40314444444444,
+          "longitude":2.1736916666666666
+        },
+        "time_taken":"2015-12-31T16:34:56Z",
+        "tag":"photo"
+      },
+      "tag":"metadata"
+    },
+    "location":{
+      "__type":"Location:http://schemas.microsoft.com/search/local/ws/rest/v1",
+      "bbox":[
+        41.399281682429326,
+        2.16682573922861,
+        41.40700711757068,
+        2.18055766077139
+      ],
+      "name":"Plaça de la Sagrada Família 316, 08013 Barcelona (B)",
+      "point":{
+        "type":"Point",
+        "coordinates":[
+          41.4031444,
+          2.1736917
+        ]
+      },
+      "address":{
+        "addressLine":"Plaça de la Sagrada Família 316",
+        "adminDistrict":"Catalonia",
+        "adminDistrict2":"B",
+        "countryRegion":"Spain",
+        "formattedAddress":"Plaça de la Sagrada Família 316, 08013 Barcelona (B)",
+        "locality":"Barcelona",
+        "postalCode":"08013"
+      },
+      "confidence":"Medium",
+      "entityType":"Address",
+      "geocodePoints":[
+        {
+          "type":"Point",
+          "coordinates":[
+            41.4031444,
+            2.1736917
+          ],
+          "calculationMethod":"Interpolation",
+          "usageTypes":[
+            "Display",
+            "Route"
+          ]
+        }
+      ],
+      "matchCodes":[
+        "Good"
+      ]
+    },
+    "_id":"Rwhk6LlCB2zQHd4e"
+  },
+  {
+    "name":"2014-09-05 12.14.11.jpg",
+    "path_lower":"/test/2014-09-05 12.14.11.jpg",
+    "id":"id:pEKt-Tbk7lAAAAAAAAAAAQ",
+    "client_modified":"2014-09-05T11:14:11Z",
+    "server_modified":"2016-02-01T09:39:53Z",
+    "rev":"b395e009b3c46",
+    "size":2884523,
+    "time_taken":"2014-09-05T12:14:11Z",
+    "displayDate":"05 Sep 2014",
+    "sortDate":1409919251,
+    "className":"landscape",
+    "thumbnail":"data:application/octet-stream;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gJESUNDX1BST0ZJTEUAAQEAAAI0AAABn//Z",
+    "media_info":{
+      "metadata":{
+        "dimensions":{
+          "height":3024,
+          "width":4032
+        },
+        "location":{
+          "latitude":41.40314444444444,
+          "longitude":2.1736916666666666
+        },
+        "time_taken":"2014-09-05T12:14:11Z",
+        "tag":"photo"
+      },
+      "tag":"metadata"
+    },
+    "location":{
+      "__type":"Location:http://schemas.microsoft.com/search/local/ws/rest/v1",
+      "bbox":[
+        33.75596508242932,
+        11.007716467805015,
+        33.76369051757067,
+        11.020105732194985
+      ],
+      "name":"Street, Aghir, Tunisia",
+      "point":{
+        "type":"Point",
+        "coordinates":[
+          33.7598278,
+          11.0139111
+        ]
+      },
+      "address":{
+        "addressLine":"Street",
+        "adminDistrict":"Medenine Governorate",
+        "countryRegion":"Tunisia",
+        "formattedAddress":"Street, Aghir, Tunisia",
+        "locality":"Aghir"
+      },
+      "confidence":"Medium",
+      "entityType":"Address",
+      "geocodePoints":[
+        {
+          "type":"Point",
+          "coordinates":[
+            33.7598278,
+            11.0139111
+          ],
+          "calculationMethod":"Interpolation",
+          "usageTypes":[
+            "Display",
+            "Route"
+          ]
+        }
+      ],
+      "matchCodes":[
+        "Good"
+      ]
+    }
+  }
+]

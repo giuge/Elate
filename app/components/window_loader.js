@@ -15,7 +15,7 @@ import MainWindow from './main_window'
 import Spinner from './spinner'
 
 
-export class App extends Component {
+export class WindowLoader extends Component {
   constructor(props) {
     super(props)
   }
@@ -44,8 +44,8 @@ export class App extends Component {
   }
 
   render() {
-    if(!this.props.has_token) return <DropboxConnect />
-    if(this.props.has_token && !this.props.has_imported_library) return <ImportLibrary account_info={this.props.account_info} />
+    if(!this.props.token) return <DropboxConnect />
+    if(this.props.token && !this.props.has_imported_library) return <ImportLibrary account_info={this.props.account_info} />
     return (
       <MainWindow
         shouldShowPreview={this.props.shouldShowPreview}
@@ -56,4 +56,4 @@ export class App extends Component {
 }
 
 
-export default connectToStores(App)
+export default connectToStores(WindowLoader)
