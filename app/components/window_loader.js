@@ -39,7 +39,7 @@ export class WindowLoader extends Component {
 
   componentDidMount() {
     if(this.props.token && this.props.library.length > 0) {
-      LibraryActions.syncLibraryDB()
+      LibraryActions.syncLibrary()
     }
   }
 

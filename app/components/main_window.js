@@ -23,7 +23,7 @@ export default class MainWindow extends Component {
   render () {
     return (
       <div className='container'>
-        <TopBar />
+        {process.platform === 'darwin' ? <TopBar /> : ''}
         {this.renderPreview()}
         <Sidebar />
         <LibraryView library={this.props.library} />

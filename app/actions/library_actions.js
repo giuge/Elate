@@ -15,49 +15,32 @@ class LibraryActions {
     return ((dispatch) => {
       db.find({}, (err, library) => {
         if(err) console.log(err)
-        library = _.orderBy(library, 'sortDate', 'desc')
-        dispatch(library)
+        else dispatch(_.orderBy(library, 'sortDate', 'desc'))
       })
     })
-  }
-
-  // Imports library from Dropbox
-  importLibrary() {
-    let library = []
-    let allMedia = []
-
-    dropbox.getFileList().then(results => {
-      let promises = dropbox.getAllMedia(results)
-      Promise.all(promises).then((values) => {
-        for(let i in values) {
-          allMedia.push(values[i])
-        }
-        AccountActions.hasImportedLibrary(true)
-        db.insert(allMedia)
-        this.loadDatabase()
-      })
-    })
-    return false
   }
 
   // Syncs library with Dropbox
-  syncLibraryDB() {
-    let library = []
-    let allMedia = []
+  syncLibrary() {
+    return ((dispatch) => {
+      let library = []
+      let allMedia = []
 
-    db.find({}, (err, dbLibrary) => { library = dbLibrary })
-    dropbox.getFileList().then(results => {
-      let missingMedia = _.differenceBy(results, library, 'id')
-      let promises = dropbox.getAllMedia(missingMedia)
-      Promise.all(promises).then((values) => {
-        for(let i in values) {
-          allMedia.push(values[i])
-        }
-        db.insert(allMedia)
-        this.loadDatabase()
+      db.find({}, (err, dbLibrary) => { library = dbLibrary })
+      dropbox.getFileList().then(results => {
+        let missingMedia = _.differenceBy(results, library, 'id')
+        let promises = dropbox.getAllMedia(missingMedia)
+        Promise.all(promises).then((values) => {
+          for(let i in values) {
+            allMedia.push(values[i])
+          }
+          db.insert(allMedia, (err, media) => {
+            if(err) console.log(err)
+            else dispatch(_.orderBy(media, 'sortDate', 'desc'))
+          })
+        })
       })
     })
-    return false
   }
 
   /**
@@ -66,10 +49,12 @@ class LibraryActions {
    * @param {Array} importedMedia: the whole user library
    */
   saveAfterImport(importedMedia) {
-    db.insert(importedMedia, () => {
-      this.loadDatabase()
+    return ((dispatch) => {
+      db.insert(importedMedia, (err, media) => {
+        if(err) console.log(err)
+        else dispatch(_.orderBy(media, 'sortDate', 'desc'))
+      })
     })
-    return false
   }
 
   /**
