@@ -1,6 +1,4 @@
-import { ipcRenderer } from 'electron'
 import React, { Component } from 'react'
-
 import LibraryView from './library_view'
 import TopBar from './topbar'
 import Sidebar from './sidebar'

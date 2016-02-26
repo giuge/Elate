@@ -1,11 +1,13 @@
 import _ from 'lodash'
 import alt from './../lib/alt'
-import Datastore from 'nedb'
+import jetpack from 'fs-jetpack'
 import dropbox from './../lib/dropbox'
 import { USER_DATA, refreshToken } from './../lib/constants'
 import AccountActions from './account_actions'
 
-const db = new Datastore({ filename: `${USER_DATA}/library.db`, autoload: true})
+import low from 'lowdb'
+import storage from 'lowdb/file-async'
+const db = low(`${USER_DATA}/library.db`, { storage })
 
 
 class LibraryActions {
@@ -13,31 +15,35 @@ class LibraryActions {
   // Loads the library database
   loadDatabase() {
     return ((dispatch) => {
-      db.find({}, (err, library) => {
-        if(err) console.log(err)
-        else dispatch(_.orderBy(library, 'sortDate', 'desc'))
+      jetpack.readAsync(`${USER_DATA}/library.db`, 'json')
+      .then((data) => {
+        dispatch(_.orderBy(data.library, 'sortDate', 'desc'))
       })
     })
   }
 
   // Syncs library with Dropbox
   syncLibrary() {
-    let library = []
-    let allMedia = []
+    return ((dispatch) => {
+      let library = db.object.library
+      let allMedia = []
 
-    db.find({}, (err, dbLibrary) => { library = dbLibrary })
-    dropbox.getFileList().then(results => {
-      let missingMedia = _.differenceBy(results, library, 'id')
-      let promises = dropbox.getAllMedia(missingMedia)
-      Promise.all(promises).then((values) => {
-        for(let i in values) {
-          allMedia.push(values[i])
-        }
-        db.insert(allMedia, (err, media) => {
-          if(err) console.log(err)
-          else this.loadDatabase()
+      dropbox.getFileList().then(results => {
+        let missingMedia = _.differenceBy(results, library, 'path_lower')
+        let promises = dropbox.getAllMedia(missingMedia)
+        Promise.all(promises).then((values) => {
+          if (values.length == 0) return false
+
+          for(let i in values) {
+            allMedia.push(values[i])
+          }
+
+          db.object.library = _.concat(db.object.library, missingMedia)
+          db.write()
+          this.loadDatabase()
         })
       })
+
     })
 
     return false
@@ -49,12 +55,11 @@ class LibraryActions {
    * @param {Array} importedMedia: the whole user library
    */
   saveAfterImport(importedMedia) {
-    return ((dispatch) => {
-      db.insert(importedMedia, (err, media) => {
-        if(err) console.log(err)
-        else dispatch(_.orderBy(media, 'sortDate', 'desc'))
-      })
-    })
+    let dbLibrary = {library: importedMedia}
+    db.object = dbLibrary
+    db.write()
+
+    return _.orderBy(importedMedia, 'sortDate', 'desc')
   }
 
   /**
