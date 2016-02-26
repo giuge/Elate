@@ -1,15 +1,12 @@
 import _ from 'lodash'
 import alt from './../lib/alt'
-import jetpack from 'fs-jetpack'
+import pdb from 'pouchdb/dist/pouchdb'
 import dropbox from './../lib/dropbox'
-import { USER_DATA, refreshToken } from './../lib/constants'
 
 import AccountActions from './account_actions'
 import AppActions from './app_actions'
 
-import low from 'lowdb'
-import storage from 'lowdb/file-async'
-const db = low(`${USER_DATA}/library.db`, { storage })
+const db = new pdb('library', { adapter: 'websql' })
 
 
 class LibraryActions {
@@ -17,32 +14,43 @@ class LibraryActions {
   // Loads the library database
   loadDatabase() {
     return ((dispatch) => {
-      jetpack.readAsync(`${USER_DATA}/library.db`, 'json')
-      .then((data) => {
-        dispatch(_.orderBy(data.library, 'sortDate', 'desc'))
+      db.allDocs({ include_docs: true, attachments: true })
+      .then((results) => {
+        let library = []
+        results.rows.map((row) => { library.push(row.doc) })
+        dispatch(_.orderBy(library, 'sortDate', 'desc'))
       })
+      .catch((err) => { console.log(err) })
     })
   }
 
-  // Syncs library with Dropbox
+  /**
+   * Syncs library with Dropbox
+   * TODO: We need to delete files as well :)
+   */
   syncLibrary() {
+    db.allDocs({ include_docs: true })
+    .then((results) => {
+      let library = []
+      results.rows.map((row) => { library.push(row.doc) })
 
-    let library = db.object.library
-    let allMedia = []
+      dropbox.getFileList().then(results => {
+        let missingMedia = _.differenceBy(results, library, 'id')
+        let promises = dropbox.getAllMedia(missingMedia)
 
-    dropbox.getFileList().then(results => {
-      let missingMedia = _.differenceBy(results, library, 'path_lower')
-      let promises = dropbox.getAllMedia(missingMedia)
+        if(promises.length > 0) AppActions.isSyncing(true)
 
-      if(promises.length > 10) AppActions.isSyncing(true)
-
-      Promise.all(promises).then((values) => {
-        for(let i in values) { allMedia.push(values[i]) }
-        db.object.library = _.unionBy(db.object.library, missingMedia, 'id')
-        db.write().then(() => {
-          this.loadDatabase()
-          AppActions.isSyncing(false)
+        Promise.all(promises).then((values) => {
+          db.bulkDocs(values)
+          .then((results) => {
+            this.loadDatabase()
+            AppActions.isSyncing(false)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
         })
+
       })
     })
     return false
@@ -54,11 +62,15 @@ class LibraryActions {
    * @param {Array} importedMedia: the whole user library
    */
   saveAfterImport(importedMedia) {
-    let dbLibrary = {library: importedMedia}
-    db.object = dbLibrary
-    db.write()
-
-    return _.orderBy(importedMedia, 'sortDate', 'desc')
+    return ((dispatch) => {
+      db.bulkDocs(importedMedia)
+      .then((results) => {
+        dispatch(_.orderBy(importedMedia, 'sortDate', 'desc'))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    })
   }
 
   /**
