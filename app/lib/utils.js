@@ -15,6 +15,7 @@ export default class Utils {
       let reader = new FileReader()
       reader.readAsDataURL(blob)
 
+      media._id = media.id
       media.tag = media['.tag']
       delete media['.tag']
 
