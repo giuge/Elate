@@ -32,6 +32,7 @@ export default class Utils {
 
             geocoder.lookUp(lat, long).then(res => {
               media.location = res.resourceSets[0].resources[0]
+              delete media.location.geocodePoints
             })
           }
 

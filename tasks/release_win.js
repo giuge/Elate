@@ -88,10 +88,12 @@ var makeWinRelease = function() {
   var loadingGifPath = path.join(__dirname, '..', 'resources', 'windows', 'default.gif')
   var nugetPath = path.join(__dirname, '..', 'releases') + '/Elate.' + manifest.version + '.nupkg'
   var releasesDir = path.join(__dirname, '..', 'releases', 'tmp')
+  var setupIconDir = path.join(__dirname, '..', 'resources', 'icon.ico')
 
   var createSetupCommand = [
     '--releasify', addWindowsPathFix(nugetPath),
     '--loadingGif', addWindowsPathFix(loadingGifPath),
+    '--setupIcon', addWindowsPathFix(setupIconDir),
     '--releaseDir', addWindowsPathFix(releasesDir)
   ]
 

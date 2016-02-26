@@ -34,7 +34,7 @@
     "build": "gulp build",
     "install-native": "node ./tasks/install_native_module",
     "test": "node ./tasks/start --env=test",
-    "prerelease": "rm -rf ./releases && rm -rf ./build",
+    "prerelease": "rm -rf ./releases && rm -rf ./build && cd app && npm prune --production && cd ..",
     "release": "gulp release --env=production"
   },
   "engine": "node 4.1.1",
