@@ -47,12 +47,14 @@ export default class ImportLibrary extends Component {
 
   componentWillUnmount() {
     let currentWindow = remote.getCurrentWindow()
+    currentWindow.hide()
     currentWindow.setBounds({
       width: 1024,
       height: 650,
       y: parseInt(screen.height / 2 - 325),
       x: parseInt(screen.width / 2 - 512)
     })
+    currentWindow.show()
   }
 
   handleClick() {

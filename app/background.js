@@ -37,14 +37,14 @@ app.on('ready', () => {
       height: 600,
       title: 'Elate',
       background: '#fff',
-      show: false
+      show: true
     })
 
     mainWindow.loadURL('file://' + __dirname + '/spec.html')
 
     // In a test env we hide every window that gets created
     ipcMain.on('tests-finished', () => {
-      app.quit()
+      //app.quit()
     })
 
     // Pretty print test logs and update dock on errors
