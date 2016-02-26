@@ -5,7 +5,7 @@ import dropbox from './../lib/dropbox'
 import { USER_DATA, refreshToken } from './../lib/constants'
 import AccountActions from './account_actions'
 
-const db = new Datastore({ filename: `${USER_DATA}/library.db`, autoload: true })
+const db = new Datastore({ filename: `${USER_DATA}/library.db`, autoload: true})
 
 
 class LibraryActions {
@@ -22,25 +22,25 @@ class LibraryActions {
 
   // Syncs library with Dropbox
   syncLibrary() {
-    return ((dispatch) => {
-      let library = []
-      let allMedia = []
+    let library = []
+    let allMedia = []
 
-      db.find({}, (err, dbLibrary) => { library = dbLibrary })
-      dropbox.getFileList().then(results => {
-        let missingMedia = _.differenceBy(results, library, 'id')
-        let promises = dropbox.getAllMedia(missingMedia)
-        Promise.all(promises).then((values) => {
-          for(let i in values) {
-            allMedia.push(values[i])
-          }
-          db.insert(allMedia, (err, media) => {
-            if(err) console.log(err)
-            else dispatch(_.orderBy(media, 'sortDate', 'desc'))
-          })
+    db.find({}, (err, dbLibrary) => { library = dbLibrary })
+    dropbox.getFileList().then(results => {
+      let missingMedia = _.differenceBy(results, library, 'id')
+      let promises = dropbox.getAllMedia(missingMedia)
+      Promise.all(promises).then((values) => {
+        for(let i in values) {
+          allMedia.push(values[i])
+        }
+        db.insert(allMedia, (err, media) => {
+          if(err) console.log(err)
+          else this.loadDatabase()
         })
       })
     })
+
+    return false
   }
 
   /**

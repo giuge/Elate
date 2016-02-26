@@ -38,7 +38,7 @@ export class WindowLoader extends Component {
   }
 
   componentDidMount() {
-    if(this.props.token && this.props.library.length > 0) {
+    if(this.props.token && this.props.has_imported_library) {
       LibraryActions.syncLibrary()
     }
   }

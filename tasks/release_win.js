@@ -96,12 +96,12 @@ var makeWinRelease = function() {
   ]
 
   if (os.platform() !== 'win32') {
-    squirrelPath = path.join(squirrelPath, 'Squirrel-Mono.exe')
+    squirrelPath = path.join(squirrelPath, 'Update-Mono.exe')
     createSetupCommand.unshift(addWindowsPathFix(squirrelPath))
     createSetupCommand.unshift('mono')
     createSetupCommand = createSetupCommand.join(' ')
   } else {
-    squirrelPath = path.join(squirrelPath, 'Squirrel.exe')
+    squirrelPath = path.join(squirrelPath, 'Update.exe')
     createSetupCommand.unshift(addWindowsPathFix(squirrelPath))
     createSetupCommand = createSetupCommand.join(' ')
   }

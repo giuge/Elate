@@ -7,8 +7,7 @@ class LibraryStore {
   constructor() {
     this.bindListeners({
       handleLoadDatabase: LibraryActions.LOAD_DATABASE,
-      handleSaveAfterImport: LibraryActions.SAVE_AFTER_IMPORT,
-      handleSyncLibrary: LibraryActions.SYNC_LIBRARY
+      handleSaveAfterImport: LibraryActions.SAVE_AFTER_IMPORT
     })
 
     this.state = {
@@ -21,10 +20,6 @@ class LibraryStore {
   }
 
   handleSaveAfterImport(library) {
-    this.setState({library})
-  }
-
-  handleSyncLibrary(library) {
     this.setState({library})
   }
 
