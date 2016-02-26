@@ -3,7 +3,9 @@ import alt from './../lib/alt'
 import jetpack from 'fs-jetpack'
 import dropbox from './../lib/dropbox'
 import { USER_DATA, refreshToken } from './../lib/constants'
+
 import AccountActions from './account_actions'
+import AppActions from './app_actions'
 
 import low from 'lowdb'
 import storage from 'lowdb/file-async'
@@ -24,28 +26,25 @@ class LibraryActions {
 
   // Syncs library with Dropbox
   syncLibrary() {
-    return ((dispatch) => {
-      let library = db.object.library
-      let allMedia = []
 
-      dropbox.getFileList().then(results => {
-        let missingMedia = _.differenceBy(results, library, 'path_lower')
-        let promises = dropbox.getAllMedia(missingMedia)
-        Promise.all(promises).then((values) => {
-          if (values.length == 0) return false
+    let library = db.object.library
+    let allMedia = []
 
-          for(let i in values) {
-            allMedia.push(values[i])
-          }
+    dropbox.getFileList().then(results => {
+      let missingMedia = _.differenceBy(results, library, 'path_lower')
+      let promises = dropbox.getAllMedia(missingMedia)
 
-          db.object.library = _.concat(db.object.library, missingMedia)
-          db.write()
+      if(promises.length > 10) AppActions.isSyncing(true)
+
+      Promise.all(promises).then((values) => {
+        for(let i in values) { allMedia.push(values[i]) }
+        db.object.library = _.unionBy(db.object.library, missingMedia, 'id')
+        db.write().then(() => {
           this.loadDatabase()
+          AppActions.isSyncing(false)
         })
       })
-
     })
-
     return false
   }
 

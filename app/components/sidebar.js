@@ -2,12 +2,30 @@ import React, { Component } from 'react'
 import { remote } from 'electron'
 
 export default class Sidebar extends Component {
+
+  renderStatus() {
+    if(this.props.isSyncingDB) {
+      return(
+        <div className='bottom-info sync'>
+          <img src='assets/loading.svg' />
+          <span>Importing</span>
+        </div>
+      )
+    } else {
+      return(
+        <div className='bottom-info'>
+          <p>Version {remote.app.getVersion()}</p>
+        </div>
+      )
+    }
+  }
+
   render () {
     return (
       <div className='sidebar'>
         <ul>
           <h6>Library</h6>
-          <li className='active'><img src='assets/all_media.svg'/>All media</li>
+          <li className='active'><img src='assets/all-media.svg'/>All media</li>
           {/*<li className=''><img src='assets/favorites.svg'/>Favorites</li>
           <li className=''><img src='assets/albums.svg'/>Albums</li>
           <li className=''><img src='assets/shared.svg'/>Shared</li>*/}
@@ -22,9 +40,8 @@ export default class Sidebar extends Component {
           <h6>Account</h6>
           <li className=''><img src='assets/logout.svg'/>Logout</li>
         </ul>*/}
-        <div className='bottom-info'>
-          <p>Version {remote.app.getVersion()}</p>
-        </div>
+
+        {this.renderStatus()}
       </div>
     )
   }

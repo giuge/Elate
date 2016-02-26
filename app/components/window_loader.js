@@ -50,7 +50,9 @@ export class WindowLoader extends Component {
       <MainWindow
         shouldShowPreview={this.props.shouldShowPreview}
         library={this.props.library}
-        selectedItem={this.props.selectedItem} />
+        selectedItem={this.props.selectedItem}
+        isSyncingDB={this.props.isSyncingDB} 
+        />
     )
   }
 }

@@ -10,6 +10,10 @@ class AppActions {
     return item
   }
 
+  isSyncing(bool) {
+    return bool
+  }
+
   // Hides the preview
   hidePreview() {
     return true

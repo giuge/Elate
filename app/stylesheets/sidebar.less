@@ -11,6 +11,30 @@
     position: absolute;
     bottom: 40px;
     width: 100%;
+    padding: 0 15px;
+
+    &.sync {
+      img {
+        display: inline-block;
+        margin-right: 5px;
+        -webkit-animation:spin 2s linear infinite;
+        animation:spin 2s linear infinite;
+        margin-bottom: -1px;
+
+        @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+        @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+      }
+
+      span {
+        display: inline-block;
+        font-size: 10px;
+        color: #fff;
+        font-weight: 400;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        letter-spacing: .1em;
+      }
+    }
 
     p {
       font-size: 10px;

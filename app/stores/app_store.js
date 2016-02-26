@@ -7,13 +7,15 @@ class AppStore {
     this.bindListeners({
       handleShowPreview: AppActions.SHOW_PREVIEW,
       handleHidePreview: AppActions.HIDE_PREVIEW,
+      handleIsSyncing: AppActions.IS_SYNCING,
       handleSelectItem: AppActions.SELECT_ITEM
     })
 
     this.state = {
       shouldShowPreview: false,
       selectedItem: {},
-      selectedItems: []
+      selectedItems: [],
+      isSyncingDB: false
     }
   }
 
@@ -28,6 +30,12 @@ class AppStore {
     this.setState({
       shouldShowPreview: false,
       previewItem: null
+    })
+  }
+
+  handleIsSyncing(bool) {
+    this.setState({
+      isSyncingDB: bool
     })
   }
 
