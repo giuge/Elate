@@ -2,6 +2,8 @@ import _ from 'lodash'
 import alt from './../lib/alt'
 import pdb from 'pouchdb/dist/pouchdb'
 import dropbox from './../lib/dropbox'
+import notifier from 'node-notifier'
+import path from 'path'
 
 import AccountActions from './account_actions'
 import AppActions from './app_actions'
@@ -43,8 +45,21 @@ class LibraryActions {
         Promise.all(promises).then((values) => {
           db.bulkDocs(values)
           .then((results) => {
-            this.loadDatabase()
             AppActions.isSyncing(false)
+
+            if(values.length > 0) {
+              this.loadDatabase()
+              notifier.notify({
+                title: 'Sync finished',
+                message: `Imported ${results.length} new pictures.`,
+                icon: path.join(__dirname, 'assets', 'notification-logo.png'),
+                sound: true,
+                wait: false
+              }, function (err, response) {
+                console.log(err)
+              })
+            }
+
           })
           .catch((err) => {
             console.log(err)
