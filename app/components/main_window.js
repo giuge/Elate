@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import remote, { dialog } from 'remote'
 import {findDOMNode} from 'react-dom'
+import utils from './../lib/utils'
 
 import LibraryView from './library_view'
 import TopBar from './topbar'
@@ -40,20 +41,26 @@ export default class MainWindow extends Component {
 
   ensureVisible() {
     let listView = document.getElementsByClassName('listView')[0]
+    let listViewTop = listView.scrollTop
+    let listViewBottom = listViewTop + listView.innerHeight
+
     let selectedElem = document.getElementsByClassName('selected')[0]
-    let selectedElemTop = selectedElem.getBoundingClientRect().top
-    let selectedElemBottom = selectedElem.getBoundingClientRect().bottom
+    let selectedElemTop = selectedElem.parentNode.getBoundingClientRect().top
+    let selectedElemBottom = selectedElem.parentNode.getBoundingClientRect().bottom
+
     //let isVisible = (selectedElemTop >= 0) && (selectedElemBottom <= listView.innerHeight)
-    let isVisible = (listView.scrollTop + listView.height >= selectedElemTop) && (listView.scrollTop <= selectedElemBottom)
+    let isVisible = (listViewBottom  - 100 > selectedElemBottom) && (listViewTop + 100 < selectedElemTop)
+    let position = selectedElem.parentNode.offsetTop - 100
 
     if(!isVisible) {
-      listView.scrollTop = selectedElem.parentNode.offsetTop - 100
+      utils.smoothScrollTo(listView, position, 200).catch(() => {})
+      //listView.scrollTop = selectedElem.parentNode.offsetTop - 100
     }
   }
 
   handleKeyDown(event) {
     if(this.props.selectedItems.length <= 0) return
-    
+
     let index = _.findIndex(this.props.library, o => {
       return o._id === this.props.selectedItems[0]._id
     })
