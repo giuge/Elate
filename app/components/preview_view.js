@@ -2,7 +2,7 @@ import _ from 'lodash'
 import request from 'superagent'
 import React, { Component } from 'react'
 import AppActions from './../actions/app_actions'
-import SelectionActions from './../actions/selection_actions'
+
 import { Circle } from 'rc-progress'
 import { CONTENT_ROOT, TOKEN } from './../lib/constants'
 
@@ -98,7 +98,6 @@ export default class PreviewView extends Component {
         setTimeout(() => { this.setState({ mediaFile: ''})}, 0)
         if(index - 1 < 0) break
         this.setState({ media: this.state.library[index - 1]})
-        SelectionActions.singleSelectItem(this.state.library[index - 1])
         this.downloadMedia()
         break
       // Right arrow pressed
@@ -107,7 +106,6 @@ export default class PreviewView extends Component {
         setTimeout(() => { this.setState({ mediaFile: ''})}, 0)
         if(index + 1 >= this.state.library.length) break
         this.setState({ media: this.state.library[index + 1]})
-        SelectionActions.singleSelectItem(this.state.library[index + 1])
         this.downloadMedia()
         break
     }

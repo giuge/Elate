@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import remote, { dialog } from 'remote'
+import {findDOMNode} from 'react-dom'
 
 import LibraryView from './library_view'
 import TopBar from './topbar'
@@ -9,7 +10,9 @@ import Spinner from './spinner'
 
 import connectToStores from 'alt-utils/lib/connectToStores'
 import SelectionStore from './../stores/selection_store'
+import SelectionActions from './../actions/selection_actions'
 import LibraryActions from './../actions/library_actions'
+import AppActions from './../actions/app_actions'
 
 
 export default class MainWindow extends Component {
@@ -35,14 +38,50 @@ export default class MainWindow extends Component {
     window.removeEventListener('keydown', this.handleKeyDown)
   }
 
+  ensureVisible() {
+    let listView = document.getElementsByClassName('listView')[0]
+    let selectedElem = document.getElementsByClassName('selected')[0]
+    let selectedElemTop = selectedElem.getBoundingClientRect().top
+    let selectedElemBottom = selectedElem.getBoundingClientRect().bottom
+    //let isVisible = (selectedElemTop >= 0) && (selectedElemBottom <= listView.innerHeight)
+    let isVisible = (listView.scrollTop + listView.height >= selectedElemTop) && (listView.scrollTop <= selectedElemBottom)
+
+    if(!isVisible) {
+      listView.scrollTop = selectedElem.parentNode.offsetTop - 100
+    }
+  }
+
   handleKeyDown(event) {
+    if(this.props.selectedItems.length <= 0) return
+    
+    let index = _.findIndex(this.props.library, o => {
+      return o._id === this.props.selectedItems[0]._id
+    })
+
     switch(event.keyCode) {
-      // Esc button pressed
+      // Canc button pressed
       case 46:
         this.handleTrash()
         break
+      // Delete button pressed
       case 8:
         this.handleTrash()
+        break
+      // Return key pressed
+      case 13:
+        AppActions.previewItem(this.props.library[index])
+        break
+      // Left arrow pressed
+      case 37:
+        if(index - 1 < 0) break
+        SelectionActions.singleSelectItem(this.props.library[index - 1])
+        this.ensureVisible()
+        break
+      // Right arrow pressed
+      case 39:
+        if(index + 1 >= this.props.library.length) break
+        SelectionActions.singleSelectItem(this.props.library[index + 1])
+        this.ensureVisible()
         break
     }
   }

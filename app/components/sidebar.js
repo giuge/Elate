@@ -26,8 +26,8 @@ export default class Sidebar extends Component {
         <ul>
           <h6>Library</h6>
           <li className='active'><img src='assets/all-media.svg'/>All media</li>
-          {/*<li className=''><img src='assets/favorites.svg'/>Favorites</li>
-          <li className=''><img src='assets/albums.svg'/>Albums</li>
+          <li className=''><img src='assets/favorites.svg'/>Favorites</li>
+          {/*<li className=''><img src='assets/albums.svg'/>Albums</li>
           <li className=''><img src='assets/shared.svg'/>Shared</li>*/}
         </ul>
         {/*<ul>
