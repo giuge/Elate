@@ -32,7 +32,7 @@ export class WindowLoader extends Component {
     }
   }
 
-  componentWillMount() {
+  static componentDidConnect() {
     AccountActions.getUserInfo()
     LibraryActions.loadDatabase()
   }
@@ -45,14 +45,10 @@ export class WindowLoader extends Component {
 
   render() {
     if(!this.props.token) return <DropboxConnect />
-    if(this.props.token && !this.props.has_imported_library) return <ImportLibrary account_info={this.props.account_info} />
+    if(this.props.token && !this.props.has_imported_library)
+      return <ImportLibrary account_info={this.props.account_info} />
     return (
-      <MainWindow
-        shouldShowPreview={this.props.shouldShowPreview}
-        library={this.props.library}
-        selectedItem={this.props.selectedItem}
-        isSyncingDB={this.props.isSyncingDB} 
-        />
+      <MainWindow {...this.props} />
     )
   }
 }

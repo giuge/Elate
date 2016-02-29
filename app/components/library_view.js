@@ -4,6 +4,7 @@ import ReactList from 'react-list'
 import remote from 'remote'
 import SingleMedia from './single_media'
 import Spinner from './spinner'
+import ActionBar from './action_bar'
 import LibraryChunk from './library_chunk'
 
 
@@ -24,7 +25,9 @@ export default class LibraryView extends Component {
       let splittedLibrary = _.groupBy(sorteLibrary, 'displayDate')
 
       _.forEach(splittedLibrary, (value, key) => {
-        chunks.push(<LibraryChunk chunk={value} date={key} key={key} />)
+        chunks.push(
+          <LibraryChunk chunk={value} date={key} key={key} />
+        )
       })
       //nextState.chunks = chunks
       this.setState({ chunks })

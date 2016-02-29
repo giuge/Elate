@@ -27,6 +27,21 @@ class LibraryActions {
   }
 
   /**
+   * Deletes a media both from the app and from Dropbox
+   * @param: {Array} an array of media
+   */
+  deleteMedia(media) {
+    for(let i in media) {
+      dropbox.deleteMedia(media[i].path_lower)
+      db.remove(media[i]._id, media[i]._rev)
+      .catch((err) => {
+        throw(err)
+      })
+    }
+    return media
+  }
+
+  /**
    * Syncs library with Dropbox
    * TODO: We need to delete files as well :)
    */
@@ -56,7 +71,7 @@ class LibraryActions {
                 sound: true,
                 wait: false
               }, function (err, response) {
-                console.log(err)
+                if(err) console.log(err)
               })
             }
 

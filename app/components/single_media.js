@@ -1,11 +1,31 @@
 import React, { Component } from 'react'
-import AppActions from './../actions/app_actions'
+import connectToStores from 'alt-utils/lib/connectToStores'
 
+import AppActions from './../actions/app_actions'
+import SelectionActions from './../actions/selection_actions'
+import SelectionStore from './../stores/selection_store'
 
 export default class SingleMedia extends Component {
 
+  constructor(props) {
+    super(props)
+  }
+
+  static getStores() {
+    return [SelectionStore]
+  }
+
+  static getPropsFromStores() {
+    return {...SelectionStore.getState()}
+  }
+
+  handleClick(event) {
+    if(event.shiftKey) SelectionActions.selectItem(this.props.media)
+    else SelectionActions.singleSelectItem(this.props.media)
+  }
+
   handleDoubleClick() {
-    AppActions.showPreview(this.props.media)
+    AppActions.previewItem(this.props.media)
   }
 
   renderDuration() {
@@ -21,12 +41,17 @@ export default class SingleMedia extends Component {
   }
 
   render () {
+    let className = ''
+    if(this.props.selectedItems.indexOf(this.props.media) !== -1) {
+      className = 'selected'
+    }
+
     if(this.props.media.media_info &&
       this.props.media.media_info.metadata &&
       this.props.media.media_info.metadata.tag === 'video') {
       return (
-        <div className='video'>
-          <img
+        <div className={`video ${className}`}>
+          <img onClick={(event) => { this.handleClick(event) }} 
             onDoubleClick={() => { this.handleDoubleClick() }}
             src={this.props.media.thumbnail}
             className='picture' />
@@ -35,8 +60,9 @@ export default class SingleMedia extends Component {
       )
     }
     return (
-      <div className='picture'>
+      <div className={`picture ${className}`}>
         <img
+          onClick={(event) => { this.handleClick(event) }}
           onDoubleClick={() => { this.handleDoubleClick() }}
           src={this.props.media.thumbnail}
           className='picture' />
@@ -44,3 +70,5 @@ export default class SingleMedia extends Component {
     )
   }
 }
+
+export default connectToStores(SingleMedia)

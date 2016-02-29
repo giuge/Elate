@@ -7,7 +7,8 @@ class LibraryStore {
   constructor() {
     this.bindListeners({
       handleLoadDatabase: LibraryActions.LOAD_DATABASE,
-      handleSaveAfterImport: LibraryActions.SAVE_AFTER_IMPORT
+      handleSaveAfterImport: LibraryActions.SAVE_AFTER_IMPORT,
+      handleDeleteMedia: LibraryActions.DELETE_MEDIA
     })
 
     this.state = {
@@ -21,6 +22,12 @@ class LibraryStore {
 
   handleSaveAfterImport(library) {
     this.setState({library})
+  }
+
+  handleDeleteMedia(media) {
+    this.setState({
+      library: _.difference(this.state.library, media)
+    })
   }
 
 }

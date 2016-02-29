@@ -5,25 +5,19 @@ import AppActions from './../actions/app_actions'
 class AppStore {
   constructor() {
     this.bindListeners({
-      handleShowPreview: AppActions.SHOW_PREVIEW,
+      handlePreviewItem: AppActions.PREVIEW_ITEM,
       handleHidePreview: AppActions.HIDE_PREVIEW,
       handleIsSyncing: AppActions.IS_SYNCING,
-      handleSelectItem: AppActions.SELECT_ITEM
     })
 
     this.state = {
-      shouldShowPreview: false,
-      selectedItem: {},
-      selectedItems: [],
+      previewItem: null,
       isSyncingDB: false
     }
   }
 
-  handleShowPreview(item) {
-    this.setState({
-      shouldShowPreview: true,
-      selectedItem: item
-    })
+  handlePreviewItem(previewItem) {
+    this.setState({previewItem})
   }
 
   handleHidePreview() {
@@ -36,12 +30,6 @@ class AppStore {
   handleIsSyncing(bool) {
     this.setState({
       isSyncingDB: bool
-    })
-  }
-
-  handleSelectItem(item) {
-    this.setState({
-      selectedItem: item
     })
   }
 

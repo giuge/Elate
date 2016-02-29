@@ -6,12 +6,9 @@ class AppActions {
    * Sets an item for preview
    * @param {Object} item
    */
-  showPreview(item) {
-    return item
-  }
-
-  isSyncing(bool) {
-    return bool
+  previewItem(item) {
+    if(item) return item
+    else return null
   }
 
   // Hides the preview
@@ -19,12 +16,9 @@ class AppActions {
     return true
   }
 
-  /**
-   * Selects the media item
-   * @param {Object} item
-   */
-  selectItem(item) {
-    return item
+  // The library is syncing
+  isSyncing(bool) {
+    return bool
   }
 
 }

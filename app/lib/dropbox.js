@@ -105,6 +105,31 @@ export default class Dropbox {
     return array
   }
 
+
+  /**
+   * Deletes a media from the Dropbox user library
+   * and the token is not present in the database.
+   * @param {String} the media path_lower
+   */
+  static deleteMedia(pathLow) {
+    fetch(`${API_ROOT}/files/delete`, {
+      method: 'post',
+      headers: {
+        'Authorization': `Bearer ${TOKEN || refreshToken()}`,
+        'Content-Type': 'text/plain; charset=dropbox-cors-hack'
+      },
+      body: JSON.stringify({
+        'path': `${pathLow}`
+      })
+    })
+    .then(() => {
+      return true
+    })
+    .catch((err) => {
+      throw(err)
+    })
+  }
+
   static downloadMedia(path) {
     return new Promise((resolve, reject) => {
       fetch(`${CONTENT_ROOT}/files/download`, {
