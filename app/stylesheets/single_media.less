@@ -33,13 +33,15 @@
 .video, .picture {
   position: relative;
 
-  &:hover, &.selected {
+  &:hover {
     .addFavorite {
+      -webkit-transition: all .4s ease-out;
       opacity: 1;
     }
   }
 
   .addFavorite {
+    -webkit-transition: all .4s ease-in;
     width: 15px !important;
     height: 15px !important;
     position: absolute;

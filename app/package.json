@@ -19,6 +19,7 @@
     "pouchdb": "^5.2.1",
     "rc-progress": "^1.0.4",
     "react": "^0.14.7",
+    "react-addons-update": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-list": "^0.7.13",
     "superagent": "^1.7.2"

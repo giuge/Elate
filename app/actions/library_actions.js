@@ -71,13 +71,13 @@ class LibraryActions {
                 sound: true,
                 wait: false
               }, function (err, response) {
-                if(err) throw(err)
+                if(err) console.log(err)
               })
             }
 
           })
           .catch((err) => {
-            throw(err)
+            console.log(err)
           })
         })
 
@@ -98,7 +98,7 @@ class LibraryActions {
         dispatch(_.orderBy(importedMedia, 'sortDate', 'desc'))
       })
       .catch((err) => {
-        throw(err)
+        console.log(err)
       })
     })
   }
@@ -118,23 +118,35 @@ class LibraryActions {
    * @param: {Object} the media to favorite
    */
   addToFavorites(media) {
-    if(media.isFavorite) {
-      media.isFavorite = false
-      media.highResThumbnail = null
-      db.put(media, media._id, media._rev).catch(err => { throw(err) })
-    } else {
-      dropbox.downloadMedia(media.path_lower)
-      .then(blob => {
-        let reader = new FileReader()
-        reader.readAsDataURL(blob)
+    return ((dispatch) => {
+      if(media.isFavorite) {
+        media.isFavorite = false
+        media.highResThumbnail = null
+        dispatch(media)
+        db.get(media._id).then((doc) => {
+          db.put(media, doc._id, doc._rev).catch(err => { console.log(err) })
+        }).catch(err => { console.log(err) })
 
-        reader.onloadend = () => {
-          media.isFavorite = true
-          media.highResThumbnail = reader.result
-          db.put(media, media._id, media._rev).catch(err => { throw(err) })
-        }
-      }).catch(err => { throw(err) })
-    }
+      } else {
+        media.isFavorite = true
+        dispatch(media)
+
+        dropbox.downloadMedia(media.path_lower)
+        .then(blob => {
+          let reader = new FileReader()
+          reader.readAsDataURL(blob)
+
+          reader.onloadend = () => {
+            media.highResThumbnail = reader.result
+            // We need to get the latest doc revision to avoid conflicts
+            db.get(media._id).then((doc) => {
+              db.put(media, doc._id, doc._rev).catch(err => { console.log(err) })
+            }).catch(err => { console.log(err) })
+            dispatch(media)
+          }
+        }).catch(err => { console.log(err) })
+      }
+    })
   }
 
 }
