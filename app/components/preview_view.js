@@ -14,7 +14,7 @@ export default class PreviewView extends Component {
     this.state = {
       media: props.media,
       library: props.library,
-      mediaFile: '',
+      mediaFile: props.media.highResThumbnail || '',
       loading: false,
       loadingPercent: 0,
       isClosingPreview: false
@@ -25,10 +25,12 @@ export default class PreviewView extends Component {
   }
 
   componentWillMount() {
-    this.setState({
-      loading: true,
-      loadingPercent: 0
-    })
+    if(!this.props.media.highResThumbnail) {
+      this.setState({
+        loading: true,
+        loadingPercent: 0
+      })
+    }
   }
 
   componentDidMount() {
@@ -41,6 +43,11 @@ export default class PreviewView extends Component {
   }
 
   downloadMedia() {
+    // If it's a favorite we already have the high res image
+    if(this.state.media.highResThumbnail) {
+      return setTimeout(() => { this.setState({ mediaFile: this.state.media.highResThumbnail})}, 0)
+    }
+
     let data = []
     let contentLength = 0
     let dataLength = 0
@@ -89,12 +96,18 @@ export default class PreviewView extends Component {
       // Esc button pressed
       case 27:
         this.setState({ isClosingPreview: true, mediaFile: '' })
-        this.req.abort()
+        try {
+          this.req.abort()
+        } catch(e) { /* We're dealing with a favorite it's ok :) */ }
+
         AppActions.hidePreview()
         break
       // Left arrow pressed
       case 37:
-        this.req.abort()
+        try {
+          this.req.abort()
+        } catch(e) { /* We're dealing with a favorite it's ok :) */ }
+
         setTimeout(() => { this.setState({ mediaFile: ''})}, 0)
         if(index - 1 < 0) break
         this.setState({ media: this.state.library[index - 1]})
@@ -102,7 +115,9 @@ export default class PreviewView extends Component {
         break
       // Right arrow pressed
       case 39:
-        this.req.abort()
+        try {
+          this.req.abort()
+        } catch(e) { /* We're dealing with a favorite it's ok :) */ }
         setTimeout(() => { this.setState({ mediaFile: ''})}, 0)
         if(index + 1 >= this.state.library.length) break
         this.setState({ media: this.state.library[index + 1]})

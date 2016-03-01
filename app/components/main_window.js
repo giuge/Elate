@@ -95,7 +95,7 @@ export default class MainWindow extends Component {
 
   handleTrash() {
     let itmeStr = `${this.props.selectedItems.length == 1 ? 'This item' : 'These items'}`
-    let msgStr =  'will be permanently deleted from Elate and Dropbox.'
+    let msgStr =  'will be deleted both from Elate and Dropbox.'
     let message = `${itmeStr} ${msgStr}`
 
     let choice = dialog.showMessageBox(

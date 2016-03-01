@@ -3,6 +3,7 @@ import connectToStores from 'alt-utils/lib/connectToStores'
 
 import AppActions from './../actions/app_actions'
 import SelectionActions from './../actions/selection_actions'
+import LibraryActions from './../actions/library_actions'
 import SelectionStore from './../stores/selection_store'
 
 export default class SingleMedia extends Component {
@@ -28,6 +29,10 @@ export default class SingleMedia extends Component {
     AppActions.previewItem(this.props.media)
   }
 
+  addFavorite() {
+    LibraryActions.addToFavorites(this.props.media)
+  }
+
   renderDuration() {
     if(this.props.media.media_info && this.props.media.media_info.metadata) {
       if(this.props.media.media_info.metadata.duration) {
@@ -46,12 +51,23 @@ export default class SingleMedia extends Component {
       className = 'selected'
     }
 
+    let image = ''
+    if(this.props.media.isFavorite) {
+      image = 'is-favorite.svg'
+    } else {
+      image = 'favorites.svg'
+    }
+
     if(this.props.media.media_info &&
       this.props.media.media_info.metadata &&
       this.props.media.media_info.metadata.tag === 'video') {
       return (
         <div className={`video ${className}`}>
-          <img onClick={(event) => { this.handleClick(event) }} 
+          <img onClick={() => { this.addFavorite() }}
+            src={`assets/${image}`}
+            className='addFavorite' />
+
+          <img onClick={(event) => { this.handleClick(event) }}
             onDoubleClick={() => { this.handleDoubleClick() }}
             src={this.props.media.thumbnail}
             className='picture' />
@@ -61,6 +77,10 @@ export default class SingleMedia extends Component {
     }
     return (
       <div className={`picture ${className}`}>
+        <img onClick={() => { this.addFavorite() }}
+          src={`assets/${image}`}
+          className='addFavorite' />
+
         <img
           onClick={(event) => { this.handleClick(event) }}
           onDoubleClick={() => { this.handleDoubleClick() }}

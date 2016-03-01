@@ -22,7 +22,7 @@ class LibraryActions {
         results.rows.map((row) => { library.push(row.doc) })
         dispatch(_.orderBy(library, 'sortDate', 'desc'))
       })
-      .catch((err) => { console.log(err) })
+      .catch((err) => { throw(err) })
     })
   }
 
@@ -71,13 +71,13 @@ class LibraryActions {
                 sound: true,
                 wait: false
               }, function (err, response) {
-                if(err) console.log(err)
+                if(err) throw(err)
               })
             }
 
           })
           .catch((err) => {
-            console.log(err)
+            throw(err)
           })
         })
 
@@ -98,7 +98,7 @@ class LibraryActions {
         dispatch(_.orderBy(importedMedia, 'sortDate', 'desc'))
       })
       .catch((err) => {
-        console.log(err)
+        throw(err)
       })
     })
   }
@@ -110,6 +110,31 @@ class LibraryActions {
    */
   deleteLibrary() {
     return false
+  }
+
+  /**
+   * Adds a media to favorites and download the high res picture
+   * for offline usage.
+   * @param: {Object} the media to favorite
+   */
+  addToFavorites(media) {
+    if(media.isFavorite) {
+      media.isFavorite = false
+      media.highResThumbnail = null
+      db.put(media, media._id, media._rev).catch(err => { throw(err) })
+    } else {
+      dropbox.downloadMedia(media.path_lower)
+      .then(blob => {
+        let reader = new FileReader()
+        reader.readAsDataURL(blob)
+
+        reader.onloadend = () => {
+          media.isFavorite = true
+          media.highResThumbnail = reader.result
+          db.put(media, media._id, media._rev).catch(err => { throw(err) })
+        }
+      }).catch(err => { throw(err) })
+    }
   }
 
 }

@@ -1,4 +1,5 @@
 import remote from 'remote'
+import env from './env'
 
 /**
  * The menu template
@@ -158,6 +159,23 @@ if (process.platform == 'darwin') {
       role: 'front'
     }
   );
+}
+
+if(env.name !== 'production') {
+  template.push(
+    {
+      label: 'Development',
+      submenu:
+      [{
+        label: 'Toggle DevTools',
+        accelerator: 'Alt+CmdOrCtrl+I',
+        click: (item, focusedWindow) => {
+          if (focusedWindow)
+            focusedWindow.toggleDevTools()
+        }
+      }]
+    }
+  )
 }
 
 const Menu = remote.Menu

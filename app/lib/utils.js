@@ -19,6 +19,9 @@ export default class Utils {
       media.tag = media['.tag']
       delete media['.tag']
 
+      media.isFavorite = false
+      media.highResThumbnail = null
+
       if(media.media_info) {
         media.media_info.tag = media.media_info['.tag']
         delete media.media_info['.tag']

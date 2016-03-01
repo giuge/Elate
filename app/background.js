@@ -88,7 +88,6 @@ app.on('ready', () => {
     })
 
     if (env.name !== 'production' && env.name !== 'test') {
-      devHelper.setDevMenu()
       mainWindow.openDevTools({detached: true})
     }
 

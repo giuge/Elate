@@ -29,3 +29,24 @@
     cursor: default;
   }
 }
+
+.video, .picture {
+  position: relative;
+
+  &:hover, &.selected {
+    .addFavorite {
+      opacity: 1;
+    }
+  }
+
+  .addFavorite {
+    width: 15px !important;
+    height: 15px !important;
+    position: absolute;
+    z-index: 999;
+    right: auto;
+    margin: 5px;
+    opacity: 0;
+    box-shadow: none !important;
+  }
+}
