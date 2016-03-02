@@ -58,8 +58,9 @@ export default class ImportLibrary extends Component {
   }
 
   handleClick() {
-    this.setState({isImporting: true})
     let finishAt = this.state.mediaToImport.length
+
+    this.setState({isImporting: true})
 
     for(let i in this.state.mediaToImport) {
       let data = []
@@ -74,12 +75,12 @@ export default class ImportLibrary extends Component {
             'size': {'.tag': 'w640h480'}
           })
         }
-      }).then(response => {
+      }).then((response) => {
         let json = JSON.parse(response.headers.get('dropbox-api-result'))
         return response.blob().then(blob => {
           return {json, blob}
         })
-      }).catch(reason => {
+      }).catch((reason) => {
         // We were not able to fetch this media due to an unsupported format
         --finishAt
       }).then(data => {
@@ -96,27 +97,34 @@ export default class ImportLibrary extends Component {
   }
 
   renderButton() {
-    if(!this.state.isImporting && this.state.mediaToImport.length > 0) {
+    let {isImporting, mediaToImport} = this.state
+
+    if(!isImporting && mediaToImport.length > 0) {
       return <a onClick={() => { this.handleClick() }} className='button'>Import Library</a>
-    } else if (!this.state.isImporting && this.state.mediaToImport.length <= 0) {
+    } else if (!isImporting && mediaToImport.length <= 0) {
       return <p>Fetching file list</p>
     } else return
   }
 
   renderProgressText() {
-    if (this.state.isImporting) {
-      return <p>Downloading {this.state.importedMedia.length} of {this.state.mediaToImport.length}</p>
+    let {isImporting, mediaToImport, importedMedia} = this.state
+
+    if (isImporting) {
+      return <p>Downloading {importedMedia.length} of {mediaToImport.length}</p>
     }
-    return <p>Total media: {this.state.mediaToImport.length}</p>
+    return <p>Total media: {mediaToImport.length}</p>
   }
 
   renderWelcomeIntro() {
-    if(this.props.account_info) {
+    let {account_info} = this.props
+    let {isImporting} = this.state
+
+    if(account_info) {
       return (
         <div className='welcome'>
-          <img src={this.props.account_info.profile_photo_url} />
-          <h2 className={this.state.isImporting ? 'hidden' : ''}>Welcome, {this.props.account_info.name.given_name}</h2>
-          <h2 className={!this.state.isImporting ? 'hidden' : ''}>You're almost done</h2>
+          <img src={account_info.profile_photo_url} />
+          <h2 className={isImporting ? 'hidden' : ''}>Welcome, {account_info.name.given_name}</h2>
+          <h2 className={!isImporting ? 'hidden' : ''}>You're almost done</h2>
           {this.renderButton()}
         </div>
       )
@@ -124,16 +132,18 @@ export default class ImportLibrary extends Component {
 
     return (
       <div className='welcome'>
-        <h2 className={this.state.isImporting ? 'hidden' : ''}>Welcome, stranger</h2>
-        <h2 className={!this.state.isImporting ? 'hidden' : ''}>You're almost done</h2>
+        <h2 className={isImporting ? 'hidden' : ''}>Welcome, stranger</h2>
+        <h2 className={!isImporting ? 'hidden' : ''}>You're almost done</h2>
         {this.renderButton()}
       </div>
     )
   }
 
   render () {
+    let {mediaToImport, importedMedia} = this.state
     let shouldWait = true
-    if(this.state.mediaToImport.length > 0) {
+
+    if(mediaToImport.length > 0) {
       shouldWait = false
     }
 
@@ -144,8 +154,8 @@ export default class ImportLibrary extends Component {
           {this.renderProgressText()}
           <progress
             className={shouldWait ? 'hidden' : ''}
-            value={this.state.importedMedia.length}
-            max={this.state.mediaToImport.length} />
+            value={importedMedia.length}
+            max={mediaToImport.length} />
         </div>
       </div>
     )

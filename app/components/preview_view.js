@@ -43,9 +43,12 @@ export default class PreviewView extends Component {
   }
 
   downloadMedia() {
+    let media = this.state.media
     // If it's a favorite we already have the high res image
-    if(this.state.media.highResThumbnail) {
-      return setTimeout(() => { this.setState({ mediaFile: this.state.media.highResThumbnail})}, 0)
+    if(media.highResThumbnail) {
+      return setTimeout(() => {
+        this.setState({ mediaFile: media.highResThumbnail })
+      }, 0)
     }
 
     let data = []
@@ -55,7 +58,7 @@ export default class PreviewView extends Component {
     this.req = request
     .post(`${CONTENT_ROOT}/files/download`)
     .set('Authorization', `Bearer ${TOKEN}`)
-    .set('Dropbox-API-Arg', JSON.stringify({ 'path': `${this.state.media.path_lower}`}))
+    .set('Dropbox-API-Arg', JSON.stringify({ 'path': `${media.path_lower}`}))
     .end((err, res) => {
       contentLength = res.headers['original-content-length']
       res.on('data', (chunk)  => {
@@ -87,11 +90,13 @@ export default class PreviewView extends Component {
   }
 
   handleKeyDown(event) {
-    this.setState({ loading: false })
-    URL.revokeObjectURL(this.state.mediaFile)
+    let {media, mediaFile, library} = this.state
 
-    const item = this.state.media
-    const index = _.findIndex(this.state.library, o => { return o.id === item.id })
+    this.setState({ loading: false })
+    URL.revokeObjectURL(mediaFile)
+
+    const item = media
+    const index = _.findIndex(library, o => { return o.id === item.id })
     switch(event.keyCode) {
       // Esc button pressed
       case 27:
@@ -110,7 +115,7 @@ export default class PreviewView extends Component {
 
         setTimeout(() => { this.setState({ mediaFile: ''})}, 0)
         if(index - 1 < 0) break
-        this.setState({ media: this.state.library[index - 1]})
+        this.setState({ media: library[index - 1]})
         this.downloadMedia()
         break
       // Right arrow pressed
@@ -119,18 +124,20 @@ export default class PreviewView extends Component {
           this.req.abort()
         } catch(e) { /* We're dealing with a favorite it's ok :) */ }
         setTimeout(() => { this.setState({ mediaFile: ''})}, 0)
-        if(index + 1 >= this.state.library.length) break
-        this.setState({ media: this.state.library[index + 1]})
+        if(index + 1 >= library.length) break
+        this.setState({ media: library[index + 1]})
         this.downloadMedia()
         break
     }
   }
 
   renderLoader() {
-    if(this.state.loading) {
+    let {loading, loadingPercent} = this.state
+
+    if(loading) {
       return (
         <div className='circularProgress'>
-          <Circle percent={this.state.loadingPercent} strokeWidth='10' strokeColor='#fff' />
+          <Circle percent={loadingPercent} strokeWidth='10' strokeColor='#fff' />
         </div>
       )
     }
@@ -138,17 +145,18 @@ export default class PreviewView extends Component {
   }
 
   renderMedia() {
-    if(this.state.media.media_info &&
-      this.state.media.media_info.metadata &&
-      this.state.media.media_info.metadata.tag === 'video') {
-      if(this.state.loading || this.state.mediaFile === '') {
-        return <img src={this.state.media.thumbnail} />
+    let {media_info, thumbnail} = this.state.media
+    let {loading, mediaFile} = this.state
+
+    if(media_info && media_info.metadata && media_info.metadata.tag === 'video') {
+      if(loading || mediaFile === '') {
+        return <img src={thumbnail} />
       } else {
         // TODO: We need to create a better video component to use
-        return <video src={this.state.mediaFile} controls poster={this.state.media.thumbnail} />
+        return <video src={mediaFile} controls poster={thumbnail} />
       }
     }
-    return <img src={this.state.mediaFile === '' ? this.state.media.thumbnail : this.state.mediaFile} />
+    return <img src={mediaFile === '' ? thumbnail : mediaFile} />
   }
 
   render () {

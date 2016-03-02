@@ -29,14 +29,16 @@ export default class SingleMedia extends Component {
     AppActions.previewItem(this.props.media)
   }
 
-  addFavorite() {
+  addFavorite(event) {
     LibraryActions.addToFavorites(this.props.media)
   }
 
   renderDuration() {
-    if(this.props.media.media_info && this.props.media.media_info.metadata) {
-      if(this.props.media.media_info.metadata.duration) {
-        let ms = this.props.media.media_info.metadata.duration
+    let { media_info } = this.props.media
+
+    if(media_info && media_info.metadata) {
+      if(media_info.metadata.duration) {
+        let ms = media_info.metadata.duration
         let min = (ms/1000/60) << 0
         let sec = parseInt((ms/1000) % 60)
 
@@ -46,30 +48,31 @@ export default class SingleMedia extends Component {
   }
 
   render () {
+    let media = this.props.media
+    let { media_info, thumbnail } = media
     let className = ''
-    if(this.props.selectedItems.indexOf(this.props.media) !== -1) {
+
+    if(this.props.selectedItems.indexOf(media) !== -1) {
       className = 'selected'
     }
 
     let image = ''
-    if(this.props.media.isFavorite) {
+    if(media.isFavorite) {
       image = 'is-favorite.svg'
     } else {
-      image = 'favorites.svg'
+      image = 'to-favorite.svg'
     }
 
-    if(this.props.media.media_info &&
-      this.props.media.media_info.metadata &&
-      this.props.media.media_info.metadata.tag === 'video') {
+    if(media_info && media_info.metadata && media_info.metadata.tag === 'video') {
       return (
         <div className={`video ${className}`}>
-          <img onClick={() => { this.addFavorite() }}
+          <img onClick={(event) => { this.addFavorite(event) }}
             src={`assets/${image}`}
             className='addFavorite' />
 
           <img onClick={(event) => { this.handleClick(event) }}
             onDoubleClick={() => { this.handleDoubleClick() }}
-            src={this.props.media.thumbnail}
+            src={thumbnail}
             className='picture' />
           {this.renderDuration()}
         </div>
@@ -77,14 +80,14 @@ export default class SingleMedia extends Component {
     }
     return (
       <div className={`picture ${className}`}>
-        <img onClick={() => { this.addFavorite() }}
+        <img onClick={(event) => { this.addFavorite(event) }}
           src={`assets/${image}`}
           className='addFavorite' />
 
         <img
           onClick={(event) => { this.handleClick(event) }}
           onDoubleClick={() => { this.handleDoubleClick() }}
-          src={this.props.media.thumbnail}
+          src={thumbnail}
           className='picture' />
       </div>
     )

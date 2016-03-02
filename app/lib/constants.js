@@ -32,7 +32,6 @@ export const GEOCODER_API_ROOT = `http://dev.virtualearth.net/REST/v1/Locations/
 // Media we support in our app
 export const SUPPORTED_MIME_TYPES = [
   'bmp', 'gif', 'jpg', 'jpeg', 'png',
-  'pjpeg', 'tiff', 'webp', 'x-tiff',
-  'avi', 'mp4', 'mov', 'moov', 'pdf',
+  'pjpeg', 'avi', 'mp4', 'mov', 'moov', 'pdf',
   'jpe', 'mpeg'
 ]

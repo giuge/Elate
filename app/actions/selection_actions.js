@@ -26,6 +26,14 @@ class SelectionActions {
     return item
   }
 
+  /**
+   * Selects the media item
+   * @param {Object} item
+   */
+  clearSelection() {
+    return true
+  }
+
 }
 
 

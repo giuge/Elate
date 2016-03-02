@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="15px" height="13px" viewBox="0 0 15 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6 (26304) - http://www.bohemiancoding.com/sketch -->
+    <title>Favorites</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" filter="url(#filter-1)">
+        <g id="favorites" transform="translate(1.000000, 1.000000)" stroke="#FFFFFF">
+            <g id="UI">
+                <g id="Desktop-HD-Copy">
+                    <g id="Group-5">
+                        <g id="Group-3">
+                            <path d="M11.9343488,0.869526038 C10.670683,-0.289842013 8.62176068,-0.289842013 7.35809485,0.869526038 L6.50028342,1.65704984 L5.6417162,0.869526038 C4.37805038,-0.289842013 2.32988387,-0.289842013 1.06621804,0.869526038 C-0.355406014,2.17475982 -0.355406014,4.28565615 1.06621804,5.59013415 L6.50028342,10.577533 L11.9343488,5.59013415 C13.3552171,4.28565615 13.3552171,2.17400404 11.9343488,0.869526038 L11.9343488,0.869526038 L11.9343488,0.869526038 Z" id="Favorites"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

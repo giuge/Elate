@@ -7,7 +7,8 @@ class SelectionStore {
     this.bindListeners({
       handleSingleSelectItem: SelectionActions.SINGLE_SELECT_ITEM,
       handleSelectItem: SelectionActions.SELECT_ITEM,
-      handleDeselectItem: SelectionActions.DESELECT_ITEM
+      handleDeselectItem: SelectionActions.DESELECT_ITEM,
+      handleClearSelection: SelectionActions.CLEAR_SELECTION
     })
 
     this.state = {
@@ -36,6 +37,10 @@ class SelectionStore {
     this.setState({
       selectedItems: this.state.selectedItems.filter((_, i) => i !== index)
     })
+  }
+
+  handleClearSelection() {
+    this.setState({ selectedItems: []})
   }
 
 }

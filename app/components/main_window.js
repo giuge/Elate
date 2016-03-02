@@ -90,6 +90,12 @@ export default class MainWindow extends Component {
         SelectionActions.singleSelectItem(this.props.library[index + 1])
         this.ensureVisible()
         break
+      // Esc button pressed
+      case 27:
+        if(!this.props.previewItem) {
+          SelectionActions.clearSelection()
+        }
+        break
     }
   }
 
