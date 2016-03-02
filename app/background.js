@@ -17,8 +17,8 @@ import env from './lib/env'
 // Create a reference to the main window
 let mainWindow
 let mainWindowState = windowStateKeeper('main', {
-  width: 1024,
-  height: 650
+  width: 1000,
+  height: 600
 })
 
 app.on('ready', () => {
@@ -42,12 +42,12 @@ app.on('ready', () => {
 
     mainWindow.loadURL('file://' + __dirname + '/spec.html')
 
-    // In a test env we hide every window that gets created
+    // Quit the app when tests are finished
     ipcMain.on('tests-finished', () => {
       //app.quit()
     })
 
-    // Pretty print test logs and update dock on errors
+    // Pretty print test logs
     ipcMain.on('test-logs', (event, message) => {
       if(message.indexOf('✗') !== -1 ) {
         console.log('\x1b[31m%s\x1b[0m', message)
@@ -68,8 +68,9 @@ app.on('ready', () => {
       width: mainWindowState.width,
       height: mainWindowState.height,
       title: 'Elate',
-      titleBarStyle: 'hidden-inset',
+      //titleBarStyle: 'hidden-inset',
       background: '#181818',
+      frame: false,
       // Avoid the white background flash since it's a dark UI
       show: false
     })
@@ -133,6 +134,7 @@ app.on('activate', () => {
       title: 'Elate',
       titleBarStyle: 'hidden-inset',
       background: '#181818',
+      frame: false,
       // Avoid the white background flash since it's a dark UI
       show: false
     })

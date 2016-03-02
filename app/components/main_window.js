@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
 import remote, { dialog } from 'remote'
 import {findDOMNode} from 'react-dom'
@@ -14,6 +15,7 @@ import SelectionStore from './../stores/selection_store'
 import SelectionActions from './../actions/selection_actions'
 import LibraryActions from './../actions/library_actions'
 import AppActions from './../actions/app_actions'
+import NavigationStore from './../stores/navigation_store'
 
 
 export default class MainWindow extends Component {
@@ -24,11 +26,14 @@ export default class MainWindow extends Component {
   }
 
   static getStores() {
-    return [SelectionStore]
+    return [SelectionStore, NavigationStore]
   }
 
   static getPropsFromStores() {
-    return {...SelectionStore.getState()}
+    return {
+      ...SelectionStore.getState(),
+      ...NavigationStore.getState()
+    }
   }
 
   componentDidMount() {
@@ -120,20 +125,49 @@ export default class MainWindow extends Component {
 
   renderPreview() {
     if(this.props.previewItem) {
-      return (
-        <PreviewView
-          library={this.props.library}
-          media={this.props.previewItem} />
-      )
+
+      if(this.props.showFavorites) {
+        let library = []
+        this.props.library.forEach((item) => {
+          if(item.isFavorite) library.push(item)
+        })
+        
+        return (
+          <PreviewView
+            library={library}
+            media={this.props.previewItem} />
+        )
+      }
+
+      else {
+        return (
+          <PreviewView
+            library={this.props.library}
+            media={this.props.previewItem} />
+        )
+      }
     } return
+  }
+
+  renderView() {
+    if(this.props.showFavorites) {
+      let library = []
+      this.props.library.forEach((item) => {
+        if(item.isFavorite) library.push(item)
+      })
+      return <LibraryView library={library} />
+    } else {
+      return <LibraryView {...this.props} />
+    }
   }
 
   render () {
     return (
       <div className='container'>
-        {process.platform === 'darwin' ? <TopBar /> : ''}
+        <TopBar />
         {this.renderPreview()}
         <Sidebar isSyncingDB={this.props.isSyncingDB} />
+        {this.renderView()}
         <LibraryView {...this.props} />
       </div>
     )

@@ -5,21 +5,30 @@ import remote from 'remote'
 export default class TopBar extends Component {
   constructor(props) {
     super(props)
+
+    this.currentWindow = remote.getCurrentWindow()
   }
 
-  handleDoubleClick() {
-    let currentWindow = remote.getCurrentWindow()
-    let bounds = currentWindow.getBounds()
-    if(bounds.width !== screen.width && bounds.height !== screen.height) {
-      currentWindow.maximize()
-    } else {
-      currentWindow.unmaximize()
-    }
+  closeWindow() {
+    this.currentWindow.close()
+  }
+
+  minimizeWindow() {
+    this.currentWindow.minimize()
+  }
+
+  maximizeWindow() {
+    this.currentWindow.maximize()
   }
 
   render () {
     return (
-      <div className='topBar' onDoubleClick={() => { this.handleDoubleClick() }}>
+      <div className='topBar' onDoubleClick={() => { this.maximizeWindow() }}>
+        <ul className={`titleBar ${process.platform}`}>
+          <li className='close' onClick={() => { this.closeWindow() }} />
+          <li className='minimize' onClick={() => { this.minimizeWindow() }} />
+          <li className='fullscreen' onClick={() => { this.maximizeWindow() }} />
+        </ul>
       </div>
     )
   }

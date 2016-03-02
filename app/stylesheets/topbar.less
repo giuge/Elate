@@ -7,6 +7,73 @@
   background: #1e1e1e;
   border-bottom: 1px solid #191919;
   text-align: center;
+  // Enale window dragging
+  -webkit-app-region: drag;
+  -webkit-user-select: none;
+
+  .titleBar {
+    padding: 0;
+    margin: 7px 9px;
+    align-self: center;
+    display: flex;
+    -webkit-app-region: no-drag;
+
+    li {
+      -webkit-transition: all .2s ease-out;
+      margin: 5px;
+      display: inline-flex;
+      list-style: none;
+      height: 14px;
+      width: 14px;
+
+      &:hover {
+        -webkit-transition: all .2s ease-in;
+        opacity: .5;
+      }
+    }
+
+    &.darwin {
+      float: left;
+
+      .close {
+        background: url('./../assets/close-osx.svg') no-repeat;
+        order: 1;
+      }
+
+      .minimize {
+        background: url('./../assets/minimize-osx.svg') no-repeat;
+        order: 2;
+      }
+
+      .fullscreen {
+        background: url('./../assets/maximize-osx.svg') no-repeat;
+        order: 3;
+      }
+    }
+
+    &.win32 {
+      float: right;
+
+      li {
+        margin: 5px 7px;
+      }
+
+      .close {
+        background: url('./../assets/close-win32.svg') no-repeat;
+        order: 3;
+      }
+
+      .minimize {
+        background: url('./../assets/minimize-win32.svg') no-repeat;
+        order: 1;
+      }
+
+      .fullscreen {
+        background: url('./../assets/maximize-win32.svg') no-repeat;
+        order: 2;
+      }
+    }
+  }
 
   .title {
     text-align: center;
