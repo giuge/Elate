@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { remote } from 'electron'
+
 import NavigationActions from './../actions/navigation_actions'
+import SelectionActions from './../actions/selection_actions'
 
 
 export default class Sidebar extends Component {
@@ -32,6 +34,8 @@ export default class Sidebar extends Component {
     }
     event.target.closest('li').classList.add('active')
     listView.scrollTop = 0
+
+    SelectionActions.clearSelection()
   }
 
   showAllMedia(event) {
