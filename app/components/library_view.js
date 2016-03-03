@@ -39,6 +39,22 @@ export default class LibraryView extends Component {
   }
 
   renderList() {
+    if(this.props.emptyLibrary) {
+      return (
+        <div>
+          <h2>Your library is empty!</h2>
+        </div>
+      )
+    }
+
+    if(this.props.emptyFavorites && this.props.showFavorites) {
+      return (
+        <div>
+          <h2>You don't have any favorites!</h2>
+        </div>
+      )
+    }
+
     if(this.state.chunks.length > 0) {
       return (
         <ReactList

@@ -25,7 +25,8 @@ export default class MainWindow extends Component {
     super(props)
 
     this.state = {
-      library: this.props.library
+      library: this.props.library,
+      showFavorites: false
     }
 
     this.handleKeyDown = this.handleKeyDown.bind(this)
@@ -56,10 +57,16 @@ export default class MainWindow extends Component {
       nextProps.library.forEach((item) => {
         if(item.isFavorite) library.push(item)
       })
-      this.setState({library})
+      this.setState({
+        library: library,
+        showFavorites: true
+      })
     } else if(nextProps.showAllMedia) {
       let library = nextProps.library
-      this.setState({library})
+      this.setState({
+        library: library,
+        showFavorites: false
+      })
     }
   }
 
@@ -162,7 +169,12 @@ export default class MainWindow extends Component {
         {this.renderPreview()}
         <Sidebar isSyncingDB={this.props.isSyncingDB} />
         {this.renderView()}
-        <LibraryView library={this.state.library} />
+
+        <LibraryView
+          library={this.state.library}
+          emptyLibrary={this.props.emptyLibrary}
+          emptyFavorites={this.props.emptyFavorites}
+          showFavorites={this.state.showFavorites} />
       </div>
     )
   }

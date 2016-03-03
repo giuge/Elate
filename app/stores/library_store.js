@@ -14,22 +14,31 @@ class LibraryStore {
     })
 
     this.state = {
-      library: []
+      library: [],
+      emptyLibrary: false,
+      emptyFavorites: false
     }
   }
 
   handleLoadDatabase(library) {
-    this.setState({library})
+    let emptyFavorites = this._checkFavorites(library)
+    let emptyLibrary = library.length < 0 ? emptyLibrary = true : emptyLibrary = false
+
+    this.setState({library, emptyFavorites, emptyLibrary})
   }
 
   handleSaveAfterImport(library) {
-    this.setState({library})
+    let emptyLibrary = library.length < 0 ? emptyLibrary = true : emptyLibrary = false
+
+    this.setState({library, emptyLibrary})
   }
 
   handleDeleteMedia(media) {
-    this.setState({
-      library: _.difference(this.state.library, media)
-    })
+    let library = _.difference(this.state.library, media)
+    let emptyFavorites = this._checkFavorites(library)
+    let emptyLibrary = library.length < 0 ? emptyLibrary = true : emptyLibrary = false
+
+    this.setState({library, emptyFavorites, emptyLibrary})
   }
 
   handleAddToFavorites(media) {
@@ -45,7 +54,21 @@ class LibraryStore {
       $splice: [[index, 1, updatedMedia]]
     })
 
-    this.setState({library: newLibrary})
+    let emptyFavorites = this._checkFavorites(newLibrary)
+
+    this.setState({
+      library: newLibrary,
+      emptyFavorites: emptyFavorites
+    })
+  }
+
+  _checkFavorites(library) {
+    for(let i in library) {
+      if(library[i].isFavorite) {
+        return false
+      }
+    }
+    return true
   }
 
 }

@@ -7,6 +7,8 @@
 
 // Handle win startup events asap
 setTimeout(() => { if (require('electron-squirrel-startup')) return }, 0)
+// Log uncaught exceptions
+process.on('uncaughtException', error => console.error(error.stack))
 
 
 import { app, BrowserWindow, autoUpdater, ipcMain } from 'electron'
