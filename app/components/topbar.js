@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import remote from 'remote'
-
+import ActionBar from './action_bar'
 
 export default class TopBar extends Component {
   constructor(props) {
@@ -29,6 +29,7 @@ export default class TopBar extends Component {
           <li className='minimize' onClick={() => { this.minimizeWindow() }} />
           <li className='fullscreen' onClick={() => { this.maximizeWindow() }} />
         </ul>
+        <ActionBar />
       </div>
     )
   }

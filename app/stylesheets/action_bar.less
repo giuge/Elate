@@ -1,28 +1,43 @@
 .actionBar {
-  position: absolute;
-  right: 15px;
-  bottom: 15px;
-  color: #fff;
-  background: #00B5FF;
-  padding: 5px !important;
-  border-radius: 2px;
+  align-self: center;
+  margin: 0;
+  order: 2;
+  float: right;
+  padding: 8px 10px;
+  -webkit-app-region: no-drag;
+
+  &.disabled li:after {
+    opacity: .2;
+  }
 
   li {
-    width: 26px;
-    height: 26px;
-    padding: 5px;
-    border: 1px solid white;
-    border-radius: 100%;
+    width: 35px;
+    height: 22px;
+    border-radius: 2px;
     text-align: center;
-    vertical-align: top;
+    vertical-align: middle;
+    margin: 0 5px;
+    background: #343434;
+    position: relative;
+    display: inline-block;
+
+    &:after {
+      display: inline-block;
+    }
+
+    &.plus:after {
+      content: url('./../assets/add-action.svg');
+      padding-top: 3px;
+    }
+
+    &.share:after {
+      content: url('./../assets/share-action.svg');
+      padding-top: 2px;
+    }
 
     img {
       margin-top: -1px;
     }
 
-    &:hover {
-      background: #1E1E1E;
-      border-color: #1E1E1E;
-    }
   }
 }
