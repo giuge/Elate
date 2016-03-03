@@ -21,8 +21,8 @@ export default class LibraryView extends Component {
   componentWillReceiveProps(nextProps) {
     if(nextProps.library) {
       let chunks = []
-      let sorteLibrary = _.orderBy(nextProps.library, 'sortDate', 'desc' )
-      let splittedLibrary = _.groupBy(sorteLibrary, 'displayDate')
+      let sortedLibrary = _.orderBy(nextProps.library, 'sortDate', 'desc' )
+      let splittedLibrary = _.groupBy(sortedLibrary, 'displayDate')
 
       _.forEach(splittedLibrary, (value, key) => {
         chunks.push(

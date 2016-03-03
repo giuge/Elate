@@ -5,9 +5,10 @@ import {findDOMNode} from 'react-dom'
 import utils from './../lib/utils'
 
 import LibraryView from './library_view'
+import AlbumsView from './albums_view'
+import PreviewView from './preview_view'
 import TopBar from './topbar'
 import Sidebar from './sidebar'
-import PreviewView from './preview_view'
 import Spinner from './spinner'
 
 import connectToStores from 'alt-utils/lib/connectToStores'
@@ -22,6 +23,11 @@ export default class MainWindow extends Component {
 
   constructor(props) {
     super(props)
+
+    this.state = {
+      library: this.props.library
+    }
+
     this.handleKeyDown = this.handleKeyDown.bind(this)
   }
 
@@ -44,32 +50,33 @@ export default class MainWindow extends Component {
     window.removeEventListener('keydown', this.handleKeyDown)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.showFavorites) {
+      let library = []
+      nextProps.library.forEach((item) => {
+        if(item.isFavorite) library.push(item)
+      })
+      this.setState({library})
+    } else if(nextProps.showAllMedia) {
+      let library = nextProps.library
+      this.setState({library})
+    }
+  }
+
   ensureVisible() {
     let listView = document.getElementsByClassName('listView')[0]
-    let listViewTop = listView.scrollTop
-    let listViewBottom = listViewTop + listView.innerHeight
-
     let selectedElem = document.getElementsByClassName('selected')[0]
-    let selectedElemTop = selectedElem.parentNode.getBoundingClientRect().top
-    let selectedElemBottom = selectedElem.parentNode.getBoundingClientRect().bottom
 
-    //let isVisible = (selectedElemTop >= 0) && (selectedElemBottom <= listView.innerHeight)
-    let isVisible = (listViewBottom  - 100 > selectedElemBottom) && (listViewTop + 100 < selectedElemTop)
-    let position = selectedElem.parentNode.offsetTop - 100
-
-    if(!isVisible) {
-      utils.smoothScrollTo(listView, position, 200).catch(() => {})
-      //listView.scrollTop = selectedElem.parentNode.offsetTop - 100
-    }
+    listView.scrollTop = selectedElem.parentNode.offsetTop - 100
   }
 
   handleKeyDown(event) {
     if(this.props.selectedItems.length <= 0) return
 
-    let index = _.findIndex(this.props.library, o => {
+    let index = _.findIndex(this.state.library, o => {
       return o._id === this.props.selectedItems[0]._id
     })
-
+    // TODO: we need to select photo from the correct library (eg: favorites)
     switch(event.keyCode) {
       // Canc button pressed
       case 46:
@@ -81,18 +88,18 @@ export default class MainWindow extends Component {
         break
       // Return key pressed
       case 13:
-        AppActions.previewItem(this.props.library[index])
+        AppActions.previewItem(this.state.library[index])
         break
       // Left arrow pressed
       case 37:
         if(index - 1 < 0) break
-        SelectionActions.singleSelectItem(this.props.library[index - 1])
+        SelectionActions.singleSelectItem(this.state.library[index - 1])
         this.ensureVisible()
         break
       // Right arrow pressed
       case 39:
-        if(index + 1 >= this.props.library.length) break
-        SelectionActions.singleSelectItem(this.props.library[index + 1])
+        if(index + 1 >= this.state.library.length) break
+        SelectionActions.singleSelectItem(this.state.library[index + 1])
         this.ensureVisible()
         break
       // Esc button pressed
@@ -125,50 +132,37 @@ export default class MainWindow extends Component {
 
   renderPreview() {
     if(this.props.previewItem) {
-
-      if(this.props.showFavorites) {
-        let library = []
-        this.props.library.forEach((item) => {
-          if(item.isFavorite) library.push(item)
-        })
-        
-        return (
-          <PreviewView
-            library={library}
-            media={this.props.previewItem} />
-        )
-      }
-
-      else {
-        return (
-          <PreviewView
-            library={this.props.library}
-            media={this.props.previewItem} />
-        )
-      }
-    } return
+      return (
+        <PreviewView
+          library={this.state.library}
+          media={this.props.previewItem} />
+      )
+    }
+    return
   }
 
   renderView() {
-    if(this.props.showFavorites) {
-      let library = []
-      this.props.library.forEach((item) => {
-        if(item.isFavorite) library.push(item)
-      })
-      return <LibraryView library={library} />
-    } else {
-      return <LibraryView {...this.props} />
+    if(this.props.showAlbums) {
+      return <AlbumsView />
     }
   }
 
   render () {
+    /**
+     * We keep the LibraryView around
+     * even if we are displaying another
+     * view that doesn't need it or the component
+     * will unmount causing a slow rerender.
+     * LibraryView will be pushed down, under the
+     * loaded view and will not be visible.
+     */
     return (
       <div className='container'>
         <TopBar />
         {this.renderPreview()}
         <Sidebar isSyncingDB={this.props.isSyncingDB} />
         {this.renderView()}
-        <LibraryView {...this.props} />
+        <LibraryView library={this.state.library} />
       </div>
     )
   }

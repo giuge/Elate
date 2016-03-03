@@ -26,6 +26,7 @@ export default class Sidebar extends Component {
 
   setActiveItem(event) {
     let listView = document.getElementsByClassName('listView')[0]
+    let albumsView = document.getElementsByClassName('albumsView')[0]
     let activeItems = document.querySelectorAll('li.active')
     for (let i in activeItems) {
       if(activeItems[i].classList) {
@@ -33,7 +34,12 @@ export default class Sidebar extends Component {
       }
     }
     event.target.closest('li').classList.add('active')
-    listView.scrollTop = 0
+
+    if(listView) {
+      listView.scrollTop = 0
+    } else if(albumsView) {
+      albumsView.scrollTop = 0
+    }
 
     SelectionActions.clearSelection()
   }
@@ -46,6 +52,11 @@ export default class Sidebar extends Component {
   showFavorites(event) {
     this.setActiveItem(event)
     NavigationActions.showFavorites()
+  }
+
+  showAlbums(event) {
+    this.setActiveItem(event)
+    NavigationActions.showAlbums()
   }
 
   render () {
@@ -61,7 +72,7 @@ export default class Sidebar extends Component {
             <img src='assets/favorites.svg'/>Favorites
           </li>
 
-          <li className='' onClick={(event) => { this.showFavorites(event) }}>
+          <li className='' onClick={(event) => { this.showAlbums(event) }}>
             <img src='assets/albums.svg'/>Albums
           </li>
           {/*<li className=''><img src='assets/albums.svg'/>Albums</li>
