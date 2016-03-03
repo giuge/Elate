@@ -158,7 +158,7 @@ export default class MainWindow extends Component {
      */
     return (
       <div className='container'>
-        <TopBar />
+        <TopBar shouldShowActionbar={true} />
         {this.renderPreview()}
         <Sidebar isSyncingDB={this.props.isSyncingDB} />
         {this.renderView()}

@@ -2,29 +2,18 @@ import React, { Component } from 'react'
 import { APP_KEY, APP_SECRET, OAUTH_REDIRECT_URL } from './../lib/constants'
 import remote from 'remote'
 
+import TopBar from './topbar'
 import AccountActions from './../actions/account_actions'
-
 
 let BrowserWinow = remote.BrowserWindow
 
 
-export default class DropboxConnect extends Component {
+export default class DropboxConnectWindow extends Component {
   constructor(props) {
     super(props)
     this.state = {
       session: Math.random().toString(10)
     }
-  }
-
-  // TODO: create a new window and don't mess with the main one
-  componentWillMount() {
-    let currentWindow = remote.getCurrentWindow()
-    currentWindow.setBounds({
-      width: 450,
-      height: 400,
-      y: parseInt(screen.height / 2 - 200),
-      x: parseInt(screen.width / 2 - 225)
-    })
   }
 
   /**
@@ -88,11 +77,14 @@ export default class DropboxConnect extends Component {
 
   render () {
     return (
-      <div className='container dropboxConnect'>
-        <h2>Ready to get started?</h2>
-        <a onClick={() => { this.handleClick() }} className='button'>
-        Connect to Dropbox</a>
-      <img src='assets/intro_logo.png' />
+      <div className='container'>
+        <TopBar />
+        <div className='dropboxConnect'>
+          <h2>Ready to get started?</h2>
+          <a onClick={() => { this.handleClick() }} className='button'>
+          Connect to Dropbox</a>
+          <img src='assets/intro_logo.png' />
+        </div>
       </div>
     )
   }

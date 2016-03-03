@@ -6,7 +6,7 @@
  */
 
 // Handle win startup events asap
-setTimeout(() => { if (require('electron-squirrel-startup')) return }, 1)
+setTimeout(() => { if (require('electron-squirrel-startup')) return }, 0)
 
 
 import { app, BrowserWindow, autoUpdater, ipcMain } from 'electron'
@@ -18,7 +18,8 @@ import env from './lib/env'
 let mainWindow
 let mainWindowState = windowStateKeeper('main', {
   width: 1000,
-  height: 600
+  height: 600,
+  backgroundColor: '#1E1E1E'
 })
 
 app.on('ready', () => {
@@ -36,7 +37,7 @@ app.on('ready', () => {
       width: 1000,
       height: 600,
       title: 'Elate',
-      background: '#fff',
+      backgroundColor: '#fff',
       show: true
     })
 
@@ -69,7 +70,7 @@ app.on('ready', () => {
       height: mainWindowState.height,
       title: 'Elate',
       //titleBarStyle: 'hidden-inset',
-      background: '#181818',
+      backgroundColor: '#1E1E1E',
       frame: false,
       // Avoid the white background flash since it's a dark UI
       show: false
@@ -99,7 +100,7 @@ app.on('ready', () => {
     })
 
     autoUpdater.on('error', (error) => {
-      mainWindow.webContents.executeJavaScript("console.log('Error');")
+      mainWindow.webContents.executeJavaScript("console.log('Error')")
     })
 
     ipcMain.on('updateRequired', () => {
@@ -133,7 +134,7 @@ app.on('activate', () => {
       height: mainWindowState.height,
       title: 'Elate',
       titleBarStyle: 'hidden-inset',
-      background: '#181818',
+      backgroundColor: '#181818',
       frame: false,
       // Avoid the white background flash since it's a dark UI
       show: false

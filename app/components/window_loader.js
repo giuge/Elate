@@ -9,8 +9,8 @@ import LibraryActions from './../actions/library_actions'
 import AppActions from './../actions/app_actions'
 import AccountActions from './../actions/account_actions'
 
-import DropboxConnect from './dropbox_connect'
-import ImportLibrary from './import_library'
+import DropboxConnectWindow from './dropbox_connect_window'
+import ImportLibraryWindow from './import_library_window'
 import MainWindow from './main_window'
 import Spinner from './spinner'
 
@@ -44,9 +44,9 @@ export class WindowLoader extends Component {
   }
 
   render() {
-    if(!this.props.token) return <DropboxConnect />
+    if(!this.props.token) return <DropboxConnectWindow />
     if(this.props.token && !this.props.has_imported_library)
-      return <ImportLibrary account_info={this.props.account_info} />
+      return <ImportLibraryWindow account_info={this.props.account_info} />
     return (
       <MainWindow {...this.props} />
     )

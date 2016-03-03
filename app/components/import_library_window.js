@@ -4,11 +4,12 @@ import dropbox from './../lib/dropbox'
 import utils from './../lib/utils'
 import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES, TOKEN, refreshToken } from './../lib/constants'
 
+import TopBar from './topbar'
 import LibraryActions from './../actions/library_actions'
 import AccountActions from './../actions/account_actions'
 
 
-export default class ImportLibrary extends Component {
+export default class ImportLibraryWindow extends Component {
 
   constructor(props) {
     super(props)
@@ -18,17 +19,6 @@ export default class ImportLibrary extends Component {
       mediaToImport: [],
       isImporting: false
     }
-  }
-
-  // TODO: create a new window and don't mess with the main one
-  componentWillMount() {
-    let currentWindow = remote.getCurrentWindow()
-    currentWindow.setBounds({
-      width: 450,
-      height: 400,
-      y: parseInt(screen.height / 2 - 200),
-      x: parseInt(screen.width / 2 - 225)
-    })
   }
 
   componentDidMount() {
@@ -43,18 +33,6 @@ export default class ImportLibrary extends Component {
       }
       this.setState({mediaToImport: media})
     })
-  }
-
-  componentWillUnmount() {
-    let currentWindow = remote.getCurrentWindow()
-    currentWindow.hide()
-    currentWindow.setBounds({
-      width: 1024,
-      height: 650,
-      y: parseInt(screen.height / 2 - 325),
-      x: parseInt(screen.width / 2 - 512)
-    })
-    currentWindow.show()
   }
 
   handleClick() {
@@ -149,6 +127,7 @@ export default class ImportLibrary extends Component {
 
     return (
       <div className='container'>
+        <TopBar />
         {this.renderWelcomeIntro()}
         <div className={shouldWait ? 'hidden bottom-bar' : 'bottom-bar'}>
           {this.renderProgressText()}

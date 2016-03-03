@@ -21,6 +21,10 @@ export default class TopBar extends Component {
     this.currentWindow.maximize()
   }
 
+  renderActionBar() {
+    if(this.props.shouldShowActionbar) return <ActionBar />
+  }
+
   render () {
     return (
       <div className='topBar' onDoubleClick={() => { this.maximizeWindow() }}>
@@ -29,7 +33,7 @@ export default class TopBar extends Component {
           <li className='minimize' onClick={() => { this.minimizeWindow() }} />
           <li className='fullscreen' onClick={() => { this.maximizeWindow() }} />
         </ul>
-        <ActionBar />
+        {this.renderActionBar()}
       </div>
     )
   }
