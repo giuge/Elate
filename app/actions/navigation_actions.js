@@ -7,7 +7,13 @@ class NavigationActions {
     return true
   }
 
+  // Shows the main view
   showAllMedia() {
+    return true
+  }
+
+  // Shows the album view
+  showAlbums() {
     return true
   }
 

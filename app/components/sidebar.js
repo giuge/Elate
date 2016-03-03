@@ -60,6 +60,10 @@ export default class Sidebar extends Component {
           <li className='' onClick={(event) => { this.showFavorites(event) }}>
             <img src='assets/favorites.svg'/>Favorites
           </li>
+
+          <li className='' onClick={(event) => { this.showFavorites(event) }}>
+            <img src='assets/albums.svg'/>Albums
+          </li>
           {/*<li className=''><img src='assets/albums.svg'/>Albums</li>
           <li className=''><img src='assets/shared.svg'/>Shared</li>*/}
         </ul>
