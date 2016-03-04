@@ -28,10 +28,11 @@ export default class SingleMedia extends Component {
     let nextMediaIndex = nextProps.selectedItems.indexOf(nextMedia)
 
     if(thisMedia.isFavorite == nextMedia.isFavorite) {
-      if(thisMediaIndex != nextMediaIndex) {
-        return true
-      } else return false
+      if(thisMediaIndex == nextMediaIndex) {
+        return false
+      }
     }
+    
     return true
   }
 
