@@ -3,13 +3,13 @@ import { ipcRenderer, remote } from 'electron'
 import sinon from 'sinon'
 import { render, mount } from 'enzyme'
 
-import DropboxConnect from './../components/dropbox_connect'
+import DropboxConnectWindow from './../components/dropbox_connect_window'
 
 
 describe('Dropbox login', () => {
 
   it('shows a login button', () => {
-    const wrapper = render(<DropboxConnect />)
+    const wrapper = render(<DropboxConnectWindow />)
     let button = wrapper.find('.button')
     expect(button.length).toBeGreaterThan(0)
   })
@@ -17,7 +17,7 @@ describe('Dropbox login', () => {
 
   it('shows the dropbox login page on click', () => {
     const onButtonClick = sinon.spy()
-    const wrapper = mount(<DropboxConnect />)
+    const wrapper = mount(<DropboxConnectWindow />)
 
     wrapper.find('.button').simulate('click')
 
