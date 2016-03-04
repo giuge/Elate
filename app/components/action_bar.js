@@ -3,7 +3,7 @@ import remote, { dialog } from 'remote'
 
 import connectToStores from 'alt-utils/lib/connectToStores'
 import SelectionStore from './../stores/selection_store'
-
+import NavigationActions from './../actions/navigation_actions'
 
 export default class ActionBar extends Component {
 
@@ -19,12 +19,25 @@ export default class ActionBar extends Component {
     return {...SelectionStore.getState()}
   }
 
-  handleAdd() {
-    if(this.props.selectedItems.length <= 0) return
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.selectedItems.length <= 0) {
+      let dropdowns = document.querySelectorAll('li.share .dropdown')
+      for (let i in dropdowns) {
+        if(dropdowns[i].classList) {
+          dropdowns[i].classList.add('inactive')
+        }
+      }
+    }
   }
 
   handleShare() {
     if(this.props.selectedItems.length <= 0) return
+    NavigationActions.showShare()
+  }
+
+  handleAdd() {
+    if(this.props.selectedItems.length <= 0) return
+    NavigationActions.showAdd()
   }
 
   render () {

@@ -17,6 +17,16 @@ class NavigationActions {
     return true
   }
 
+  // Shows the share view
+  showShare() {
+    return true
+  }
+
+  // Shows the add to album view
+  showAdd() {
+    return true
+  }
+
 }
 
 

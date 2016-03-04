@@ -5,6 +5,8 @@ import remote, { dialog } from 'remote'
 import LibraryView from './library_view'
 import AlbumsView from './albums_view'
 import PreviewView from './preview_view'
+import ShareView from './share_view'
+import AddView from './add_view'
 import TopBar from './topbar'
 import Sidebar from './sidebar'
 import Spinner from './spinner'
@@ -150,6 +152,10 @@ export default class MainWindow extends Component {
   renderView() {
     if(this.props.showAlbums) {
       return <AlbumsView />
+    } else if(this.props.showShare) {
+      return <ShareView />
+    } else if(this.props.showAdd) {
+      return <AddView />
     }
   }
 

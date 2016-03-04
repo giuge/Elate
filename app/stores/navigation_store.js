@@ -7,13 +7,17 @@ class NavigationStore {
     this.bindListeners({
       handleShowFavorites: NavigationActions.SHOW_FAVORITES,
       handleShowAllMedia: NavigationActions.SHOW_ALL_MEDIA,
-      handleShowAlbums: NavigationActions.SHOW_ALBUMS
+      handleShowAlbums: NavigationActions.SHOW_ALBUMS,
+      handleShowShare: NavigationActions.SHOW_SHARE,
+      handleShowAdd: NavigationActions.SHOW_ADD
     })
 
     this.state = {
       showAllMedia: true,
       showFavorites: false,
-      showAlbums: false
+      showAlbums: false,
+      showShare: false,
+      showAdd: false
     }
   }
 
@@ -21,7 +25,9 @@ class NavigationStore {
     this.setState({
       showFavorites: true,
       showAllMedia: false,
-      showAlbums: false
+      showAlbums: false,
+      showShare: false,
+      showAdd: false
     })
   }
 
@@ -29,7 +35,9 @@ class NavigationStore {
     this.setState({
       showAllMedia: true,
       showFavorites: false,
-      showAlbums: false
+      showAlbums: false,
+      showShare: false,
+      showAdd: false
     })
   }
 
@@ -37,7 +45,29 @@ class NavigationStore {
     this.setState({
       showAlbums: true,
       showAllMedia: false,
-      showFavorites: false
+      showFavorites: false,
+      showShare: false,
+      showAdd: false
+    })
+  }
+
+  handleShowShare() {
+    this.setState({
+      showShare: true,
+      showAlbums: false,
+      showAllMedia: false,
+      showFavorites: false,
+      showAdd: false
+    })
+  }
+
+  handleShowAdd() {
+    this.setState({
+      showAdd: true,
+      showAlbums: false,
+      showAllMedia: false,
+      showFavorites: false,
+      showShare: false
     })
   }
 
