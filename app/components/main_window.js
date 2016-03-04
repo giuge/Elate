@@ -1,8 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import remote, { dialog } from 'remote'
-import {findDOMNode} from 'react-dom'
-import utils from './../lib/utils'
 
 import LibraryView from './library_view'
 import AlbumsView from './albums_view'
@@ -83,6 +81,7 @@ export default class MainWindow extends Component {
     let index = _.findIndex(this.state.library, o => {
       return o._id === this.props.selectedItems[0]._id
     })
+
     // TODO: we need to select photo from the correct library (eg: favorites)
     switch(event.keyCode) {
       // Canc button pressed

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import connectToStores from 'alt-utils/lib/connectToStores'
 
 import AppActions from './../actions/app_actions'
@@ -18,6 +18,21 @@ export default class SingleMedia extends Component {
 
   static getPropsFromStores() {
     return {...SelectionStore.getState()}
+  }
+
+  // This improves performance a LOT! Only update if needed
+  shouldComponentUpdate(nextProps, nextState) {
+    let thisMedia = this.props.media
+    let nextMedia = nextProps.media
+    let thisMediaIndex = this.props.selectedItems.indexOf(thisMedia)
+    let nextMediaIndex = nextProps.selectedItems.indexOf(nextMedia)
+
+    if(thisMedia.isFavorite == nextMedia.isFavorite) {
+      if(thisMediaIndex != nextMediaIndex) {
+        return true
+      } else return false
+    }
+    return true
   }
 
   handleClick(event) {
