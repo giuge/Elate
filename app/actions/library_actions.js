@@ -124,7 +124,8 @@ class LibraryActions {
         media.highResThumbnail = null
         dispatch(media)
         db.get(media._id).then((doc) => {
-          db.put(media, doc._id, doc._rev).catch(err => { console.log(err) })
+          media._rev = doc._rev
+          db.put(media).catch(err => { console.log(err) })
         }).catch(err => { console.log(err) })
 
       } else {
@@ -140,8 +141,10 @@ class LibraryActions {
             media.highResThumbnail = reader.result
             // We need to get the latest doc revision to avoid conflicts
             db.get(media._id).then((doc) => {
-              db.put(media, doc._id, doc._rev).catch(err => { console.log(err) })
+              media._rev = doc._rev
+              db.put(media).catch(err => { console.log(err) })
             }).catch(err => { console.log(err) })
+
             dispatch(media)
           }
         }).catch(err => { console.log(err) })

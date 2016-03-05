@@ -6,7 +6,7 @@ import SingleMedia from './single_media'
 import Spinner from './spinner'
 import ActionBar from './action_bar'
 import LibraryChunk from './library_chunk'
-
+import FavoritesEmpty from './favorites_empty'
 
 export default class LibraryView extends Component {
 
@@ -48,11 +48,7 @@ export default class LibraryView extends Component {
     }
 
     if(this.props.emptyFavorites && this.props.showFavorites) {
-      return (
-        <div>
-          <h2>You don't have any favorites!</h2>
-        </div>
-      )
+      return ( <FavoritesEmpty />)
     }
 
     if(this.state.chunks.length > 0) {
