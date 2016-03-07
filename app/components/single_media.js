@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { Component, PropTypes } from 'react'
 import connectToStores from 'alt-utils/lib/connectToStores'
 
@@ -22,17 +23,14 @@ export default class SingleMedia extends Component {
 
   // This improves performance a LOT! Only update if needed
   shouldComponentUpdate(nextProps, nextState) {
-    let thisMedia = this.props.media
-    let nextMedia = nextProps.media
-    let thisMediaIndex = this.props.selectedItems.indexOf(thisMedia)
-    let nextMediaIndex = nextProps.selectedItems.indexOf(nextMedia)
+    let thisMediaIndex = this.props.selectedItems.indexOf(this.props.media)
+    let nextMediaIndex = nextProps.selectedItems.indexOf(nextProps.media)
 
-    if(thisMedia.isFavorite == nextMedia.isFavorite) {
-      if(thisMediaIndex == nextMediaIndex) {
+    if(_.isEqual(this.props.media, nextProps.media)) {
+      if(thisMediaIndex === nextMediaIndex) {
         return false
       }
     }
-    
     return true
   }
 

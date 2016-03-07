@@ -102,7 +102,7 @@ export default class ImportLibraryWindow extends Component {
         <div className='welcome'>
           <img src={account_info.profile_photo_url} />
           <h2 className={isImporting ? 'hidden' : ''}>Welcome, {account_info.name.given_name}</h2>
-          <h2 className={!isImporting ? 'hidden' : ''}>You're almost done</h2>
+          <h2 className={!isImporting ? 'hidden' : ''}>This may take a while</h2>
           {this.renderButton()}
         </div>
       )
