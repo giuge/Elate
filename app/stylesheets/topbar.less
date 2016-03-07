@@ -26,9 +26,48 @@
       height: 14px;
       width: 14px;
     }
+  }
 
-    &.darwin {
+  .titleBar {
+    float: right;
+
+    li {
+      padding: 12px 18px;
+      margin: 0;
+
+      &:hover {
+        background-color: #333333 !important;
+      }
+    }
+
+    .close {
+      background: url('./../assets/close-win32.svg') center no-repeat;
+      order: 3;
+
+      &:hover {
+        background-color: #D0021B !important;
+      }
+    }
+
+    .minimize {
+      background: url('./../assets/minimize-win32.svg') center no-repeat;
+      order: 1;
+    }
+
+    .fullscreen {
+      background: url('./../assets/maximize-win32.svg') center no-repeat;
+      order: 2;
+    }
+  }
+
+  &.darwin {
+    .titleBar {
       float: left;
+
+      li {
+        padding: 0;
+        margin: 5px;
+      }
 
       &:hover {
         .close {
@@ -60,38 +99,6 @@
       .fullscreen {
         background: url('./../assets/maximize-osx.svg') no-repeat;
         order: 3;
-      }
-    }
-
-    &.win32 {
-      float: right;
-
-      li {
-        padding: 12px 18px;
-        margin: 0;
-
-        &:hover {
-          background-color: #333333 !important;
-        }
-      }
-
-      .close {
-        background: url('./../assets/close-win32.svg') center no-repeat;
-        order: 3;
-
-        &:hover {
-          background-color: #D0021B !important;
-        }
-      }
-
-      .minimize {
-        background: url('./../assets/minimize-win32.svg') center no-repeat;
-        order: 1;
-      }
-
-      .fullscreen {
-        background: url('./../assets/maximize-win32.svg') center no-repeat;
-        order: 2;
       }
     }
   }

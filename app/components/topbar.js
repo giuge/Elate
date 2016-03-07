@@ -30,8 +30,8 @@ export default class TopBar extends Component {
 
   render () {
     return (
-      <div className='topBar'>
-        <ul className={`titleBar ${process.platform}`}>
+      <div className={`topBar ${process.platform}`}>
+        <ul className='titleBar'>
           <li className='close' onClick={() => { this.closeWindow() }} />
           <li className='minimize' onClick={() => { this.minimizeWindow() }} />
           <li className='fullscreen' onClick={() => { this.maximizeWindow() }} />
