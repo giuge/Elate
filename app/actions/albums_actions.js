@@ -14,9 +14,9 @@ class AlbumsActions {
       .then((results) => {
         let albums = []
         results.rows.map((row) => { albums.push(row.doc) })
-        dispatch(_.orderBy(albums, 'sortDate', 'desc'))
+        dispatch(albums)
       })
-      .catch((err) => { throw(err) })
+      .catch(err => { throw(err) })
     })
   }
 
@@ -25,8 +25,26 @@ class AlbumsActions {
    * @param: {Name} the album name
    * @param: {Array} an array of media
    */
-  createAlbum(name, medias) {
-    return
+  createAlbum(title, medias) {
+    return ((dispatch) => {
+      let mediasID = []
+
+      medias.map(media => {
+        mediasID.push(media._id)
+      })
+
+      let album = {
+        title: title,
+        items: mediasID,
+        cover: medias[0].thumbnail
+      }
+
+      db.post(album).then(() => {
+        dispatch(album)
+      }).catch(err => { throw(err) })
+
+    })
+
   }
 
 }

@@ -1,11 +1,38 @@
 import React, { Component } from 'react'
 import { remote } from 'electron'
 
+import connectToStores from 'alt-utils/lib/connectToStores'
+import NavigationStore from './../stores/navigation_store'
 import NavigationActions from './../actions/navigation_actions'
 import SelectionActions from './../actions/selection_actions'
 
 
 export default class Sidebar extends Component {
+
+  constructor(props) {
+    super(props)
+  }
+
+  static getStores() {
+    return [NavigationStore]
+  }
+
+  static getPropsFromStores() {
+    return {...NavigationStore.getState()}
+  }
+
+  prepareForView() {
+    let listView = document.getElementsByClassName('listView')[0]
+    let albumsView = document.getElementsByClassName('albumsView')[0]
+
+    if(listView) {
+      listView.scrollTop = 0
+    } else if(albumsView) {
+      albumsView.scrollTop = 0
+    }
+
+    SelectionActions.clearSelection()
+  }
 
   renderStatus() {
     if(this.props.isSyncingDB) {
@@ -24,73 +51,32 @@ export default class Sidebar extends Component {
     }
   }
 
-  setActiveItem(event) {
-    let listView = document.getElementsByClassName('listView')[0]
-    let albumsView = document.getElementsByClassName('albumsView')[0]
-    let activeItems = document.querySelectorAll('li.active')
-    for (let i in activeItems) {
-      if(activeItems[i].classList) {
-        activeItems[i].classList.remove('active')
-      }
-    }
-    event.target.closest('li').classList.add('active')
-
-    if(listView) {
-      listView.scrollTop = 0
-    } else if(albumsView) {
-      albumsView.scrollTop = 0
-    }
-
-    SelectionActions.clearSelection()
-  }
-
-  showAllMedia(event) {
-    this.setActiveItem(event)
-    NavigationActions.showAllMedia()
-  }
-
-  showFavorites(event) {
-    this.setActiveItem(event)
-    NavigationActions.showFavorites()
-  }
-
-  showAlbums(event) {
-    this.setActiveItem(event)
-    NavigationActions.showAlbums()
-  }
-
   render () {
     return (
       <div className='sidebar'>
         <ul>
           <h6>Library</h6>
-          <li className='active' onClick={(event) => { this.showAllMedia(event) }}>
+
+          <li className={this.props.showAllMedia ? 'active' : ''}
+            onClick={() => { NavigationActions.showAllMedia(); this.prepareForView() }}>
             <img src='assets/all-media.svg'/>All media
           </li>
 
-          <li className='' onClick={(event) => { this.showFavorites(event) }}>
+          <li className={this.props.showFavorites ? 'active' : ''}
+            onClick={() => { NavigationActions.showFavorites(); this.prepareForView() }}>
             <img src='assets/favorites.svg'/>Favorites
           </li>
 
-          <li className='' onClick={(event) => { this.showAlbums(event) }}>
+          <li className={this.props.showAlbums ? 'active' : ''}
+            onClick={() => { NavigationActions.showAlbums(); this.prepareForView() }}>
             <img src='assets/albums.svg'/>Albums
           </li>
-          {/*<li className=''><img src='assets/albums.svg'/>Albums</li>
-          <li className=''><img src='assets/shared.svg'/>Shared</li>*/}
         </ul>
-        {/*<ul>
-          <h6>Filter</h6>
-          <li className='active'>Day</li>
-          <li className=''>Month</li>
-          <li className=''>Year</li>
-        </ul>
-        <ul>
-          <h6>Account</h6>
-          <li className=''><img src='assets/logout.svg'/>Logout</li>
-        </ul>*/}
 
         {this.renderStatus()}
       </div>
     )
   }
 }
+
+export default connectToStores(Sidebar)

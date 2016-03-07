@@ -29,7 +29,7 @@ export default class LibraryView extends Component {
           <LibraryChunk chunk={value} date={key} key={key} />
         )
       })
-      //nextState.chunks = chunks
+
       this.setState({ chunks })
     }
   }

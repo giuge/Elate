@@ -6,15 +6,27 @@ class AlbumsStore {
   constructor() {
     this.bindListeners({
       handleGetAlbums: AlbumsActions.GET_ALBUMS,
+      handleCreateAlbum: AlbumsActions.CREATE_ALBUM
     })
 
     this.state = {
-      albums: []
+      albums: [],
+      emptyAlbums: false
     }
   }
 
   handleGetAlbums(albums) {
-    this.setState({albums})
+    let emptyAlbums
+    albums.length > 0 ? emptyAlbums = false : emptyAlbums = true
+
+    this.setState({albums, emptyAlbums})
+  }
+
+  handleCreateAlbum(album) {
+    this.setState({
+      albums: this.state.albums.concat(album),
+      emptyAlbums: false
+    })
   }
 
 }

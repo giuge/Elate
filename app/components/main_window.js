@@ -25,8 +25,7 @@ export default class MainWindow extends Component {
     super(props)
 
     this.state = {
-      library: this.props.library,
-      showFavorites: false
+      library: this.props.library
     }
 
     this.handleKeyDown = this.handleKeyDown.bind(this)
@@ -57,22 +56,13 @@ export default class MainWindow extends Component {
       nextProps.library.forEach((item) => {
         if(item.isFavorite) library.push(item)
       })
-      this.setState({
-        library: library,
-        showFavorites: true
-      })
+      this.setState({library})
     } else if(nextProps.showAllMedia) {
       let library = nextProps.library
-      this.setState({
-        library: library,
-        showFavorites: false
-      })
+      this.setState({library})
     } else {
       let library = nextProps.library
-      this.setState({
-        library: library,
-        showFavorites: false
-      })
+      this.setState({library})
     }
   }
 
@@ -85,6 +75,7 @@ export default class MainWindow extends Component {
 
   handleKeyDown(event) {
     if(this.props.selectedItems.length <= 0) return
+    if(this.props.showAdd) return
 
     let index = _.findIndex(this.state.library, o => {
       return o._id === this.props.selectedItems[0]._id
@@ -157,11 +148,11 @@ export default class MainWindow extends Component {
 
   renderView() {
     if(this.props.showAlbums) {
-      return <AlbumsView />
+      return <AlbumsView library={this.props.library} />
     } else if(this.props.showShare) {
       return <ShareView />
     } else if(this.props.showAdd) {
-      return <AddView />
+      return <AddView selectedItems={this.props.selectedItems}/>
     }
   }
 
@@ -185,7 +176,7 @@ export default class MainWindow extends Component {
           library={this.state.library}
           emptyLibrary={this.props.emptyLibrary}
           emptyFavorites={this.props.emptyFavorites}
-          showFavorites={this.state.showFavorites} />
+          showFavorites={this.props.showFavorites} />
       </div>
     )
   }
