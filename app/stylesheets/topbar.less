@@ -28,6 +28,7 @@
     }
   }
 
+  // All operating systems
   .titleBar {
     float: right;
 
@@ -36,7 +37,7 @@
       margin: 0;
 
       &:hover {
-        background-color: #333333 !important;
+        background-color: #333333;
       }
     }
 
@@ -45,7 +46,7 @@
       order: 3;
 
       &:hover {
-        background-color: #D0021B !important;
+        background-color: #D0021B;
       }
     }
 
@@ -60,6 +61,7 @@
     }
   }
 
+  // OSX only
   &.darwin {
     .titleBar {
       float: left;
@@ -67,6 +69,25 @@
       li {
         padding: 0;
         margin: 5px;
+
+        &:hover {
+          background-color: none !important;
+        }
+      }
+
+      .close {
+        background: url('./../assets/close-osx.svg') no-repeat;
+        order: 1;
+      }
+
+      .minimize {
+        background: url('./../assets/minimize-osx.svg') no-repeat;
+        order: 2;
+      }
+
+      .fullscreen {
+        background: url('./../assets/maximize-osx.svg') no-repeat;
+        order: 3;
       }
 
       &:hover {
@@ -86,30 +107,7 @@
         }
       }
 
-      .close {
-        background: url('./../assets/close-osx.svg') no-repeat;
-        order: 1;
-      }
-
-      .minimize {
-        background: url('./../assets/minimize-osx.svg') no-repeat;
-        order: 2;
-      }
-
-      .fullscreen {
-        background: url('./../assets/maximize-osx.svg') no-repeat;
-        order: 3;
-      }
     }
   }
 
-  .title {
-    text-align: center;
-    display: inline-block;
-    margin: 15px 0 0 0;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: rgba(213, 216, 224, .4);
-  }
 }
