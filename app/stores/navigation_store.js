@@ -95,14 +95,7 @@ class NavigationStore {
     let {showAdd, showAlbums, showAllMedia, showFavorites, showShare} = this.state.navigationStack[navigationIndex]
 
     this.setState({navigationIndex, showAdd, showAlbums, showAllMedia, showFavorites, showShare})
-
-    if(this.state.navigationStack[this.state.navigationIndex - 1]) {
-      this.setState({canGoBack: true})
-    } else { this.setState({canGoBack: false}) }
-
-    if(this.state.navigationStack[this.state.navigationIndex + 1]) {
-      this.setState({canGoForward: true})
-    } else { this.setState({canGoForward: false}) }
+    this._checkBackForward(this.state.navigationStack, this.state.navigationIndex)
   }
 
   handleGoForward() {
@@ -112,14 +105,7 @@ class NavigationStore {
     let {showAdd, showAlbums, showAllMedia, showFavorites, showShare} = this.state.navigationStack[navigationIndex]
 
     this.setState({navigationIndex, showAdd, showAlbums, showAllMedia, showFavorites, showShare})
-
-    if(this.state.navigationStack[this.state.navigationIndex - 1]) {
-      this.setState({canGoBack: true})
-    } else { this.setState({canGoBack: false}) }
-
-    if(this.state.navigationStack[this.state.navigationIndex + 1]) {
-      this.setState({canGoForward: true})
-    } else { this.setState({canGoForward: false}) }
+    this._checkBackForward(this.state.navigationStack, this.state.navigationIndex)
   }
 
   _pushToNavigationStack(state) {
@@ -132,11 +118,15 @@ class NavigationStore {
       navigationIndex: this.state.navigationIndex += 1
     })
 
-    if(this.state.navigationStack[this.state.navigationIndex - 1]) {
+    this._checkBackForward(this.state.navigationStack, this.state.navigationIndex)
+  }
+
+  _checkBackForward(stack, index) {
+    if(stack[index - 1]) {
       this.setState({canGoBack: true})
     } else { this.setState({canGoBack: false}) }
 
-    if(this.state.navigationStack[this.state.navigationIndex + 1]) {
+    if(stack[index + 1]) {
       this.setState({canGoForward: true})
     } else { this.setState({canGoForward: false}) }
   }
