@@ -1,28 +1,28 @@
-.actionBar {
+.navigationBar {
   align-self: center;
   margin: 0;
   order: 2;
-  float: right;
+  float: left;
   padding: 8px 10px;
   -webkit-app-region: no-drag;
 
-  &.disabled li:after {
-    opacity: .2;
-  }
-
   li {
-    width: 35px;
-    height: 22px;
     border-radius: 2px;
     text-align: center;
     vertical-align: middle;
-    margin: 0 5px;
-    background: #343434;
+    margin: 0 -2px;
     position: relative;
     display: inline-block;
+    width: 25px;
+    height: 22px;
+    background: #343434;
 
     &:after {
       display: inline-block;
+    }
+
+    &.disabled:after {
+      opacity: .2;
     }
 
     &.back:after {

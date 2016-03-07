@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import remote from 'remote'
+
+import NavigationBar from './navigation_bar'
 import ActionBar from './action_bar'
+
 
 export default class TopBar extends Component {
   constructor(props) {
@@ -27,12 +30,13 @@ export default class TopBar extends Component {
 
   render () {
     return (
-      <div className='topBar' onDoubleClick={() => { this.maximizeWindow() }}>
+      <div className='topBar'>
         <ul className={`titleBar ${process.platform}`}>
           <li className='close' onClick={() => { this.closeWindow() }} />
           <li className='minimize' onClick={() => { this.minimizeWindow() }} />
           <li className='fullscreen' onClick={() => { this.maximizeWindow() }} />
         </ul>
+        <NavigationBar />
         {this.renderActionBar()}
       </div>
     )
