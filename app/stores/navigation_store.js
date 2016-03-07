@@ -76,7 +76,6 @@ class NavigationStore {
       showFavorites: false,
       showAdd: false
     })
-    this._pushToNavigationStack(this.state)
   }
 
   handleShowAdd() {
@@ -87,7 +86,6 @@ class NavigationStore {
       showFavorites: false,
       showShare: false
     })
-    this._pushToNavigationStack(this.state)
   }
 
   handleGoBack() {
