@@ -67,6 +67,12 @@ export default class MainWindow extends Component {
         library: library,
         showFavorites: false
       })
+    } else {
+      let library = nextProps.library
+      this.setState({
+        library: library,
+        showFavorites: false
+      })
     }
   }
 

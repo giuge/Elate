@@ -119,7 +119,7 @@ class LibraryActions {
    */
   addToFavorites(media) {
     return ((dispatch) => {
-      if(media.isFavorite) {
+      if(media.isFavorite === true) {
         media.isFavorite = false
         media.highResThumbnail = null
         dispatch(media)

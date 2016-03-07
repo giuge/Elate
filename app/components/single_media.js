@@ -26,7 +26,7 @@ export default class SingleMedia extends Component {
     let thisMediaIndex = this.props.selectedItems.indexOf(this.props.media)
     let nextMediaIndex = nextProps.selectedItems.indexOf(nextProps.media)
 
-    if(_.isEqual(this.props.media, nextProps.media)) {
+    if(_.isEqual(this.props.media.isFavorite, nextProps.isFavorite)) {
       if(thisMediaIndex === nextMediaIndex) {
         return false
       }
