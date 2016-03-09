@@ -1,18 +1,15 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 
 import KeyboardManager from './keyboard_manager'
 import PreviewView from './preview_view'
+import FavoritesEmpty from './favorites_empty'
 import MediaList from './media_list'
 
 
-export default class LibraryView extends Component {
+export default class FavoritesView extends Component {
 
   constructor(props) {
     super(props)
-  }
-
-  static propTypes = {
-    library: PropTypes.array.isRequired
   }
 
   componentWillMount() {
@@ -28,16 +25,16 @@ export default class LibraryView extends Component {
       return (
         <PreviewView
           media={this.props.previewItem}
-          library={this.props.library} />
+          library={this.props.favorites} />
       )
     }
   }
 
   render () {
-    if(this.props.emptyLibrary) {
+    if(this.props.emptyFavorites) {
       return (
-        <div>
-          <h2>Library empty</h2>
+        <div className='listView'>
+          <FavoritesEmpty />
         </div>
       )
     }
@@ -45,7 +42,7 @@ export default class LibraryView extends Component {
     return (
       <div className='listView'>
         {this.renderPreview()}
-        <MediaList library={this.props.library} />
+        <MediaList library={this.props.favorites} />
       </div>
     )
   }

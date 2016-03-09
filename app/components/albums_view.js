@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
-import AlbumItemsView from './album_items_view'
+import KeyboardManager from './keyboard_manager'
+import PreviewView from './preview_view'
+import MediaList from './media_list'
 import AlbumsEmpty from './albums_empty'
 
 import connectToStores from 'alt-utils/lib/connectToStores'
@@ -31,10 +33,28 @@ export default class AlbumsView extends Component {
     AlbumsActions.getAlbums()
   }
 
+  componentWillMount() {
+    KeyboardManager.activate(this)
+  }
+
+  componentWillUnmount() {
+    KeyboardManager.deactivate()
+  }
+
   handleClick(album) {
+    let items = []
+
+    this.props.library.forEach((item) => {
+      for(let i in album.items) {
+        if(item._id == album.items[i])
+        items.push(item)
+      }
+    })
+
     this.setState({
       showSingleAlbum: true,
-      selectedAlbum: album
+      selectedAlbum: album,
+      albumItems: items
     })
   }
 
@@ -44,17 +64,19 @@ export default class AlbumsView extends Component {
     }
 
     if(this.state.showSingleAlbum) {
-      let items = []
-      let albumItems = this.state.selectedAlbum.items
+      if(this.props.previewItem) {
+        return (
+          <PreviewView
+            media={this.props.previewItem}
+            library={this.state.albumItems} />
+        )
+      }
 
-      this.props.library.forEach((item) => {
-        for(let i in albumItems) {
-          if(item._id == albumItems[i])
-          items.push(item)
-        }
-      })
-
-      return <AlbumItemsView items={items} />
+      return (
+        <div className='listView'>
+          <MediaList library={this.state.albumItems} />
+        </div>
+      )
     }
 
     return (

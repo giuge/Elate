@@ -1,11 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import SingleMedia from './single_media'
 
 
-export default class LibraryChunk extends Component {
+export default class MediaListChunk extends Component {
 
   constructor(props) {
     super(props)
+  }
+
+  static propTypes = {
+    chunk: PropTypes.array.isRequired,
+    date: PropTypes.string.isRequired
   }
 
   renderLocation() {

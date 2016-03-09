@@ -1,15 +1,15 @@
 import _ from 'lodash'
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import remote, { dialog } from 'remote'
 
-import LibraryView from './library_view'
-import AlbumsView from './albums_view'
-import PreviewView from './preview_view'
-import ShareView from './share_view'
-import AddView from './add_view'
 import TopBar from './topbar'
 import Sidebar from './sidebar'
 import Spinner from './spinner'
+import LibraryView from './library_view'
+import FavoritesView from './favorites_view'
+import AlbumsView from './albums_view'
+import ShareView from './share_view'
+import AddView from './add_view'
 
 import connectToStores from 'alt-utils/lib/connectToStores'
 import SelectionStore from './../stores/selection_store'
@@ -23,12 +23,18 @@ export default class MainWindow extends Component {
 
   constructor(props) {
     super(props)
+  }
 
-    this.state = {
-      library: this.props.library
-    }
-
-    this.handleKeyDown = this.handleKeyDown.bind(this)
+  static propTypes = {
+    library: PropTypes.array.isRequired,
+    favorites: PropTypes.array.isRequired,
+    emptyLibrary: PropTypes.bool.isRequired,
+    emptyFavorites: PropTypes.bool.isRequired,
+    showAllMedia: PropTypes.bool.isRequired,
+    showFavorites: PropTypes.bool.isRequired,
+    showAlbums: PropTypes.bool.isRequired,
+    showAdd: PropTypes.bool.isRequired,
+    showShare: PropTypes.bool.isRequired
   }
 
   static getStores() {
@@ -42,141 +48,42 @@ export default class MainWindow extends Component {
     }
   }
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.showFavorites) {
-      let library = []
-      nextProps.library.forEach((item) => {
-        if(item.isFavorite) library.push(item)
-      })
-      this.setState({library})
-    } else if(nextProps.showAllMedia) {
-      let library = nextProps.library
-      this.setState({library})
-    } else {
-      let library = nextProps.library
-      this.setState({library})
-    }
-  }
-
-  ensureVisible() {
-    let listView = document.getElementsByClassName('listView')[0]
-    let selectedElem = document.getElementsByClassName('selected')[0]
-
-    listView.scrollTop = selectedElem.parentNode.offsetTop - 100
-  }
-
-  handleKeyDown(event) {
-    if(this.props.selectedItems.length <= 0) return
-    if(this.props.showAdd) return
-
-    let index = _.findIndex(this.state.library, o => {
-      return o._id === this.props.selectedItems[0]._id
-    })
-
-    // TODO: we need to select photo from the correct library (eg: favorites)
-    switch(event.keyCode) {
-      // Canc button pressed
-      case 46:
-        this.handleTrash()
-        break
-      // Delete button pressed
-      case 8:
-        this.handleTrash()
-        break
-      // Return key pressed
-      case 13:
-        AppActions.previewItem(this.state.library[index])
-        break
-      // Left arrow pressed
-      case 37:
-        if(index - 1 < 0) break
-        SelectionActions.singleSelectItem(this.state.library[index - 1])
-        this.ensureVisible()
-        break
-      // Right arrow pressed
-      case 39:
-        if(index + 1 >= this.state.library.length) break
-        SelectionActions.singleSelectItem(this.state.library[index + 1])
-        this.ensureVisible()
-        break
-      // Esc button pressed
-      case 27:
-        if(!this.props.previewItem) {
-          SelectionActions.clearSelection()
-        }
-        break
-    }
-  }
-
-  handleTrash() {
-    let itmeStr = `${this.props.selectedItems.length == 1 ? 'This item' : 'These items'}`
-    let msgStr =  'will be deleted both from Elate and Dropbox.'
-    let message = `${itmeStr} ${msgStr}`
-
-    let choice = dialog.showMessageBox(
-      remote.getCurrentWindow(),
-      {
-        type: 'question',
-        buttons: ['Delete', 'Cancel'],
-        message: 'Delete from all your devices?',
-        detail: message
-      })
-
-    if (choice === 0) {
-      LibraryActions.deleteMedia(this.props.selectedItems)
-    }
-  }
-
-  renderPreview() {
-    if(this.props.previewItem) {
+  renderView() {
+    if(this.props.showAllMedia) {
       return (
-        <PreviewView
-          library={this.state.library}
-          media={this.props.previewItem} />
+        <LibraryView
+          previewItem={this.props.previewItem}
+          emptyLibrary={this.props.emptyLibrary}
+          library={this.props.library} />
       )
     }
-    return
-  }
-
-  renderView() {
-    if(this.props.showAlbums) {
-      return <AlbumsView library={this.props.library} />
-    } else if(this.props.showShare) {
-      return <ShareView />
-    } else if(this.props.showAdd) {
-      return <AddView selectedItems={this.props.selectedItems}/>
+    else if(this.props.showAlbums) {
+      return <AlbumsView
+        previewItem={this.props.previewItem}
+        library={this.props.library} />
+    }
+    else if(this.props.showShare) {
+      return <ShareView selectedItems={this.props.selectedItems} />
+    }
+    else if(this.props.showAdd) {
+      return <AddView selectedItems={this.props.selectedItems} />
+    }
+    else if(this.props.showFavorites) {
+      return (
+        <FavoritesView
+          previewItem={this.props.previewItem}
+          emptyFavorites={this.props.emptyFavorites}
+          favorites={this.props.favorites} />
+      )
     }
   }
 
   render () {
-    /**
-     * We keep the LibraryView around
-     * even if we are displaying another
-     * view that doesn't need it or the component
-     * will unmount causing a slow rerender.
-     * LibraryView will be pushed down, under the
-     * loaded view and will not be visible.
-     */
     return (
       <div className='container'>
         <TopBar shouldShowActionbar={true} />
-        {this.renderPreview()}
         <Sidebar isSyncingDB={this.props.isSyncingDB} />
         {this.renderView()}
-
-        <LibraryView
-          library={this.state.library}
-          emptyLibrary={this.props.emptyLibrary}
-          emptyFavorites={this.props.emptyFavorites}
-          showFavorites={this.props.showFavorites} />
       </div>
     )
   }

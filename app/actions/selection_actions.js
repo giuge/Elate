@@ -27,7 +27,7 @@ class SelectionActions {
   }
 
   /**
-   * Selects the media item
+   * Deselects everything
    * @param {Object} item
    */
   clearSelection() {

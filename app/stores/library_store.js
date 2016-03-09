@@ -1,6 +1,7 @@
-import alt from './../lib/alt'
 import _ from 'lodash'
 import update from 'react-addons-update'
+
+import alt from './../lib/alt'
 import LibraryActions from './../actions/library_actions'
 
 
@@ -15,34 +16,50 @@ class LibraryStore {
 
     this.state = {
       library: [],
+      favorites: [],
       emptyLibrary: false,
       emptyFavorites: false
     }
   }
 
   handleLoadDatabase(library) {
-    let emptyFavorites = this._checkFavorites(library)
-    let emptyLibrary = library.length < 0 ? emptyLibrary = true : emptyLibrary = false
+    let favorites = []
 
-    this.setState({library, emptyFavorites, emptyLibrary})
+    library.forEach((item) => {
+      if(item.isFavorite) {
+        favorites = favorites.concat(item)
+      }
+    })
+
+    let emptyFavorites = favorites.length <= 0 ? emptyFavorites = true : emptyFavorites = false
+    let emptyLibrary = library.length <= 0 ? emptyLibrary = true : emptyLibrary = false
+
+    this.setState({library, emptyFavorites, emptyLibrary, favorites})
   }
 
   handleSaveAfterImport(library) {
-    let emptyLibrary = library.length < 0 ? emptyLibrary = true : emptyLibrary = false
+    let emptyLibrary = library.length <= 0 ? emptyLibrary = true : emptyLibrary = false
 
     this.setState({library, emptyLibrary})
   }
 
   handleDeleteMedia(media) {
     let library = _.difference(this.state.library, media)
-    let emptyFavorites = this._checkFavorites(library)
-    let emptyLibrary = library.length < 0 ? emptyLibrary = true : emptyLibrary = false
+    let favorites = this.state.favorites
 
-    this.setState({library, emptyFavorites, emptyLibrary})
+    if(media.isFavorite) {
+      favorites = _.difference(this.state.favorites, media)
+    }
+
+    let emptyFavorites = favorites.length <= 0 ? emptyFavorites = true : emptyFavorites = false
+    let emptyLibrary = library.length <= 0 ? emptyLibrary = true : emptyLibrary = false
+
+    this.setState({library, favorites, emptyLibrary, emptyFavorites})
   }
 
   handleAddToFavorites(media) {
     let data = this.state.library
+    let favorites = []
     let index = data.findIndex((c) => { return c._id == media._id })
 
     let updatedMedia = update(data[index], {
@@ -54,21 +71,19 @@ class LibraryStore {
       $splice: [[index, 1, updatedMedia]]
     })
 
-    let emptyFavorites = this._checkFavorites(newLibrary)
+    newLibrary.forEach((item) => {
+      if(item.isFavorite) {
+        favorites = favorites.concat(item)
+      }
+    })
+
+    let emptyFavorites = favorites.length <= 0 ? emptyFavorites = true : emptyFavorites = false
 
     this.setState({
       library: newLibrary,
+      favorites: favorites,
       emptyFavorites: emptyFavorites
     })
-  }
-
-  _checkFavorites(library) {
-    for(let i in library) {
-      if(library[i].isFavorite) {
-        return false
-      }
-    }
-    return true
   }
 
 }

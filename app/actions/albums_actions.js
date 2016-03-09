@@ -22,7 +22,7 @@ class AlbumsActions {
 
   /**
    * Creates an album
-   * @param: {Name} the album name
+   * @param: {String} the album name
    * @param: {Array} an array of media
    */
   createAlbum(title, medias) {
@@ -44,7 +44,42 @@ class AlbumsActions {
       }).catch(err => { throw(err) })
 
     })
+  }
 
+  /**
+   * Deletes an album
+   * @param: {Object} the album
+   */
+  deleteAlbum(album) {
+    return ((dispatch) => {
+      db.remove(album._id, album._rev)
+      .then(dispatch(album))
+      .catch((err) => {
+        throw(err)
+      })
+    })
+  }
+
+  /**
+   * Removes media from an album
+   * @param: {Object} the album
+   * @param: {Array} an array of media
+   */
+  removeFromAlbum(album, medias) {
+    return ((dispatch) => {
+      let itemsIDs = []
+
+      for(let i in medias) {
+        itemsIDs.push(medias[i]._id)
+      }
+
+      let items = _.difference(album.items, itemsIDs)
+
+      db.get(album._id).then((doc) => {
+        doc.items = items
+        db.put(doc).then(dispatch(doc)).catch(err => { console.log(err) })
+      }).catch(err => { console.log(err) })
+    })
   }
 
 }
