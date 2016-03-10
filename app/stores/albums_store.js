@@ -39,6 +39,10 @@ class AlbumsStore {
     this.setState({
       albums: this.state.albums.filter((_, i) => i !== index)
     })
+
+    if(this.state.albums.length <= 0) {
+      this.setState({emptyAlbums: true})
+    }
   }
 
   handleRemoveFromAlbum(album) {
