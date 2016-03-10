@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 
 import KeyboardManager from './keyboard_manager'
 import PreviewView from './preview_view'
+import LibraryEmpty from './library_empty'
 import MediaList from './media_list'
 
 
@@ -36,8 +37,8 @@ export default class LibraryView extends Component {
   render () {
     if(this.props.emptyLibrary) {
       return (
-        <div>
-          <h2>Library empty</h2>
+        <div className='listView'>
+          <LibraryEmpty />
         </div>
       )
     }

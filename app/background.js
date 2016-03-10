@@ -21,6 +21,8 @@ let mainWindow
 let mainWindowState = windowStateKeeper('main', {
   width: 1000,
   height: 600,
+  minWidth: 950,
+  minHeight: 550,
   backgroundColor: '#1E1E1E'
 })
 
@@ -70,6 +72,8 @@ app.on('ready', () => {
       y: mainWindowState.y,
       width: mainWindowState.width,
       height: mainWindowState.height,
+      minWidth: 950,
+      minHeight: 550,
       title: 'Elate',
       //titleBarStyle: 'hidden-inset',
       backgroundColor: '#1E1E1E',

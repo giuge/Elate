@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="202px" height="152px" viewBox="0 0 202 152" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6 (26304) - http://www.bohemiancoding.com/sketch -->
+    <title>library-empty-state</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.28 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <rect id="path-2" x="0" y="0" width="190" height="140" rx="4"></rect>
+    </defs>
+    <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD-Copy-6" transform="translate(-694.000000, -368.000000)">
+            <g id="Group-8" transform="translate(638.000000, 359.000000)">
+                <g id="library-empty-state" transform="translate(62.000000, 15.000000)">
+                    <mask id="mask-3" fill="white">
+                        <use xlink:href="#path-2"></use>
+                    </mask>
+                    <g id="Rectangle-107" filter="url(#filter-1)">
+                        <use stroke="#FFFFFF" stroke-width="3" fill="#ACE7FF" fill-rule="evenodd" xlink:href="#path-2"></use>
+                        <use stroke="none" fill="none" xlink:href="#path-2"></use>
+                    </g>
+                    <path d="M14.2932401,145.317202 C14.625324,140.915743 17.174779,134.587315 19.9922632,131.176626 L54.9042974,88.9140625 L85.7851563,132.644531 L143.833981,83.3964844 L195.011715,123.644531 L221.160156,61.9726562 L221.160156,153.240187 L13.6954618,153.240187 L14.2932401,145.317202 Z" id="Path-298" stroke="#E4F0F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="#E4F0F6" mask="url(#mask-3)"></path>
+                    <path d="M-15.7067599,135.317202 C-15.374676,130.915743 -13.1157547,124.381024 -10.6477559,120.701277 L23.671875,69.53125 L55.7851563,122.644531 L103.230469,42.8632812 L142.011719,116.9375 L191.160156,51.9726562 L191.160156,143.240187 L-16.3045382,143.240187 L-15.7067599,135.317202 Z" id="Path-298" stroke="#F6FCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="#F6FCFF" mask="url(#mask-3)"></path>
+                    <circle id="Oval-45" fill="#F6EB69" mask="url(#mask-3)" cx="32" cy="30" r="11"></circle>
+                    <g id="Group-9" mask="url(#mask-3)">
+                        <g transform="translate(92.000000, 74.000000)">
+                            <path d="M0.4,20.9416316 C0.4,20.9416316 3.14921875,14.9423077 10.0859375,14.9423077 C17.0226562,14.9423077 19.771875,20.9416316 19.771875,20.9416316" id="Path-330" stroke="#0E1315" stroke-width="2.00000003" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+                            <ellipse id="Oval-41" stroke="none" fill="#0D1214" fill-rule="evenodd" cx="2.4" cy="4.44230769" rx="2.4" ry="4.44230769"></ellipse>
+                            <ellipse id="Oval-41" stroke="none" fill="#0D1214" fill-rule="evenodd" cx="17.2" cy="4.44230769" rx="2.4" ry="4.44230769"></ellipse>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

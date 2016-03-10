@@ -50,7 +50,7 @@ class AlbumsStore {
     let index = data.findIndex((c) => { return c._id == album._id })
 
     let updatedAlbum = update(data[index], {
-      items: {$set: album.items}
+      items: {$set: album.items.filter((_, i) => i !== index)}
     })
 
     let newAlbums = update(data, {
