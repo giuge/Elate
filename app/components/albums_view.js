@@ -8,6 +8,7 @@ import AlbumsEmpty from './albums_empty'
 import connectToStores from 'alt-utils/lib/connectToStores'
 import AlbumsStore from './../stores/albums_store'
 import AlbumsActions from './../actions/albums_actions'
+import SelectionActions from './../actions/selection_actions'
 
 
 export default class AlbumsView extends Component {
@@ -42,6 +43,10 @@ export default class AlbumsView extends Component {
   }
 
   handleClick(album) {
+    SelectionActions.singleSelectItem(album)
+  }
+
+  handleDoubleClick(album) {
     let items = []
 
     this.props.library.forEach((item) => {
@@ -108,7 +113,8 @@ export default class AlbumsView extends Component {
         <div className={`album ${className}`}
           key={album.title}
           style={{backgroundImage: `url(${album.cover})`}}
-          onDoubleClick={() => { this.handleClick(album) }} >
+          onClick={() => { this.handleClick(album) }}
+          onDoubleClick={() => { this.handleDoubleClick(album) }} >
           <p>{album.title}</p>
         </div>
       )

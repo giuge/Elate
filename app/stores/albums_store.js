@@ -34,9 +34,11 @@ class AlbumsStore {
   }
 
   handleDeleteAlbum(album) {
-    let albums = _.difference(this.state.albums, album)
+    let index = this.state.albums.indexOf(album)
 
-    this.setState({albums})
+    this.setState({
+      albums: this.state.albums.filter((_, i) => i !== index)
+    })
   }
 
   handleRemoveFromAlbum(album) {

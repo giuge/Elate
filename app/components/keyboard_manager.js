@@ -133,7 +133,7 @@ export default class KeyboardManager {
           break
         } else {
           let albumsIndex = caller.props.albums.indexOf(selectedItems[0])
-          caller.handleClick(caller.props.albums[albumsIndex])
+          caller.handleDoubleClick(caller.props.albums[albumsIndex])
           break
         }
     }
