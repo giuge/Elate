@@ -60,7 +60,8 @@ export default class MainWindow extends Component {
     else if(this.props.showAlbums) {
       return <AlbumsView
         previewItem={this.props.previewItem}
-        library={this.props.library} />
+        library={this.props.library}
+        selectedItems={this.props.selectedItems} />
     }
     else if(this.props.showShare) {
       return <ShareView selectedItems={this.props.selectedItems} />
@@ -81,7 +82,7 @@ export default class MainWindow extends Component {
   render () {
     return (
       <div className='container'>
-        <TopBar shouldShowActionbar={true} />
+        <TopBar shouldShowActionbar={true} shouldShowNavigationbar={true} />
         <Sidebar isSyncingDB={this.props.isSyncingDB} />
         {this.renderView()}
       </div>

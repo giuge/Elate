@@ -28,6 +28,10 @@ export default class TopBar extends Component {
     if(this.props.shouldShowActionbar) return <ActionBar />
   }
 
+  renderNavigationBar() {
+    if(this.props.shouldShowNavigationbar) return <NavigationBar />
+  }
+
   render () {
     return (
       <div className={`topBar ${process.platform}`}>
@@ -36,7 +40,7 @@ export default class TopBar extends Component {
           <li className='minimize' onClick={() => { this.minimizeWindow() }} />
           <li className='fullscreen' onClick={() => { this.maximizeWindow() }} />
         </ul>
-        <NavigationBar />
+        {this.renderNavigationBar()}
         {this.renderActionBar()}
       </div>
     )

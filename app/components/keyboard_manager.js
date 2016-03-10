@@ -61,13 +61,17 @@ export default class KeyboardManager {
 
       case 'AlbumsView':
         if(caller.state.showSingleAlbum) {
-          let albumsIndex = caller.state.albumItems.indexOf(selectedItems[0])
-          if(albumsIndex - 1 < 0) break
-          SelectionActions.singleSelectItem(caller.state.albumItems[albumsIndex - 1])
+          let albumsItemsIndex = caller.state.albumItems.indexOf(selectedItems[0])
+          if(albumsItemsIndex - 1 < 0) break
+          SelectionActions.singleSelectItem(caller.state.albumItems[albumsItemsIndex - 1])
           this.ensureVisible()
           break
         } else {
-
+          let albumsIndex = caller.props.albums.indexOf(selectedItems[0])
+          if(albumsIndex - 1 < 0) break
+          SelectionActions.singleSelectItem(caller.props.albums[albumsIndex - 1])
+          this.ensureVisible()
+          break
         }
     }
   }
@@ -93,9 +97,15 @@ export default class KeyboardManager {
 
       case 'AlbumsView':
         if(caller.state.showSingleAlbum) {
-          let albumsIndex = caller.state.albumItems.indexOf(selectedItems[0])
-          if(albumsIndex + 1 >= caller.state.albumItems.length) { break }
-          SelectionActions.singleSelectItem(caller.state.albumItems[albumsIndex + 1])
+          let albumsItemsIndex = caller.state.albumItems.indexOf(selectedItems[0])
+          if(albumsItemsIndex + 1 >= caller.state.albumItems.length) { break }
+          SelectionActions.singleSelectItem(caller.state.albumItems[albumsItemsIndex + 1])
+          this.ensureVisible()
+          break
+        } else {
+          let albumsIndex = caller.props.albums.indexOf(selectedItems[0])
+          if(albumsIndex + 1 >= caller.props.albums.length) { break }
+          SelectionActions.singleSelectItem(caller.props.albums[albumsIndex + 1])
           this.ensureVisible()
           break
         }
@@ -118,21 +128,21 @@ export default class KeyboardManager {
 
       case 'AlbumsView':
         if(caller.state.showSingleAlbum) {
-          let albumsIndex = caller.state.albumItems.indexOf(selectedItems[0])
-          AppActions.previewItem(caller.state.albumItems[albumsIndex])
+          let albumsItemsIndex = caller.state.albumItems.indexOf(selectedItems[0])
+          AppActions.previewItem(caller.state.albumItems[albumsItemsIndex])
+          break
+        } else {
+          let albumsIndex = caller.props.albums.indexOf(selectedItems[0])
+          caller.handleClick(caller.props.albums[albumsIndex])
           break
         }
     }
   }
 
-
-  static exit() {
-
-  }
-
-
   static delete() {
     let {selectedItems} = SelectionStore.getState()
+    if(selectedItems.length <= 0) return
+
     let pluralString = `${selectedItems.length == 1 ? 'This item' : 'These items'}`
 
     switch(callerName) {
@@ -175,7 +185,7 @@ export default class KeyboardManager {
       case 'AlbumsView':
         if(caller.state.showSingleAlbum) {
           if(selectedItems.length == caller.state.selectedAlbum.items.length) {
-            let deleteAlbumMsg = 'You are deleting the album and all its items'
+            let deleteAlbumMsg = 'You are deleting the album and all its items.'
 
             let albumsChoice = dialog.showMessageBox(
               remote.getCurrentWindow(), {
@@ -188,6 +198,7 @@ export default class KeyboardManager {
             if (albumsChoice === 0) {
               AlbumsActions.deleteAlbum(caller.state.selectedAlbum)
               NavigationActions.showAlbums()
+              caller.setState({showSingleAlbum: false, selectedAlbum: null})
             }
             break
           } else {
@@ -207,18 +218,39 @@ export default class KeyboardManager {
             }
             break
           }
+        } else {
+          let deleteAlbumMsg = 'You are deleting the album and all its items.'
 
+          let albumsChoice = dialog.showMessageBox(
+            remote.getCurrentWindow(), {
+              type: 'question',
+              buttons: ['Delete album', 'Cancel'],
+              message: 'Delete album?',
+              detail: deleteAlbumMsg
+          })
+
+          if (albumsChoice === 0) {
+            AlbumsActions.deleteAlbum(selectedItems[0])
+          }
+          break
         }
         break
     }
   }
 
+  static exit() {
+
+  }
 
   static ensureVisible() {
-    let listView = document.getElementsByClassName('listView')[0]
+    let ContainerElem = document.getElementsByClassName('listView')[0]
     let selectedElem = document.getElementsByClassName('selected')[0]
 
-    listView.scrollTop = selectedElem.parentNode.offsetTop - 100
+    if(callerName == 'AlbumsView' && !caller.state.showSingleAlbum) {
+      ContainerElem = document.getElementsByClassName('albumsView')[0]
+    }
+
+    ContainerElem.scrollTop = selectedElem.parentNode.offsetTop - 100
   }
 
 

@@ -58,51 +58,65 @@ export default class AlbumsView extends Component {
     })
   }
 
+  renderPreview() {
+    if(this.props.previewItem) {
+      return (
+        <PreviewView
+          media={this.props.previewItem}
+          library={this.state.albumItems} />
+      )
+    }
+  }
+
   renderView() {
     if(this.props.emptyAlbums) {
-      return <AlbumsEmpty />
+      return (
+        <div className='albumsView'>
+          <AlbumsEmpty />
+        </div>
+      )
     }
 
     if(this.state.showSingleAlbum) {
-      if(this.props.previewItem) {
-        return (
-          <PreviewView
-            media={this.props.previewItem}
-            library={this.state.albumItems} />
-        )
-      }
-
       return (
         <div className='listView'>
+          {this.renderPreview()}
           <MediaList library={this.state.albumItems} />
         </div>
       )
     }
 
     return (
-      <div className='albumList'>
-        {this.renderAlbums()}
+      <div className='albumsView'>
+        <div className='albumList'>
+          {this.renderAlbums()}
+        </div>
       </div>
+
     )
   }
 
   renderAlbums() {
     return this.props.albums.map(album => {
+      let className = ''
+
+      if(this.props.selectedItems.indexOf(album) !== -1) {
+        className = 'selected'
+      }
+
       return(
-        <div className='album' key={album.title}>
+        <div className={`album ${className}`}
+          key={album.title}
+          style={{backgroundImage: `url(${album.cover})`}}
+          onDoubleClick={() => { this.handleClick(album) }} >
           <p>{album.title}</p>
-          <img src={album.cover} onDoubleClick={() => { this.handleClick(album) }} />
         </div>
       )
     })
   }
 
   render () {
-    return (
-      <div className='albumsView'>
-        {this.renderView()}
-      </div>
-    )
+    return this.renderView()
   }
 }
 
