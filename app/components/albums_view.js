@@ -42,6 +42,34 @@ export default class AlbumsView extends Component {
     KeyboardManager.deactivate()
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.albums.length <= 0) return
+    if(this.state.selectedAlbum) {
+      let items = []
+      let nextAlbumIndex = -1
+
+      for(let i in nextProps.albums) {
+        if(this.state.selectedAlbum._id == nextProps.albums[i]._id) {
+          nextAlbumIndex = i
+        }
+      }
+      if(nextAlbumIndex == -1) return
+
+      let nextAlbum = nextProps.albums[nextAlbumIndex]
+
+      this.props.library.forEach((item) => {
+        for(let i in nextAlbum.items) {
+          if(item._id == nextAlbum.items[i])
+          items.push(item)
+        }
+      })
+
+      this.setState({
+        albumItems: items
+      })
+    }
+  }
+
   handleClick(album) {
     SelectionActions.singleSelectItem(album)
   }

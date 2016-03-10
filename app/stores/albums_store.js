@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import alt from './../lib/alt'
 import update from 'react-addons-update'
 
@@ -48,9 +49,10 @@ class AlbumsStore {
   handleRemoveFromAlbum(album) {
     let data = this.state.albums
     let index = data.findIndex((c) => { return c._id == album._id })
+    let newAlbumItems = _.intersection(data[index].items, album.items)
 
     let updatedAlbum = update(data[index], {
-      items: {$set: album.items.filter((_, i) => i !== index)}
+      items: {$set: newAlbumItems}
     })
 
     let newAlbums = update(data, {
