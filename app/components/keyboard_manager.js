@@ -3,6 +3,7 @@ import Mousetrap from 'mousetrap'
 import remote, { dialog } from 'remote'
 
 import SelectionStore from './../stores/selection_store'
+import AlbumsStore from './../stores/albums_store'
 import AppActions from './../actions/app_actions'
 import SelectionActions from './../actions/selection_actions'
 import AlbumsActions from './../actions/albums_actions'
@@ -60,10 +61,10 @@ export default class KeyboardManager {
         break
 
       case 'AlbumsView':
-        if(caller.state.showSingleAlbum) {
-          let albumsItemsIndex = caller.state.albumItems.indexOf(selectedItems[0])
+        if(caller.props.showSingleAlbum) {
+          let albumsItemsIndex = caller.props.albumItems.indexOf(selectedItems[0])
           if(albumsItemsIndex - 1 < 0) break
-          SelectionActions.singleSelectItem(caller.state.albumItems[albumsItemsIndex - 1])
+          SelectionActions.singleSelectItem(caller.props.albumItems[albumsItemsIndex - 1])
           this.ensureVisible()
           break
         } else {
@@ -96,10 +97,10 @@ export default class KeyboardManager {
         break
 
       case 'AlbumsView':
-        if(caller.state.showSingleAlbum) {
-          let albumsItemsIndex = caller.state.albumItems.indexOf(selectedItems[0])
-          if(albumsItemsIndex + 1 >= caller.state.albumItems.length) { break }
-          SelectionActions.singleSelectItem(caller.state.albumItems[albumsItemsIndex + 1])
+        if(caller.props.showSingleAlbum) {
+          let albumsItemsIndex = caller.props.albumItems.indexOf(selectedItems[0])
+          if(albumsItemsIndex + 1 >= caller.props.albumItems.length) { break }
+          SelectionActions.singleSelectItem(caller.props.albumItems[albumsItemsIndex + 1])
           this.ensureVisible()
           break
         } else {
@@ -111,6 +112,7 @@ export default class KeyboardManager {
         }
     }
   }
+
 
   static showPreview() {
     let {selectedItems} = SelectionStore.getState()
@@ -127,9 +129,9 @@ export default class KeyboardManager {
         break
 
       case 'AlbumsView':
-        if(caller.state.showSingleAlbum) {
-          let albumsItemsIndex = caller.state.albumItems.indexOf(selectedItems[0])
-          AppActions.previewItem(caller.state.albumItems[albumsItemsIndex])
+        if(caller.props.showSingleAlbum) {
+          let albumsItemsIndex = caller.props.albumItems.indexOf(selectedItems[0])
+          AppActions.previewItem(caller.props.albumItems[albumsItemsIndex])
           break
         } else {
           let albumsIndex = caller.props.albums.indexOf(selectedItems[0])
@@ -138,6 +140,7 @@ export default class KeyboardManager {
         }
     }
   }
+
 
   static delete() {
     let {selectedItems} = SelectionStore.getState()
@@ -161,6 +164,7 @@ export default class KeyboardManager {
 
         if (libraryChoice === 0) {
           LibraryActions.deleteMedia(selectedItems)
+          SelectionActions.clearSelection()
         }
         break
 
@@ -179,12 +183,15 @@ export default class KeyboardManager {
 
         if (favoritesChoice === 0) {
           LibraryActions.deleteMedia(selectedItems)
+          SelectionActions.clearSelection()
         }
         break
 
       case 'AlbumsView':
-        if(caller.state.showSingleAlbum) {
-          if(selectedItems.length == caller.state.selectedAlbum.items.length) {
+        if(caller.props.showSingleAlbum) {
+          let {selectedAlbum} = AlbumsStore.getState()
+
+          if(selectedItems.length == selectedAlbum.items.length) {
             let deleteAlbumMsg = 'You are deleting the album and all its items.'
 
             let albumsChoice = dialog.showMessageBox(
@@ -196,9 +203,9 @@ export default class KeyboardManager {
             })
 
             if (albumsChoice === 0) {
-              AlbumsActions.deleteAlbum(caller.state.selectedAlbum)
+              AlbumsActions.deleteAlbum(selectedAlbum)
+              AlbumsActions.hideSingleAlbum()
               NavigationActions.showAlbums()
-              caller.setState({showSingleAlbum: false, selectedAlbum: null})
             }
             break
           } else {
@@ -214,7 +221,7 @@ export default class KeyboardManager {
             })
 
             if (albumsChoice === 0) {
-              AlbumsActions.removeFromAlbum(caller.state.selectedAlbum, selectedItems)
+              AlbumsActions.removeFromAlbum(caller.props.selectedAlbum, selectedItems)
             }
             break
           }
@@ -238,20 +245,21 @@ export default class KeyboardManager {
     }
   }
 
+
   static exit() {
 
   }
+
 
   static ensureVisible() {
     let ContainerElem = document.getElementsByClassName('listView')[0]
     let selectedElem = document.getElementsByClassName('selected')[0]
 
-    if(callerName == 'AlbumsView' && !caller.state.showSingleAlbum) {
+    if(callerName == 'AlbumsView' && !caller.props.showSingleAlbum) {
       ContainerElem = document.getElementsByClassName('albumsView')[0]
     }
 
     ContainerElem.scrollTop = selectedElem.parentNode.offsetTop - 100
   }
-
 
 }

@@ -5,7 +5,6 @@ import AlbumsStore from './../stores/albums_store'
 import AlbumsActions from './../actions/albums_actions'
 import NavigationActions from './../actions/navigation_actions'
 
-
 export default class AddView extends Component {
 
   constructor(props) {
@@ -38,6 +37,7 @@ export default class AddView extends Component {
   createNewAlbum() {
     if(this.state.albumTitle) {
       AlbumsActions.createAlbum(this.state.albumTitle, this.state.items)
+      AlbumsActions.hideSingleAlbum()
       NavigationActions.showAlbums()
     }
   }

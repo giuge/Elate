@@ -15,119 +15,54 @@ export default class AlbumsView extends Component {
 
   constructor(props) {
     super(props)
-
-    this.state = {
-      showSingleAlbum: false,
-      selectedAlbum: null
-    }
   }
+
 
   static getStores() {
     return [AlbumsStore]
   }
 
+
   static getPropsFromStores() {
     return { ...AlbumsStore.getState()}
   }
+
 
   static componentDidConnect() {
     AlbumsActions.getAlbums()
   }
 
+
   componentWillMount() {
     KeyboardManager.activate(this)
   }
+
 
   componentWillUnmount() {
     KeyboardManager.deactivate()
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.albums.length <= 0) return
-    if(this.state.selectedAlbum) {
-      let items = []
-      let nextAlbumIndex = -1
-
-      for(let i in nextProps.albums) {
-        if(this.state.selectedAlbum._id == nextProps.albums[i]._id) {
-          nextAlbumIndex = i
-        }
-      }
-      if(nextAlbumIndex == -1) return
-
-      let nextAlbum = nextProps.albums[nextAlbumIndex]
-
-      this.props.library.forEach((item) => {
-        for(let i in nextAlbum.items) {
-          if(item._id == nextAlbum.items[i])
-          items.push(item)
-        }
-      })
-
-      this.setState({
-        albumItems: items
-      })
-    }
-  }
 
   handleClick(album) {
     SelectionActions.singleSelectItem(album)
   }
 
+
   handleDoubleClick(album) {
-    let items = []
-
-    this.props.library.forEach((item) => {
-      for(let i in album.items) {
-        if(item._id == album.items[i])
-        items.push(item)
-      }
-    })
-
-    this.setState({
-      showSingleAlbum: true,
-      selectedAlbum: album,
-      albumItems: items
-    })
+    AlbumsActions.showSingleAlbum(album)
   }
+
 
   renderPreview() {
     if(this.props.previewItem) {
       return (
         <PreviewView
           media={this.props.previewItem}
-          library={this.state.albumItems} />
+          library={this.props.albumItems} />
       )
     }
   }
 
-  renderView() {
-    if(this.props.emptyAlbums) {
-      return (
-        <div className='albumsView'>
-          <AlbumsEmpty />
-        </div>
-      )
-    }
-
-    if(this.state.showSingleAlbum) {
-      return (
-        <div className='listView'>
-          {this.renderPreview()}
-          <MediaList library={this.state.albumItems} />
-        </div>
-      )
-    }
-
-    return (
-      <div className='albumsView'>
-        <div className='albumList'>
-          {this.renderAlbums()}
-        </div>
-      </div>
-
-    )
-  }
 
   renderAlbums() {
     return this.props.albums.map(album => {
@@ -149,9 +84,35 @@ export default class AlbumsView extends Component {
     })
   }
 
+
   render () {
-    return this.renderView()
+    if(this.props.emptyAlbums) {
+      return (
+        <div className='albumsView'>
+          <AlbumsEmpty />
+        </div>
+      )
+    }
+
+    if(this.props.showSingleAlbum) {
+      return (
+        <div className='listView'>
+          {this.renderPreview()}
+          <MediaList library={this.props.albumItems} />
+        </div>
+      )
+    }
+
+    return (
+      <div className='albumsView'>
+        <div className='albumList'>
+          {this.renderAlbums()}
+        </div>
+      </div>
+    )
   }
+
 }
+
 
 export default connectToStores(AlbumsView)

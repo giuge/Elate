@@ -5,7 +5,7 @@ import connectToStores from 'alt-utils/lib/connectToStores'
 import NavigationStore from './../stores/navigation_store'
 import NavigationActions from './../actions/navigation_actions'
 import SelectionActions from './../actions/selection_actions'
-
+import AlbumsActions from './../actions/albums_actions'
 
 export default class Sidebar extends Component {
 
@@ -68,7 +68,7 @@ export default class Sidebar extends Component {
           </li>
 
           <li className={this.props.showAlbums ? 'active' : ''}
-            onClick={() => { NavigationActions.showAlbums(); this.prepareForView() }}>
+            onClick={() => { NavigationActions.showAlbums(); AlbumsActions.hideSingleAlbum(); this.prepareForView() }}>
             <img src='assets/albums.svg'/>Albums
           </li>
         </ul>

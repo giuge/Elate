@@ -7,18 +7,31 @@ const db = new pdb('albums', { adapter: 'websql' })
 
 class AlbumsActions {
 
-  // Get all the albums
+  // Get all the albums from the DB
   getAlbums() {
-    return ((dispatch) => {
+    return (dispatch => {
       db.allDocs({ include_docs: true, attachments: true })
-      .then((results) => {
+      .then(results => {
         let albums = []
-        results.rows.map((row) => { albums.push(row.doc) })
+        results.rows.map(row => { albums.push(row.doc) })
         dispatch(albums)
       })
-      .catch(err => { throw(err) })
+      .catch(err => { console.log(err) })
     })
   }
+
+
+  // Shows the content of an album
+  showSingleAlbum(album) {
+    return album
+  }
+
+
+  // Doesn't show any album
+  hideSingleAlbum() {
+    return true
+  }
+
 
   /**
    * Creates an album
@@ -26,7 +39,7 @@ class AlbumsActions {
    * @param: {Array} an array of media
    */
   createAlbum(title, medias) {
-    return ((dispatch) => {
+    return (dispatch => {
       let mediasID = []
 
       medias.map(media => {
@@ -46,19 +59,21 @@ class AlbumsActions {
     })
   }
 
+
   /**
    * Deletes an album
    * @param: {Object} the album
    */
   deleteAlbum(album) {
-    return ((dispatch) => {
-      db.remove(album._id, album._rev)
-      .then(dispatch(album))
-      .catch((err) => {
-        throw(err)
+    return (dispatch => {
+      db.get(album._id).then(doc => {
+        db.remove(doc)
+        .then(dispatch(album))
+        .catch(err => { console.log(err) })
       })
     })
   }
+
 
   /**
    * Removes media from an album
@@ -66,19 +81,17 @@ class AlbumsActions {
    * @param: {Array} an array of media
    */
   removeFromAlbum(album, medias) {
-    return ((dispatch) => {
+    return (dispatch => {
       let itemsIDs = []
 
       for(let i in medias) {
         itemsIDs.push(medias[i]._id)
       }
 
-      let items = _.difference(album.items, itemsIDs)
-
-      db.get(album._id).then((doc) => {
-        doc.items = items
+      db.get(album._id).then(doc => {
+        doc.items = _.difference(doc.items, itemsIDs)
         db.put(doc).then(dispatch(doc)).catch(err => { console.log(err) })
-      }).catch(err => { console.log(err) })
+      })
     })
   }
 
