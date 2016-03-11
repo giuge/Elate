@@ -6,6 +6,7 @@ import ActionBar from './action_bar'
 
 
 export default class TopBar extends Component {
+  
   constructor(props) {
     super(props)
 
