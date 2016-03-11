@@ -20,9 +20,11 @@ export class WindowLoader extends Component {
     super(props)
   }
 
+
   static getStores() {
     return [LibraryStore, AppStore, AccountStore]
   }
+
 
   static getPropsFromStores() {
     return {
@@ -32,16 +34,19 @@ export class WindowLoader extends Component {
     }
   }
 
+
   static componentDidConnect() {
     AccountActions.getUserInfo()
     LibraryActions.loadDatabase()
   }
+
 
   componentDidMount() {
     if(this.props.token && this.props.has_imported_library) {
       LibraryActions.syncLibrary()
     }
   }
+
 
   render() {
     if(!this.props.token) return <DropboxConnectWindow />
@@ -51,6 +56,7 @@ export class WindowLoader extends Component {
       <MainWindow {...this.props} />
     )
   }
+
 }
 
 

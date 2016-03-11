@@ -1,5 +1,6 @@
 import alt from './../lib/alt'
 
+
 class SelectionActions {
 
   /**
@@ -10,6 +11,7 @@ class SelectionActions {
     return item
   }
 
+
   /**
    * Selects the media item for multiselection
    * @param {Object} item
@@ -18,6 +20,7 @@ class SelectionActions {
     return item
   }
 
+
   /**
    * Selects the media item
    * @param {Object} item
@@ -25,6 +28,7 @@ class SelectionActions {
   deselectItem(item) {
     return item
   }
+
 
   /**
    * Deselects everything

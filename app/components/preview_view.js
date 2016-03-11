@@ -24,6 +24,7 @@ export default class PreviewView extends Component {
     this.req = request
   }
 
+
   componentWillMount() {
     if(!this.props.media.highResThumbnail) {
       this.setState({
@@ -33,14 +34,17 @@ export default class PreviewView extends Component {
     }
   }
 
+
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown)
     this.downloadMedia()
   }
 
+
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyDown)
   }
+
 
   downloadMedia() {
     let media = this.state.media
@@ -89,6 +93,7 @@ export default class PreviewView extends Component {
     })
   }
 
+
   handleKeyDown(event) {
     let {media, mediaFile, library} = this.state
 
@@ -131,6 +136,7 @@ export default class PreviewView extends Component {
     }
   }
 
+
   renderLoader() {
     let {loading, loadingPercent} = this.state
 
@@ -143,6 +149,7 @@ export default class PreviewView extends Component {
     }
     return
   }
+
 
   renderMedia() {
     let {media_info, thumbnail} = this.state.media
@@ -158,6 +165,7 @@ export default class PreviewView extends Component {
     }
     return <img src={mediaFile === '' ? thumbnail : mediaFile} />
   }
+
 
   render () {
     return (

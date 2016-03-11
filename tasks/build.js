@@ -24,6 +24,7 @@ var paths = {
   ],
 }
 
+
 // -------------------------------------
 // Tasks
 // -------------------------------------
@@ -41,6 +42,7 @@ var copyTask = function () {
 }
 gulp.task('copy', ['clean'], copyTask)
 gulp.task('copy-watch', copyTask)
+
 
 var silence = function() {}
 var bundle = function (src, dest) {
@@ -77,12 +79,14 @@ var bundle = function (src, dest) {
   return deferred.promise
 }
 
+
 var bundleApplication = function () {
   return Q.all([
     bundle(srcDir.path('background.js'), destDir.path('background.js')),
     bundle(srcDir.path('app.js'), destDir.path('app.js')),
   ])
 }
+
 
 var bundleSpecs = function () {
   generateSpecsImportFile().then(function (specEntryPointPath) {
@@ -92,6 +96,7 @@ var bundleSpecs = function () {
     ])
   })
 }
+
 
 var bundleTask = function () {
   if (utils.getEnvName() === 'test') {

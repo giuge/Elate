@@ -1,6 +1,7 @@
 import remote from 'remote'
 import env from './env'
 
+
 /**
  * The menu template
  * TODO: Make it work in the main process
@@ -178,8 +179,10 @@ if(env.name !== 'production') {
   )
 }
 
+
 const Menu = remote.Menu
 var menu = Menu.buildFromTemplate(template)
+
 
 export default function buildMenu() {
   Menu.setApplicationMenu(menu)

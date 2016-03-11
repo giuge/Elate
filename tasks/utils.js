@@ -1,7 +1,8 @@
-'use strict' 
+'use strict'
 
 var argv = require('yargs').argv
 var os = require('os')
+
 
 module.exports.os = function () {
   switch (os.platform()) {
@@ -15,6 +16,7 @@ module.exports.os = function () {
   return 'unsupported'
 }
 
+
 module.exports.replace = function (str, patterns) {
   Object.keys(patterns).forEach(function (pattern) {
     var matcher = new RegExp('{{' + pattern + '}}', 'g')
@@ -23,13 +25,16 @@ module.exports.replace = function (str, patterns) {
   return str
 }
 
+
 module.exports.getEnvName = function () {
   return argv.env || 'development'
 }
 
+
 module.exports.getSigningId = function () {
   return argv.sign
 }
+
 
 // Fixes https://github.com/nodejs/node-v0.x-archive/issues/2318
 module.exports.spawnablePath = function (path) {

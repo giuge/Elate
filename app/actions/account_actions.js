@@ -21,6 +21,7 @@ class AccountActions {
     })
   }
 
+
   /**
    * Saves the user account info to the database
    * after the user has finished connecting his
@@ -38,6 +39,7 @@ class AccountActions {
     })
   }
 
+
   /**
    * Updates the has_imported_library field in the database
    * @param {Bool}
@@ -50,6 +52,7 @@ class AccountActions {
       dispatch(account)
     })
   }
+
 
   /**
    * Logs the user out of the dropbox account

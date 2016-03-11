@@ -1,5 +1,6 @@
 import { GEOCODER_API_KEY, GEOCODER_API_ROOT } from './constants'
 
+
 export default class Geocoder {
 
   // Reverse geocoding using bing api

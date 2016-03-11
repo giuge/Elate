@@ -8,6 +8,7 @@ import _ from 'lodash'
 import utils from './utils'
 import { API_ROOT, CONTENT_ROOT, MEDIA_FOLDER, SUPPORTED_MIME_TYPES, TOKEN, refreshToken } from './constants'
 
+
 export default class Dropbox {
 
   // If the user is importing library we need to get the token again
@@ -40,6 +41,7 @@ export default class Dropbox {
     })
   }
 
+
   static getFromCursor(cursor, entries) {
     return new Promise((resolve, reject) => {
       let allEntries = []
@@ -70,6 +72,7 @@ export default class Dropbox {
       })
     })
   }
+
 
   static getAllMedia(files) {
     let array = []
@@ -130,6 +133,7 @@ export default class Dropbox {
     })
   }
 
+
   static downloadMedia(path) {
     return new Promise((resolve, reject) => {
       fetch(`${CONTENT_ROOT}/files/download`, {
@@ -147,6 +151,7 @@ export default class Dropbox {
       })
     })
   }
+
 
   /**
    * Fetch the user account info from Dropbox.

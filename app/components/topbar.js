@@ -12,25 +12,31 @@ export default class TopBar extends Component {
     this.currentWindow = remote.getCurrentWindow()
   }
 
+
   closeWindow() {
     this.currentWindow.close()
   }
+
 
   minimizeWindow() {
     this.currentWindow.minimize()
   }
 
+
   maximizeWindow() {
     this.currentWindow.maximize()
   }
+
 
   renderActionBar() {
     if(this.props.shouldShowActionbar) return <ActionBar />
   }
 
+
   renderNavigationBar() {
     if(this.props.shouldShowNavigationbar) return <NavigationBar />
   }
+
 
   render () {
     return (
@@ -45,4 +51,5 @@ export default class TopBar extends Component {
       </div>
     )
   }
+
 }

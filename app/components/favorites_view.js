@@ -12,13 +12,16 @@ export default class FavoritesView extends Component {
     super(props)
   }
 
+
   componentWillMount() {
     KeyboardManager.activate(this)
   }
 
+
   componentWillUnmount() {
     KeyboardManager.deactivate()
   }
+
 
   renderPreview() {
     if(this.props.previewItem) {
@@ -30,6 +33,7 @@ export default class FavoritesView extends Component {
     }
   }
 
+
   render () {
     if(this.props.emptyFavorites) {
       return (
@@ -38,7 +42,6 @@ export default class FavoritesView extends Component {
         </div>
       )
     }
-
     return (
       <div className='listView'>
         {this.renderPreview()}
@@ -46,4 +49,5 @@ export default class FavoritesView extends Component {
       </div>
     )
   }
+
 }

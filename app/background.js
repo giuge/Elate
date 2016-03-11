@@ -16,6 +16,7 @@ import windowStateKeeper from './vendor/electron_boilerplate/window_state'
 import devHelper from './vendor/electron_boilerplate/dev_helper'
 import env from './lib/env'
 
+
 // Create a reference to the main window
 let mainWindow
 let mainWindowState = windowStateKeeper('main', {
@@ -25,6 +26,7 @@ let mainWindowState = windowStateKeeper('main', {
   minHeight: 550,
   backgroundColor: '#1E1E1E'
 })
+
 
 app.on('ready', () => {
   if(env.name == 'production') {
@@ -120,6 +122,7 @@ app.on('ready', () => {
   }
 })
 
+
 app.on('window-all-closed', () => {
   if (process.platform != 'darwin') {
     app.quit()
@@ -167,5 +170,5 @@ app.on('activate', () => {
       mainWindowState.saveState(mainWindow)
       mainWindow = null
     })
-  }
+  }  
 })

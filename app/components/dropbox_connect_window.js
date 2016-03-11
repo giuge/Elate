@@ -16,6 +16,7 @@ export default class DropboxConnectWindow extends Component {
     }
   }
 
+
   /**
    * Dropbox redirects to a URL (OAuth2 flow)
    * that contains the user token and various account info.
@@ -34,6 +35,7 @@ export default class DropboxConnectWindow extends Component {
       AccountActions.saveAfterConnect(data)
     } else this.handleCallback(url)
   }
+
 
   /**
    * On click we create a new browser window
@@ -75,6 +77,7 @@ export default class DropboxConnectWindow extends Component {
 
   }
 
+
   render () {
     return (
       <div className='container'>
@@ -88,4 +91,5 @@ export default class DropboxConnectWindow extends Component {
       </div>
     )
   }
+
 }

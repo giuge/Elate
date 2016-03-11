@@ -3,6 +3,7 @@ import SelectionActions from './../actions/selection_actions'
 
 
 class SelectionStore {
+
   constructor() {
     this.bindListeners({
       handleSingleSelectItem: SelectionActions.SINGLE_SELECT_ITEM,
@@ -16,6 +17,7 @@ class SelectionStore {
     }
   }
 
+
   handleSelectItem(item) {
     if(this.state.selectedItems.indexOf(item) != -1) {
       return this.handleDeselectItem(item)
@@ -26,11 +28,13 @@ class SelectionStore {
     })
   }
 
+
   handleSingleSelectItem(selectedItem) {
     this.setState({
       selectedItems: [selectedItem]
     })
   }
+
 
   handleDeselectItem(item) {
     let index = this.state.selectedItems.indexOf(item)
@@ -38,6 +42,7 @@ class SelectionStore {
       selectedItems: this.state.selectedItems.filter((_, i) => i !== index)
     })
   }
+
 
   handleClearSelection() {
     this.setState({ selectedItems: []})

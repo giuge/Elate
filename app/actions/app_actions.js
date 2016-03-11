@@ -1,5 +1,6 @@
 import alt from './../lib/alt'
 
+
 class AppActions {
 
   /**
@@ -11,10 +12,12 @@ class AppActions {
     else return null
   }
 
+
   // Hides the preview
   hidePreview() {
     return true
   }
+
 
   // The library is syncing
   isSyncing(bool) {

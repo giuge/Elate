@@ -7,19 +7,23 @@ import NavigationActions from './../actions/navigation_actions'
 import SelectionActions from './../actions/selection_actions'
 import AlbumsActions from './../actions/albums_actions'
 
+
 export default class Sidebar extends Component {
 
   constructor(props) {
     super(props)
   }
 
+
   static getStores() {
     return [NavigationStore]
   }
 
+
   static getPropsFromStores() {
     return {...NavigationStore.getState()}
   }
+
 
   prepareForView() {
     let listView = document.getElementsByClassName('listView')[0]
@@ -33,6 +37,7 @@ export default class Sidebar extends Component {
 
     SelectionActions.clearSelection()
   }
+
 
   renderStatus() {
     if(this.props.isSyncingDB) {
@@ -50,6 +55,7 @@ export default class Sidebar extends Component {
       )
     }
   }
+
 
   render () {
     return (
@@ -77,6 +83,8 @@ export default class Sidebar extends Component {
       </div>
     )
   }
+
 }
+
 
 export default connectToStores(Sidebar)

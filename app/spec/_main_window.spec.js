@@ -16,6 +16,7 @@ describe('Main window', () => {
     })
   })
 
+
   afterAll(() => {
     wrapper.unmount()
   })

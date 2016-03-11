@@ -7,19 +7,23 @@ import SelectionActions from './../actions/selection_actions'
 import LibraryActions from './../actions/library_actions'
 import SelectionStore from './../stores/selection_store'
 
+
 export default class SingleMedia extends Component {
 
   constructor(props) {
     super(props)
   }
 
+
   static getStores() {
     return [SelectionStore]
   }
 
+
   static getPropsFromStores() {
     return {...SelectionStore.getState()}
   }
+
 
   // This improves performance a LOT! Only update if needed
   shouldComponentUpdate(nextProps, nextState) {
@@ -34,18 +38,22 @@ export default class SingleMedia extends Component {
     return true
   }
 
+
   handleClick(event) {
     if(event.shiftKey) SelectionActions.selectItem(this.props.media)
     else SelectionActions.singleSelectItem(this.props.media)
   }
 
+
   handleDoubleClick() {
     AppActions.previewItem(this.props.media)
   }
 
+
   addFavorite(event) {
     LibraryActions.addToFavorites(this.props.media)
   }
+
 
   renderDuration() {
     let { media_info } = this.props.media
@@ -60,6 +68,7 @@ export default class SingleMedia extends Component {
       }
     }
   }
+
 
   render () {
     let media = this.props.media
@@ -106,6 +115,8 @@ export default class SingleMedia extends Component {
       </div>
     )
   }
+
 }
+
 
 export default connectToStores(SingleMedia)

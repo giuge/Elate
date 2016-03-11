@@ -17,9 +17,11 @@ export default class MediaList extends Component {
     }
   }
 
+
   static propTypes = {
     library: PropTypes.array.isRequired
   }
+
 
   shouldComponentUpdate(nextProps, nextState) {
     if(this.props.library == nextProps.library) {
@@ -27,6 +29,7 @@ export default class MediaList extends Component {
     }
     return true
   }
+
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.library.length > 0) {
@@ -44,6 +47,7 @@ export default class MediaList extends Component {
     }
   }
 
+
   componentWillMount() {
     let chunks = []
     let sortedLibrary = _.orderBy(this.props.library, 'sortDate', 'desc' )
@@ -58,9 +62,11 @@ export default class MediaList extends Component {
     this.setState({chunks})
   }
 
+
   renderChunk(index) {
     return this.state.chunks[index]
   }
+
 
   render() {
     if(this.state.chunks.length > 0) {

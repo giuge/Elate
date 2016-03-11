@@ -9,6 +9,7 @@ const accountDB = path.join(USER_DATA, 'account.db')
 
 
 class AccountStore {
+  
   constructor() {
     this.bindListeners({
       handleGetUserInfo: AccountActions.GET_USER_INFO,
@@ -21,17 +22,21 @@ class AccountStore {
     this.state = {...account}
   }
 
+
   handleGetUserInfo(account) {
     this.setState({ ...account })
   }
+
 
   handleHasImportedLibrary(account) {
     this.setState({ ...account })
   }
 
+
   handleSaveAfterConnect(account) {
     this.setState({ ...account })
   }
+
 
   handleLogout() {
     this.setState({})

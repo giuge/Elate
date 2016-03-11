@@ -26,6 +26,7 @@ class LibraryActions {
     })
   }
 
+
   /**
    * Deletes a media both from the app and from Dropbox
    * @param: {Array} an array of media
@@ -40,6 +41,7 @@ class LibraryActions {
     }
     return media
   }
+
 
   /**
    * Syncs library with Dropbox
@@ -86,6 +88,7 @@ class LibraryActions {
     return false
   }
 
+
   /**
    * Saves the user library to the database after
    * it has been imported
@@ -103,6 +106,7 @@ class LibraryActions {
     })
   }
 
+
   /**
    * TODO: Create a function that deletes the library db
    * after the user has logged out and logged back in with a different
@@ -111,6 +115,7 @@ class LibraryActions {
   deleteLibrary() {
     return false
   }
+
 
   /**
    * Adds a media to favorites and download the high res picture

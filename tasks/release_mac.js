@@ -86,6 +86,7 @@ var makeDMG = function() {
   return deferred.promise
 }
 
+
 var zipMac = function() {
   if(os.platform() != 'darwin') {
     console.log('You can create zips on OSX only atm.')
@@ -101,6 +102,7 @@ var zipMac = function() {
   })
   return deferred.promise
 }
+
 
 var removeFolders = function() {
   let dirs = jetpack.find('./releases', { matching: 'Elate-*' })

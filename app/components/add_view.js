@@ -5,6 +5,7 @@ import AlbumsStore from './../stores/albums_store'
 import AlbumsActions from './../actions/albums_actions'
 import NavigationActions from './../actions/navigation_actions'
 
+
 export default class AddView extends Component {
 
   constructor(props) {
@@ -16,23 +17,28 @@ export default class AddView extends Component {
     }
   }
 
+
   static getStores() {
     return [AlbumsStore]
   }
+
 
   static getPropsFromStores() {
     return { ...AlbumsStore.getState()}
   }
 
+
   static componentDidConnect() {
     AlbumsActions.getAlbums()
   }
+
 
   handleTitleChange(event) {
     this.setState({
       albumTitle: event.target.value
     })
   }
+
 
   createNewAlbum() {
     if(this.state.albumTitle) {
@@ -42,6 +48,7 @@ export default class AddView extends Component {
     }
   }
 
+
   renderTitle() {
     if(this.props.albums.length <= 0) {
       return <h2>Create your first album with {this.state.items.length} items</h2>
@@ -49,6 +56,7 @@ export default class AddView extends Component {
       return <h2>Add {this.state.items.length} items to an album</h2>
     }
   }
+
 
   renderCreate() {
     return (
@@ -59,6 +67,7 @@ export default class AddView extends Component {
     )
   }
 
+
   render () {
     return (
       <div className='addView'>
@@ -67,6 +76,8 @@ export default class AddView extends Component {
       </div>
     )
   }
+
 }
+
 
 export default connectToStores(AddView)

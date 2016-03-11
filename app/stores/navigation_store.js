@@ -3,6 +3,7 @@ import NavigationActions from './../actions/navigation_actions'
 
 
 class NavigationStore {
+
   constructor() {
     this.bindListeners({
       handleGoBack: NavigationActions.GO_BACK,
@@ -35,6 +36,7 @@ class NavigationStore {
     this.state.navigationStack.push(inistialNavStack)
   }
 
+
   handleShowFavorites() {
     this.setState({
       showFavorites: true,
@@ -45,6 +47,7 @@ class NavigationStore {
     })
     this._pushToNavigationStack(this.state)
   }
+
 
   handleShowAllMedia() {
     this.setState({
@@ -57,6 +60,7 @@ class NavigationStore {
     this._pushToNavigationStack(this.state)
   }
 
+
   handleShowAlbums() {
     this.setState({
       showAlbums: true,
@@ -68,6 +72,7 @@ class NavigationStore {
     this._pushToNavigationStack(this.state)
   }
 
+
   handleShowShare() {
     this.setState({
       showShare: true,
@@ -77,6 +82,7 @@ class NavigationStore {
       showAdd: false
     })
   }
+
 
   handleShowAdd() {
     this.setState({
@@ -88,6 +94,7 @@ class NavigationStore {
     })
   }
 
+
   handleGoBack() {
     if(this.state.navigationIndex - 1 < 0) return
 
@@ -98,6 +105,7 @@ class NavigationStore {
     this._checkBackForward(this.state.navigationStack, this.state.navigationIndex)
   }
 
+
   handleGoForward() {
     if(this.state.navigationIndex + 1 >= this.state.navigationStack.length) return
 
@@ -107,6 +115,7 @@ class NavigationStore {
     this.setState({navigationIndex, showAdd, showAlbums, showAllMedia, showFavorites, showShare})
     this._checkBackForward(this.state.navigationStack, this.state.navigationIndex)
   }
+
 
   _pushToNavigationStack(state) {
     let newState = JSON.parse(JSON.stringify(state))
@@ -120,6 +129,7 @@ class NavigationStore {
 
     this._checkBackForward(this.state.navigationStack, this.state.navigationIndex)
   }
+
 
   _checkBackForward(stack, index) {
     if(stack[index - 1]) {

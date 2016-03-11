@@ -3,6 +3,7 @@ import AppActions from './../actions/app_actions'
 
 
 class AppStore {
+
   constructor() {
     this.bindListeners({
       handlePreviewItem: AppActions.PREVIEW_ITEM,
@@ -16,9 +17,11 @@ class AppStore {
     }
   }
 
+
   handlePreviewItem(previewItem) {
     this.setState({previewItem})
   }
+
 
   handleHidePreview() {
     this.setState({
@@ -26,6 +29,7 @@ class AppStore {
       previewItem: null
     })
   }
+
 
   handleIsSyncing(bool) {
     this.setState({

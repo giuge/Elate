@@ -6,6 +6,7 @@ import LibraryActions from './../actions/library_actions'
 
 
 class LibraryStore {
+
   constructor() {
     this.bindListeners({
       handleLoadDatabase: LibraryActions.LOAD_DATABASE,
@@ -22,6 +23,7 @@ class LibraryStore {
     }
   }
 
+
   handleLoadDatabase(library) {
     let favorites = []
 
@@ -37,11 +39,13 @@ class LibraryStore {
     this.setState({library, emptyFavorites, emptyLibrary, favorites})
   }
 
+
   handleSaveAfterImport(library) {
     let emptyLibrary = library.length <= 0 ? emptyLibrary = true : emptyLibrary = false
 
     this.setState({library, emptyLibrary})
   }
+
 
   handleDeleteMedia(media) {
     let library = _.difference(this.state.library, media)
@@ -56,6 +60,7 @@ class LibraryStore {
 
     this.setState({library, favorites, emptyLibrary, emptyFavorites})
   }
+
 
   handleAddToFavorites(media) {
     let data = this.state.library

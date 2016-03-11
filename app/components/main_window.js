@@ -25,6 +25,7 @@ export default class MainWindow extends Component {
     super(props)
   }
 
+
   static propTypes = {
     library: PropTypes.array.isRequired,
     favorites: PropTypes.array.isRequired,
@@ -37,9 +38,11 @@ export default class MainWindow extends Component {
     showShare: PropTypes.bool.isRequired
   }
 
+
   static getStores() {
     return [SelectionStore, NavigationStore]
   }
+
 
   static getPropsFromStores() {
     return {
@@ -47,6 +50,7 @@ export default class MainWindow extends Component {
       ...NavigationStore.getState()
     }
   }
+
 
   renderView() {
     if(this.props.showAllMedia) {
@@ -78,6 +82,7 @@ export default class MainWindow extends Component {
     }
   }
 
+
   render () {
     return (
       <div className='container'>
@@ -87,6 +92,8 @@ export default class MainWindow extends Component {
       </div>
     )
   }
+
 }
+
 
 export default connectToStores(MainWindow)

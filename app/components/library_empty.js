@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import {shell} from 'electron'
 
+
 export default class LibraryEmpty extends Component {
 
   handleClick(){
     shell.openExternal('https://www.dropbox.com/en/help/289')
   }
+
 
   render () {
     return (
@@ -17,4 +19,5 @@ export default class LibraryEmpty extends Component {
       </div>
     )
   }
+
 }

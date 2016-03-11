@@ -11,21 +11,26 @@ export default class NavigationBar extends Component {
     super(props)
   }
 
+
   static getStores() {
     return [NavigationStore]
   }
+
 
   static getPropsFromStores() {
     return {...NavigationStore.getState()}
   }
 
+
   handleGoBack() {
     NavigationActions.goBack()
   }
 
+
   handleGoForward() {
     NavigationActions.goForward()
   }
+
 
   render () {
     return (
@@ -38,6 +43,8 @@ export default class NavigationBar extends Component {
       </ul>
     )
   }
+
 }
+
 
 export default connectToStores(NavigationBar)

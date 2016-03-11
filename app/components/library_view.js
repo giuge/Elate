@@ -12,17 +12,21 @@ export default class LibraryView extends Component {
     super(props)
   }
 
+
   static propTypes = {
     library: PropTypes.array.isRequired
   }
+
 
   componentWillMount() {
     KeyboardManager.activate(this)
   }
 
+
   componentWillUnmount() {
     KeyboardManager.deactivate()
   }
+
 
   renderPreview() {
     if(this.props.previewItem) {
@@ -33,6 +37,7 @@ export default class LibraryView extends Component {
       )
     }
   }
+
 
   render () {
     if(this.props.emptyLibrary) {
@@ -50,4 +55,5 @@ export default class LibraryView extends Component {
       </div>
     )
   }
+
 }

@@ -9,6 +9,7 @@ var appDir = require('fs-jetpack').cwd(__dirname, '../app')
 var argv = require('yargs').argv
 var utils = require('./utils')
 
+
 var ensureElectronRebuildInstalled = function () {
   var deferred = Q.defer()
 
@@ -28,6 +29,7 @@ var ensureElectronRebuildInstalled = function () {
 
   return deferred.promise
 }
+
 
 var ensurePostinstallRunsElectronRebuild = function () {
   var postinstallScript = 'node ../tasks/rebuild_native_modules'
@@ -51,6 +53,7 @@ var ensurePostinstallRunsElectronRebuild = function () {
   return Q()
 }
 
+
 var installNativeModule = function () {
   var deferred = Q.defer()
   var moduleName = argv._[0]
@@ -71,6 +74,7 @@ var installNativeModule = function () {
   return deferred.promise
 }
 
+
 var runRebuild = function () {
   var deferred = Q.defer()
 
@@ -85,6 +89,7 @@ var runRebuild = function () {
 
   return deferred.promise
 }
+
 
 ensureElectronRebuildInstalled()
 .then(ensurePostinstallRunsElectronRebuild)

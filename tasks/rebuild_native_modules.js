@@ -11,6 +11,7 @@ var rebuild = require('electron-rebuild')
 
 var pathToElectronNativeModules = path.join(__dirname, '../app/node_modules')
 
+
 rebuild.shouldRebuildNativeModules(electron)
 .then(function (shouldBuild) {
   if (!shouldBuild) {

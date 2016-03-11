@@ -32,6 +32,7 @@ var runBuild = function () {
   return deferred.promise
 }
 
+
 var runGulpWatch = function () {
   watch = childProcess.spawn(utils.spawnablePath(gulpPath), [
     'watch',
@@ -48,6 +49,7 @@ var runGulpWatch = function () {
   })
 }
 
+
 var runApp = function () {
   var app = childProcess.spawn(electron, ['./build'], {
     // Always listen to what the app has to say :)
@@ -61,6 +63,7 @@ var runApp = function () {
     })
   })
 }
+
 
 runBuild()
 .then(function () {

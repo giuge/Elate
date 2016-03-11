@@ -21,6 +21,7 @@ export default class ImportLibraryWindow extends Component {
     }
   }
 
+
   componentDidMount() {
     dropbox.getFileList().then(results => {
       let media = []
@@ -34,6 +35,7 @@ export default class ImportLibraryWindow extends Component {
       this.setState({mediaToImport: media})
     })
   }
+
 
   handleClick() {
     let finishAt = this.state.mediaToImport.length
@@ -74,6 +76,7 @@ export default class ImportLibraryWindow extends Component {
     }
   }
 
+
   renderButton() {
     let {isImporting, mediaToImport} = this.state
 
@@ -84,6 +87,7 @@ export default class ImportLibraryWindow extends Component {
     } else return
   }
 
+
   renderProgressText() {
     let {isImporting, mediaToImport, importedMedia} = this.state
 
@@ -92,6 +96,7 @@ export default class ImportLibraryWindow extends Component {
     }
     return <p>Total media: {mediaToImport.length}</p>
   }
+
 
   renderWelcomeIntro() {
     let {account_info} = this.props
@@ -117,6 +122,7 @@ export default class ImportLibraryWindow extends Component {
     )
   }
 
+
   render () {
     let {mediaToImport, importedMedia} = this.state
     let shouldWait = true
@@ -139,4 +145,5 @@ export default class ImportLibraryWindow extends Component {
       </div>
     )
   }
+
 }

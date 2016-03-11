@@ -8,10 +8,12 @@ export default class MediaListChunk extends Component {
     super(props)
   }
 
+
   static propTypes = {
     chunk: PropTypes.array.isRequired,
     date: PropTypes.string.isRequired
   }
+
 
   renderLocation() {
     for(let i in this.props.chunk) {
@@ -28,12 +30,14 @@ export default class MediaListChunk extends Component {
     return
   }
 
+
   renderDate() {
     if(this.props.date === '01 Jan 1970') {
       return <p className='date'>Sometime in the past</p>
     }
     return <p className='date'>{this.props.date}</p>
   }
+
 
   renderList() {
     return this.props.chunk.map((media) => {
@@ -44,6 +48,7 @@ export default class MediaListChunk extends Component {
       )
     })
   }
+
 
   render() {
     return (

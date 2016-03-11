@@ -1,6 +1,7 @@
 import geocoder from './geocoder'
 import moment from 'moment'
 
+
 export default class Utils {
 
   /**
@@ -67,6 +68,7 @@ export default class Utils {
 
     })
   }
+
 
   /**
    *  Smoothly scroll element to the given target (element.scrollTop)

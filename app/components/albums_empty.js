@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
+
 export default class AlbumsEmpty extends Component {
+
   render () {
     return (
       <div className='albumsEmpty'>
@@ -11,4 +13,5 @@ export default class AlbumsEmpty extends Component {
       </div>
     )
   }
+  
 }

@@ -11,6 +11,7 @@ var whatToInclude = [
   '!node_modules/**'
 ]
 
+
 module.exports = function () {
   return srcDir.findAsync('.', { matching: whatToInclude }, 'relativePath')
   .then(function (specPaths) {

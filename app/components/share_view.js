@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
+
 export default class ShareView extends Component {
+
   render () {
     return (
       <div className='shareView'>
@@ -8,4 +10,5 @@ export default class ShareView extends Component {
       </div>
     )
   }
+
 }
