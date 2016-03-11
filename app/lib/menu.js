@@ -106,6 +106,7 @@ let template = [
   },
 ];
 
+
 if (process.platform == 'darwin') {
   var name = remote.app.getName();
   template.unshift({
