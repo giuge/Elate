@@ -25,14 +25,7 @@ class LibraryStore {
 
 
   handleLoadDatabase(library) {
-    let favorites = []
-
-    library.forEach((item) => {
-      if(item.isFavorite) {
-        favorites = favorites.concat(item)
-      }
-    })
-
+    let favorites = library.filter(x => x.isFavorite === true)
     let emptyFavorites = favorites.length <= 0 ? emptyFavorites = true : emptyFavorites = false
     let emptyLibrary = library.length <= 0 ? emptyLibrary = true : emptyLibrary = false
 
@@ -64,8 +57,7 @@ class LibraryStore {
 
   handleAddToFavorites(media) {
     let data = this.state.library
-    let favorites = []
-    let index = data.findIndex((c) => { return c._id == media._id })
+    let index = data.findIndex(x => x._id == media._id)
 
     let updatedMedia = update(data[index], {
       isFavorite: {$set: media.isFavorite},
@@ -76,12 +68,7 @@ class LibraryStore {
       $splice: [[index, 1, updatedMedia]]
     })
 
-    newLibrary.forEach((item) => {
-      if(item.isFavorite) {
-        favorites = favorites.concat(item)
-      }
-    })
-
+    let favorites = newLibrary.filter(x => x.isFavorite === true)
     let emptyFavorites = favorites.length <= 0 ? emptyFavorites = true : emptyFavorites = false
 
     this.setState({

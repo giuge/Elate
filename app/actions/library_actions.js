@@ -18,8 +18,7 @@ class LibraryActions {
     return ((dispatch) => {
       db.allDocs({ include_docs: true, attachments: true })
       .then((results) => {
-        let library = []
-        results.rows.map((row) => { library.push(row.doc) })
+        let library = results.rows.map(row => row.doc)
         dispatch(_.orderBy(library, 'sortDate', 'desc'))
       })
       .catch((err) => { throw(err) })
@@ -31,15 +30,16 @@ class LibraryActions {
    * Deletes a media both from the app and from Dropbox
    * @param: {Array} an array of media
    */
-  deleteMedia(media) {
-    for(let i in media) {
-      dropbox.deleteMedia(media[i].path_lower)
-      db.remove(media[i]._id, media[i]._rev)
+  deleteMedia(medias) {
+    medias.map(media => {
+      dropbox.deleteMedia(media.path_lower)
+      db.remove(media._id, media._rev)
       .catch((err) => {
         throw(err)
       })
-    }
-    return media
+    })
+
+    return medias
   }
 
 
@@ -49,9 +49,8 @@ class LibraryActions {
    */
   syncLibrary() {
     db.allDocs({ include_docs: true })
-    .then((results) => {
-      let library = []
-      results.rows.map((row) => { library.push(row.doc) })
+    .then(results => {
+      let library = results.rows.map(row => row.doc)
 
       dropbox.getFileList().then(results => {
         let missingMedia = _.differenceBy(results, library, 'id')
@@ -59,9 +58,9 @@ class LibraryActions {
 
         if(promises.length > 0) AppActions.isSyncing(true)
 
-        Promise.all(promises).then((values) => {
+        Promise.all(promises).then(values => {
           db.bulkDocs(values)
-          .then((results) => {
+          .then(results => {
             AppActions.isSyncing(false)
 
             if(values.length > 0) {
@@ -78,9 +77,7 @@ class LibraryActions {
             }
 
           })
-          .catch((err) => {
-            console.log(err)
-          })
+          .catch(err => console.log(err))
         })
 
       })
@@ -97,12 +94,10 @@ class LibraryActions {
   saveAfterImport(importedMedia) {
     return ((dispatch) => {
       db.bulkDocs(importedMedia)
-      .then((results) => {
+      .then(results => {
         dispatch(_.orderBy(importedMedia, 'sortDate', 'desc'))
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      .catch(err => console.log(err))
     })
   }
 
@@ -130,8 +125,8 @@ class LibraryActions {
         dispatch(media)
         db.get(media._id).then((doc) => {
           media._rev = doc._rev
-          db.put(media).catch(err => { console.log(err) })
-        }).catch(err => { console.log(err) })
+          db.put(media).catch(err => console.log(err))
+        }).catch(err => console.log(err))
 
       } else {
         media.isFavorite = true
@@ -147,12 +142,12 @@ class LibraryActions {
             // We need to get the latest doc revision to avoid conflicts
             db.get(media._id).then((doc) => {
               media._rev = doc._rev
-              db.put(media).catch(err => { console.log(err) })
-            }).catch(err => { console.log(err) })
+              db.put(media).catch(err => console.log(err))
+            }).catch(err => console.log(err))
 
             dispatch(media)
           }
-        }).catch(err => { console.log(err) })
+        }).catch(err => console.log(err))
       }
     })
   }

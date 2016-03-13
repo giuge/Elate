@@ -19,12 +19,12 @@ export default class LibraryView extends Component {
 
 
   componentWillMount() {
-    KeyboardManager.activate(this)
+    KeyboardManager().activate(this)
   }
 
 
   componentWillUnmount() {
-    KeyboardManager.deactivate()
+    KeyboardManager().deactivate()
   }
 
 

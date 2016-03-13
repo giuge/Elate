@@ -14,12 +14,12 @@ export default class FavoritesView extends Component {
 
 
   componentWillMount() {
-    KeyboardManager.activate(this)
+    KeyboardManager().activate(this)
   }
 
 
   componentWillUnmount() {
-    KeyboardManager.deactivate()
+    KeyboardManager().deactivate()
   }
 
 

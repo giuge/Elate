@@ -65,7 +65,7 @@ export default class PreviewView extends Component {
     .set('Dropbox-API-Arg', JSON.stringify({ 'path': `${media.path_lower}`}))
     .end((err, res) => {
       contentLength = res.headers['original-content-length']
-      res.on('data', (chunk)  => {
+      res.on('data', chunk  => {
         dataLength += chunk.length
         this.setState({
           loading: true,

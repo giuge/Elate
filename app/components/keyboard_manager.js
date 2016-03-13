@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import Mousetrap from 'mousetrap'
 import remote, { dialog } from 'remote'
 
@@ -10,39 +9,15 @@ import AlbumsActions from './../actions/albums_actions'
 import LibraryActions from './../actions/library_actions'
 import NavigationActions from './../actions/navigation_actions'
 
-let caller
-let callerName = ''
-let supportedComponents = ['LibraryView', 'FavoritesView', 'AlbumsView', 'PreviewView']
+
+const KeyboardManager = () => {
+
+  let caller
+  let callerName = ''
+  const supportedComponents = ['LibraryView', 'FavoritesView', 'AlbumsView']
 
 
-export default class KeyboardManager {
-
-  static activate(component) {
-    caller = component
-    callerName = component.constructor.name
-
-    if(supportedComponents.indexOf(callerName) == -1) {
-      return console.error(`The ${callerName} component is not supported.`)
-    }
-
-    Mousetrap.bind('left', () => {this.selectPrev()})
-    Mousetrap.bind('right', () => {this.selectNext()})
-    Mousetrap.bind('enter', () => {this.showPreview()})
-    Mousetrap.bind(['del', 'backspace'], () => {this.delete()})
-    Mousetrap.bind('esc', () => {this.exit()})
-  }
-
-
-  static deactivate() {
-    Mousetrap.unbind('left')
-    Mousetrap.unbind('right')
-    Mousetrap.unbind('enter')
-    Mousetrap.unbind(['del', 'backspace'])
-    Mousetrap.unbind('esc')
-  }
-
-
-  static selectPrev() {
+  const selectPrev = () => {
     let {selectedItems} = SelectionStore.getState()
 
     switch(callerName) {
@@ -50,14 +25,14 @@ export default class KeyboardManager {
         let libraryIndex = caller.props.library.indexOf(selectedItems[0])
         if(libraryIndex - 1 < 0) break
         SelectionActions.singleSelectItem(caller.props.library[libraryIndex - 1])
-        this.ensureVisible()
+        ensureVisible()
         break
 
       case 'FavoritesView':
         let favoritesIndex = caller.props.favorites.indexOf(selectedItems[0])
         if(favoritesIndex - 1 < 0) break
         SelectionActions.singleSelectItem(caller.props.favorites[favoritesIndex - 1])
-        this.ensureVisible()
+        ensureVisible()
         break
 
       case 'AlbumsView':
@@ -65,20 +40,20 @@ export default class KeyboardManager {
           let albumsItemsIndex = caller.props.albumItems.indexOf(selectedItems[0])
           if(albumsItemsIndex - 1 < 0) break
           SelectionActions.singleSelectItem(caller.props.albumItems[albumsItemsIndex - 1])
-          this.ensureVisible()
+          ensureVisible()
           break
         } else {
           let albumsIndex = caller.props.albums.indexOf(selectedItems[0])
           if(albumsIndex - 1 < 0) break
           SelectionActions.singleSelectItem(caller.props.albums[albumsIndex - 1])
-          this.ensureVisible()
+          ensureVisible()
           break
         }
     }
   }
 
 
-  static selectNext() {
+  const selectNext = () => {
     let {selectedItems} = SelectionStore.getState()
 
     switch(callerName) {
@@ -86,14 +61,14 @@ export default class KeyboardManager {
         let libraryIndex = caller.props.library.indexOf(selectedItems[0])
         if(libraryIndex + 1 >= caller.props.library.length) { break }
         SelectionActions.singleSelectItem(caller.props.library[libraryIndex + 1])
-        this.ensureVisible()
+        ensureVisible()
         break
 
       case 'FavoritesView':
         let favoritesIndex = caller.props.favorites.indexOf(selectedItems[0])
         if(favoritesIndex + 1 >= caller.props.favorites.length) { break }
         SelectionActions.singleSelectItem(caller.props.favorites[favoritesIndex + 1])
-        this.ensureVisible()
+        ensureVisible()
         break
 
       case 'AlbumsView':
@@ -101,20 +76,20 @@ export default class KeyboardManager {
           let albumsItemsIndex = caller.props.albumItems.indexOf(selectedItems[0])
           if(albumsItemsIndex + 1 >= caller.props.albumItems.length) { break }
           SelectionActions.singleSelectItem(caller.props.albumItems[albumsItemsIndex + 1])
-          this.ensureVisible()
+          ensureVisible()
           break
         } else {
           let albumsIndex = caller.props.albums.indexOf(selectedItems[0])
           if(albumsIndex + 1 >= caller.props.albums.length) { break }
           SelectionActions.singleSelectItem(caller.props.albums[albumsIndex + 1])
-          this.ensureVisible()
+          ensureVisible()
           break
         }
     }
   }
 
 
-  static showPreview() {
+  const showPreview = () => {
     let {selectedItems} = SelectionStore.getState()
 
     switch(callerName) {
@@ -142,7 +117,7 @@ export default class KeyboardManager {
   }
 
 
-  static delete() {
+  const deleteSelected = () => {
     let {selectedItems} = SelectionStore.getState()
     if(selectedItems.length <= 0) return
 
@@ -246,12 +221,12 @@ export default class KeyboardManager {
   }
 
 
-  static exit() {
+  const exit = () => {
 
   }
 
 
-  static ensureVisible() {
+  const ensureVisible = () => {
     let ContainerElem = document.getElementsByClassName('listView')[0]
     let selectedElem = document.getElementsByClassName('selected')[0]
 
@@ -262,4 +237,35 @@ export default class KeyboardManager {
     ContainerElem.scrollTop = selectedElem.parentNode.offsetTop - 100
   }
 
+
+  return {
+
+    activate: (component) => {
+      caller = component
+      callerName = component.constructor.name
+
+      if(supportedComponents.indexOf(callerName) == -1) {
+        return console.error(`The ${callerName} component is not supported.`)
+      }
+
+      Mousetrap.bind('left', () => {selectPrev()})
+      Mousetrap.bind('right', () => {selectNext()})
+      Mousetrap.bind('enter', () => {showPreview()})
+      Mousetrap.bind(['del', 'backspace'], () => {deleteSelected()})
+      Mousetrap.bind('esc', () => {exit()})
+    },
+
+
+    deactivate: () => {
+      Mousetrap.unbind('left')
+      Mousetrap.unbind('right')
+      Mousetrap.unbind('enter')
+      Mousetrap.unbind(['del', 'backspace'])
+      Mousetrap.unbind('esc')
+    }
+
+  }
+
 }
+
+export default KeyboardManager

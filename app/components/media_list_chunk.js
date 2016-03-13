@@ -40,7 +40,7 @@ export default class MediaListChunk extends Component {
 
 
   renderList() {
-    return this.props.chunk.map((media) => {
+    return this.props.chunk.map(media => {
       return (
         <li key={media.id} className={media.className}>
           <SingleMedia media={media} />

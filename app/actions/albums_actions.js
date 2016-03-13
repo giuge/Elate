@@ -12,8 +12,7 @@ class AlbumsActions {
     return (dispatch => {
       db.allDocs({ include_docs: true, attachments: true })
       .then(results => {
-        let albums = []
-        results.rows.map(row => { albums.push(row.doc) })
+        let albums = results.rows.map(row => row.doc)
         dispatch(albums)
       })
       .catch(err => { console.log(err) })
@@ -40,11 +39,7 @@ class AlbumsActions {
    */
   createAlbum(title, medias) {
     return (dispatch => {
-      let mediasID = []
-
-      medias.map(media => {
-        mediasID.push(media._id)
-      })
+      let mediasID = medias.map(media => media._id)
 
       let album = {
         title: title,
@@ -82,11 +77,7 @@ class AlbumsActions {
    */
   removeFromAlbum(album, medias) {
     return (dispatch => {
-      let itemsIDs = []
-
-      for(let i in medias) {
-        itemsIDs.push(medias[i]._id)
-      }
+      let itemsIDs = medias.map(media => media._id)
 
       db.get(album._id).then(doc => {
         doc.items = _.difference(doc.items, itemsIDs)
