@@ -36,4 +36,12 @@ describe('Library view', () => {
     expect(location.nodes[1].textContent).toBe('Aghir - Tunisia')
   })
 
+
+  it('shows the empty state given an empty library', () => {
+    wrapper.setProps({library: [], emptyLibrary: true})
+
+    let location = wrapper.find('.libraryEmpty')
+    expect(location.nodes.length).toBeGreaterThan(0)
+  })
+
 })

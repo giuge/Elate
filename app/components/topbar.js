@@ -5,52 +5,49 @@ import NavigationBar from './navigation_bar'
 import ActionBar from './action_bar'
 
 
-export default class TopBar extends Component {
-  
-  constructor(props) {
-    super(props)
+const TopBar = ({shouldShowActionbar, shouldShowNavigationbar}) => {
 
-    this.currentWindow = remote.getCurrentWindow()
+  const currentWindow = remote.getCurrentWindow()
+
+
+  const closeWindow = () => {
+    currentWindow.close()
   }
 
 
-  closeWindow() {
-    this.currentWindow.close()
+  const minimizeWindow = () => {
+    currentWindow.minimize()
   }
 
 
-  minimizeWindow() {
-    this.currentWindow.minimize()
+  const maximizeWindow = () => {
+    currentWindow.maximize()
   }
 
 
-  maximizeWindow() {
-    this.currentWindow.maximize()
+  const renderActionBar = () => {
+    if(shouldShowActionbar) return <ActionBar />
   }
 
 
-  renderActionBar() {
-    if(this.props.shouldShowActionbar) return <ActionBar />
+  const renderNavigationBar = () => {
+    if(shouldShowNavigationbar) return <NavigationBar />
   }
 
 
-  renderNavigationBar() {
-    if(this.props.shouldShowNavigationbar) return <NavigationBar />
-  }
-
-
-  render () {
-    return (
-      <div className={`topBar ${process.platform}`}>
-        <ul className='titleBar'>
-          <li className='close' onClick={() => { this.closeWindow() }} />
-          <li className='minimize' onClick={() => { this.minimizeWindow() }} />
-          <li className='fullscreen' onClick={() => { this.maximizeWindow() }} />
-        </ul>
-        {this.renderNavigationBar()}
-        {this.renderActionBar()}
-      </div>
-    )
-  }
+  return (
+    <div className={`topBar ${process.platform}`}>
+      <ul className='titleBar'>
+        <li className='close' onClick={() => { closeWindow() }} />
+        <li className='minimize' onClick={() => { minimizeWindow() }} />
+        <li className='fullscreen' onClick={() => { maximizeWindow() }} />
+      </ul>
+      {renderNavigationBar()}
+      {renderActionBar()}
+    </div>
+  )
 
 }
+
+
+export default TopBar

@@ -1,31 +1,14 @@
 import React, { Component } from 'react'
 import { remote } from 'electron'
 
-import connectToStores from 'alt-utils/lib/connectToStores'
-import NavigationStore from './../stores/navigation_store'
 import NavigationActions from './../actions/navigation_actions'
 import SelectionActions from './../actions/selection_actions'
 import AlbumsActions from './../actions/albums_actions'
 
 
-export default class Sidebar extends Component {
+const Sidebar = (props) => {
 
-  constructor(props) {
-    super(props)
-  }
-
-
-  static getStores() {
-    return [NavigationStore]
-  }
-
-
-  static getPropsFromStores() {
-    return {...NavigationStore.getState()}
-  }
-
-
-  prepareForView() {
+  const prepareForView = () => {
     let listView = document.getElementsByClassName('listView')[0]
     let albumsView = document.getElementsByClassName('albumsView')[0]
 
@@ -39,8 +22,8 @@ export default class Sidebar extends Component {
   }
 
 
-  renderStatus() {
-    if(this.props.isSyncingDB) {
+  const renderStatus = () => {
+    if(props.isSyncingDB) {
       return(
         <div className='bottom-info sync'>
           <img src='assets/loading.svg' />
@@ -57,34 +40,32 @@ export default class Sidebar extends Component {
   }
 
 
-  render () {
-    return (
-      <div className='sidebar'>
-        <ul>
-          <h6>Library</h6>
+  return (
+    <div className='sidebar'>
+      <ul>
+        <h6>Library</h6>
 
-          <li className={this.props.showAllMedia ? 'active' : ''}
-            onClick={() => { NavigationActions.showAllMedia(); this.prepareForView() }}>
-            <img src='assets/all-media.svg'/>All media
-          </li>
+        <li className={props.showAllMedia ? 'active' : ''}
+          onClick={() => { NavigationActions.showAllMedia(); prepareForView() }}>
+          <img src='assets/all-media.svg'/>All media
+        </li>
 
-          <li className={this.props.showFavorites ? 'active' : ''}
-            onClick={() => { NavigationActions.showFavorites(); this.prepareForView() }}>
-            <img src='assets/favorites.svg'/>Favorites
-          </li>
+        <li className={props.showFavorites ? 'active' : ''}
+          onClick={() => { NavigationActions.showFavorites(); prepareForView() }}>
+          <img src='assets/favorites.svg'/>Favorites
+        </li>
 
-          <li className={this.props.showAlbums ? 'active' : ''}
-            onClick={() => { NavigationActions.showAlbums(); AlbumsActions.hideSingleAlbum(); this.prepareForView() }}>
-            <img src='assets/albums.svg'/>Albums
-          </li>
-        </ul>
+        <li className={props.showAlbums ? 'active' : ''}
+          onClick={() => { NavigationActions.showAlbums(); AlbumsActions.hideSingleAlbum(); prepareForView() }}>
+          <img src='assets/albums.svg'/>Albums
+        </li>
+      </ul>
 
-        {this.renderStatus()}
-      </div>
-    )
-  }
+      {renderStatus()}
+    </div>
+  )
 
 }
 
 
-export default connectToStores(Sidebar)
+export default Sidebar

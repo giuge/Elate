@@ -26,19 +26,6 @@ export default class MainWindow extends Component {
   }
 
 
-  static propTypes = {
-    library: PropTypes.array.isRequired,
-    favorites: PropTypes.array.isRequired,
-    emptyLibrary: PropTypes.bool.isRequired,
-    emptyFavorites: PropTypes.bool.isRequired,
-    showAllMedia: PropTypes.bool.isRequired,
-    showFavorites: PropTypes.bool.isRequired,
-    showAlbums: PropTypes.bool.isRequired,
-    showAdd: PropTypes.bool.isRequired,
-    showShare: PropTypes.bool.isRequired
-  }
-
-
   static getStores() {
     return [SelectionStore, NavigationStore]
   }
@@ -87,7 +74,12 @@ export default class MainWindow extends Component {
     return (
       <div className='container'>
         <TopBar shouldShowActionbar={true} shouldShowNavigationbar={true} />
-        <Sidebar isSyncingDB={this.props.isSyncingDB} />
+
+        <Sidebar isSyncingDB={this.props.isSyncingDB}
+          showAllMedia={this.props.showAllMedia}
+          showFavorites={this.props.showFavorites}
+          showAlbums={this.props.showAlbums} />
+
         {this.renderView()}
       </div>
     )
