@@ -2,7 +2,8 @@ import _ from 'lodash'
 import alt from './../lib/alt'
 import pdb from 'pouchdb/dist/pouchdb'
 
-const db = new pdb('albums', { adapter: 'websql' })
+pdb.adapter('worker', require('worker-pouch/dist/pouchdb.worker-pouch.min.js'))
+const db = new pdb('albums', {adapter: 'worker'})
 
 
 class AlbumsActions {

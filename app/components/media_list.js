@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import React, { Component, PropTypes } from 'react'
+import {findDOMNode} from 'react-dom'
 
 import ReactList from 'react-list'
 import SingleMedia from './single_media'
@@ -74,8 +75,9 @@ export default class MediaList extends Component {
         <ReactList
           itemRenderer={::this.renderChunk}
           length={this.state.chunks.length}
+          type='simple'
           initialIndex={0}
-          pageSize={6}
+          pageSize={3}
           threshold={1500}
           useTranslate3d={true}
         />

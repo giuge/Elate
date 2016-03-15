@@ -3,6 +3,7 @@ import request from 'superagent'
 import React, { Component } from 'react'
 import AppActions from './../actions/app_actions'
 
+import VideoPlayer from './video_player'
 import { Circle } from 'rc-progress'
 import { CONTENT_ROOT, TOKEN } from './../lib/constants'
 
@@ -156,11 +157,10 @@ export default class PreviewView extends Component {
     let {loading, mediaFile} = this.state
 
     if(media_info && media_info.metadata && media_info.metadata.tag === 'video') {
-      if(loading || mediaFile === '') {
+      if(loading || !mediaFile) {
         return <img src={thumbnail} />
       } else {
-        // TODO: We need to create a better video component to use
-        return <video src={mediaFile} controls poster={thumbnail} />
+        return <VideoPlayer src={mediaFile} poster={thumbnail} />
       }
     }
     return <img src={mediaFile === '' ? thumbnail : mediaFile} />

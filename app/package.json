@@ -4,7 +4,7 @@
   "url": "http://elateapp.com",
   "identifier": "gs.germinaro.elate",
   "description": "The Dropbox media browser.",
-  "version": "0.59.0-alpha",
+  "version": "0.60.0-alpha",
   "author": "Giuseppe Germinaro",
   "copyright": "© 2016, Giuseppe Germinaro",
   "main": "background.js",
@@ -23,7 +23,9 @@
     "react-addons-update": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-list": "^0.7.13",
-    "superagent": "^1.7.2"
+    "react-virtualized": "^5.5.3",
+    "superagent": "^1.7.2",
+    "worker-pouch": "^1.0.1"
   },
   "scripts": {
     "postinstall": "node ../tasks/rebuild_native_modules"

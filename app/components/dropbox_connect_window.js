@@ -40,7 +40,7 @@ export default class DropboxConnectWindow extends Component {
   /**
    * On click we create a new browser window
    * that opens the dropbox OAuth page that will
-   * let the user connects the app to his account and will redirect
+   * let the user connect the app to his account and will redirect
    * to the specified URL.
    */
   handleClick() {

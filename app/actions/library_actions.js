@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import alt from './../lib/alt'
-import pdb from 'pouchdb/dist/pouchdb'
+import pdb from 'pouchdb/dist/pouchdb.min.js'
 import dropbox from './../lib/dropbox'
 import notifier from 'node-notifier'
 import path from 'path'
@@ -8,7 +8,8 @@ import path from 'path'
 import AccountActions from './account_actions'
 import AppActions from './app_actions'
 
-const db = new pdb('library', { adapter: 'websql' })
+pdb.adapter('worker', require('worker-pouch/dist/pouchdb.worker-pouch.min.js'))
+const db = new pdb('library', {adapter: 'worker'})
 
 
 class LibraryActions {
