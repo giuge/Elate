@@ -37,9 +37,6 @@ export default class NavigationBar extends Component {
       <ul className='navigationBar'>
         <li className={`back ${this.props.canGoBack ? '' : 'disabled'}`}
           onClick={() => { this.handleGoBack() }} />
-
-        <li className={`forward ${this.props.canGoForward ? '' : 'disabled'}`}
-          onClick={() => { this.handleGoForward() }} />
       </ul>
     )
   }

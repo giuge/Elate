@@ -20,10 +20,8 @@ class NavigationStore {
     })
 
     this.state = {
-      navigationStack: [],
-      navigationIndex: 0,
-      canGoBack: false,
-      canGoForward: false,
+      canGoBack: '',
+      canGoForward: '',
 
       showAllMedia: true,
       showFavorites: false,
@@ -32,12 +30,6 @@ class NavigationStore {
       showAdd: false,
       previewItem: null
     }
-
-    let inistialNavStack = JSON.parse(JSON.stringify(this.state))
-    delete inistialNavStack.navigationStack
-    delete inistialNavStack.navigationIndex
-
-    this.state.navigationStack.push(inistialNavStack)
   }
 
 
@@ -47,9 +39,9 @@ class NavigationStore {
       showAllMedia: false,
       showAlbums: false,
       showShare: false,
-      showAdd: false
+      showAdd: false,
+      previewItem: null
     })
-    this._pushToNavigationStack(this.state)
   }
 
 
@@ -59,9 +51,9 @@ class NavigationStore {
       showFavorites: false,
       showAlbums: false,
       showShare: false,
-      showAdd: false
+      showAdd: false,
+      previewItem: null
     })
-    this._pushToNavigationStack(this.state)
   }
 
 
@@ -71,87 +63,94 @@ class NavigationStore {
       showAllMedia: false,
       showFavorites: false,
       showShare: false,
-      showAdd: false
+      showAdd: false,
+      previewItem: null
     })
-    this._pushToNavigationStack(this.state)
   }
 
 
   onShowShare() {
+    this.setBack(this.state)
+
     this.setState({
       showShare: true,
       showAlbums: false,
       showAllMedia: false,
       showFavorites: false,
-      showAdd: false
+      showAdd: false,
+      previewItem: null
     })
   }
 
 
   onShowAdd() {
+    this.setBack(this.state)
+
     this.setState({
       showAdd: true,
       showAlbums: false,
       showAllMedia: false,
       showFavorites: false,
-      showShare: false
+      showShare: false,
+      previewItem: null
     })
   }
 
 
-  onGoBack() {
-    if(this.state.navigationIndex - 1 < 0) return
-
-    let navigationIndex = this.state.navigationIndex - 1
-    let {showAdd, showAlbums, showAllMedia, showFavorites, showShare} = this.state.navigationStack[navigationIndex]
-
-    this.setState({navigationIndex, showAdd, showAlbums, showAllMedia, showFavorites, showShare})
-    this._checkBackForward(this.state.navigationStack, this.state.navigationIndex)
-  }
-
-
-  onGoForward() {
-    if(this.state.navigationIndex + 1 >= this.state.navigationStack.length) return
-
-    let navigationIndex = this.state.navigationIndex + 1
-    let {showAdd, showAlbums, showAllMedia, showFavorites, showShare} = this.state.navigationStack[navigationIndex]
-
-    this.setState({navigationIndex, showAdd, showAlbums, showAllMedia, showFavorites, showShare})
-    this._checkBackForward(this.state.navigationStack, this.state.navigationIndex)
-  }
-
-
   onPreviewItem(previewItem) {
+    this.setBack(this.state)
     this.setState({previewItem})
   }
+
 
   onHidePreview() {
     this.setState({previewItem: null})
   }
 
 
-  _pushToNavigationStack(state) {
-    let newState = JSON.parse(JSON.stringify(state))
-    delete newState.navigationStack
-    delete newState.navigationIndex
-
-    this.setState({
-      navigationStack: this.state.navigationStack.concat(newState),
-      navigationIndex: this.state.navigationIndex += 1
-    })
-
-    this._checkBackForward(this.state.navigationStack, this.state.navigationIndex)
+  onGoBack() {
+    switch(this.state.canGoBack) {
+      case 'showAdd':
+        this.onShowAdd()
+        this.resetNavigationStack()
+        break
+      case 'showAlbums':
+        this.onShowAlbums()
+        this.resetNavigationStack()
+        break
+      case 'showAllMedia':
+        this.onShowAllMedia()
+        this.resetNavigationStack()
+        break
+      case 'showFavorites':
+        this.onShowFavorites()
+        this.resetNavigationStack()
+        break
+      case 'showShare':
+        this.onShowShare()
+        this.resetNavigationStack()
+        break
+    }
   }
 
 
-  _checkBackForward(stack, index) {
-    if(stack[index - 1]) {
-      this.setState({canGoBack: true})
-    } else { this.setState({canGoBack: false}) }
+  onGoForward() {}
 
-    if(stack[index + 1]) {
-      this.setState({canGoForward: true})
-    } else { this.setState({canGoForward: false}) }
+
+  setBack(oldState) {
+    let oldPage = Object.keys(oldState).filter(x => {
+      if(oldState[`${x}`] === true) return x
+    })
+
+    this.setState({canGoBack: `${oldPage[0]}`})
+  }
+
+
+  resetNavigationStack() {
+    this.setState({
+      canGoBack: '',
+      canGoForward: ''
+    })
   }
 
 }
