@@ -4,7 +4,7 @@
   "url": "http://elateapp.com",
   "identifier": "gs.germinaro.elate",
   "description": "The Dropbox media browser.",
-  "version": "0.61.0-alpha",
+  "version": "0.62.0-alpha",
   "author": "Giuseppe Germinaro",
   "copyright": "© 2016, Giuseppe Germinaro",
   "main": "background.js",

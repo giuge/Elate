@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import request from 'superagent'
 import React, { Component } from 'react'
-import AppActions from './../actions/app_actions'
+import NavigationActions from './../actions/navigation_actions'
 
 import VideoPlayer from './video_player'
 import { Circle } from 'rc-progress'
@@ -111,7 +111,7 @@ export default class PreviewView extends Component {
           this.req.abort()
         } catch(e) { /* We're dealing with a favorite it's ok :) */ }
 
-        AppActions.hidePreview()
+        NavigationActions.hidePreview()
         break
       // Left arrow pressed
       case 37:

@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React, { Component, PropTypes } from 'react'
 import connectToStores from 'alt-utils/lib/connectToStores'
 
-import AppActions from './../actions/app_actions'
+import NavigationActions from './../actions/navigation_actions'
 import SelectionActions from './../actions/selection_actions'
 import LibraryActions from './../actions/library_actions'
 import SelectionStore from './../stores/selection_store'
@@ -46,7 +46,7 @@ export default class SingleMedia extends Component {
 
 
   handleDoubleClick() {
-    AppActions.previewItem(this.props.media)
+    NavigationActions.previewItem(this.props.media)
   }
 
 

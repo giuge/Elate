@@ -13,7 +13,10 @@ class NavigationStore {
       handleShowAllMedia: NavigationActions.SHOW_ALL_MEDIA,
       handleShowAlbums: NavigationActions.SHOW_ALBUMS,
       handleShowShare: NavigationActions.SHOW_SHARE,
-      handleShowAdd: NavigationActions.SHOW_ADD
+      handleShowAdd: NavigationActions.SHOW_ADD,
+
+      handlePreviewItem: NavigationActions.PREVIEW_ITEM,
+      handleHidePreview: NavigationActions.HIDE_PREVIEW
     })
 
     this.state = {
@@ -26,7 +29,8 @@ class NavigationStore {
       showFavorites: false,
       showAlbums: false,
       showShare: false,
-      showAdd: false
+      showAdd: false,
+      previewItem: null
     }
 
     let inistialNavStack = JSON.parse(JSON.stringify(this.state))
@@ -114,6 +118,15 @@ class NavigationStore {
 
     this.setState({navigationIndex, showAdd, showAlbums, showAllMedia, showFavorites, showShare})
     this._checkBackForward(this.state.navigationStack, this.state.navigationIndex)
+  }
+
+
+  handlePreviewItem(previewItem) {
+    this.setState({previewItem})
+  }
+
+  handleHidePreview() {
+    this.setState({previewItem: null})
   }
 
 

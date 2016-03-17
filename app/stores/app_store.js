@@ -6,28 +6,12 @@ class AppStore {
 
   constructor() {
     this.bindListeners({
-      handlePreviewItem: AppActions.PREVIEW_ITEM,
-      handleHidePreview: AppActions.HIDE_PREVIEW,
-      handleIsSyncing: AppActions.IS_SYNCING,
+      handleIsSyncing: AppActions.IS_SYNCING
     })
 
     this.state = {
-      previewItem: null,
       isSyncingDB: false
     }
-  }
-
-
-  handlePreviewItem(previewItem) {
-    this.setState({previewItem})
-  }
-
-
-  handleHidePreview() {
-    this.setState({
-      shouldShowPreview: false,
-      previewItem: null
-    })
   }
 
 

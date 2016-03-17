@@ -95,18 +95,18 @@ const KeyboardManager = () => {
     switch(callerName) {
       case 'LibraryView':
         let libraryIndex = caller.props.library.indexOf(selectedItems[0])
-        AppActions.previewItem(caller.props.library[libraryIndex])
+        NavigationActions.previewItem(caller.props.library[libraryIndex])
         break
 
       case 'FavoritesView':
         let favoritesIndex = caller.props.favorites.indexOf(selectedItems[0])
-        AppActions.previewItem(caller.props.favorites[favoritesIndex])
+        NavigationActions.previewItem(caller.props.favorites[favoritesIndex])
         break
 
       case 'AlbumsView':
         if(caller.props.showSingleAlbum) {
           let albumsItemsIndex = caller.props.albumItems.indexOf(selectedItems[0])
-          AppActions.previewItem(caller.props.albumItems[albumsItemsIndex])
+          NavigationActions.previewItem(caller.props.albumItems[albumsItemsIndex])
           break
         } else {
           let albumsIndex = caller.props.albums.indexOf(selectedItems[0])

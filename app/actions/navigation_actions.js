@@ -15,6 +15,22 @@ class NavigationActions {
   }
 
 
+  /**
+   * Sets an item for preview
+   * @param {Object} item
+   */
+  previewItem(item) {
+    if(item) return item
+    else return null
+  }
+
+
+  // Hides the preview
+  hidePreview() {
+    return true
+  }
+
+
   // Show the favorites view
   showFavorites() {
     return true
