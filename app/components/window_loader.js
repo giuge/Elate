@@ -41,13 +41,6 @@ export class WindowLoader extends Component {
   }
 
 
-  componentDidMount() {
-    if(this.props.token && this.props.has_imported_library) {
-      LibraryActions.syncLibrary()
-    }
-  }
-
-
   render() {
     if(!this.props.token) return <DropboxConnectWindow />
     if(this.props.token && !this.props.has_imported_library)

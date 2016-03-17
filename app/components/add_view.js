@@ -5,6 +5,8 @@ import AlbumsStore from './../stores/albums_store'
 import AlbumsActions from './../actions/albums_actions'
 import NavigationActions from './../actions/navigation_actions'
 
+import AlbumsView from './albums_view'
+
 
 export default class AddView extends Component {
 
@@ -12,8 +14,9 @@ export default class AddView extends Component {
     super(props)
 
     this.state = {
-      items: props.selectedItems,
-      albumTitle: ''
+      items: this.props.selectedItems,
+      albumTitle: '',
+      selectedAlbum: null
     }
   }
 
@@ -40,6 +43,13 @@ export default class AddView extends Component {
   }
 
 
+  handleClick(album) {
+    this.setState({
+      selectedAlbum: album
+    })
+  }
+
+
   createNewAlbum() {
     if(this.state.albumTitle) {
       AlbumsActions.createAlbum(this.state.albumTitle, this.state.items)
@@ -49,11 +59,19 @@ export default class AddView extends Component {
   }
 
 
+  addToAlbum() {
+    if(this.state.selectedAlbum) {
+      AlbumsActions.addToAlbum(this.state.selectedAlbum, this.state.items)
+      NavigationActions.showAlbums()
+    }
+  }
+
+
   renderTitle() {
     if(this.props.albums.length <= 0) {
       return <h2>Create your first album with {this.state.items.length} items</h2>
     } else {
-      return <h2>Add {this.state.items.length} items to an album</h2>
+      return <h2>Create a new album with {this.state.items.length} items</h2>
     }
   }
 
@@ -68,11 +86,42 @@ export default class AddView extends Component {
   }
 
 
+  renderAlbumsList() {
+    return this.props.albums.map(album => {
+      let className = this.state.selectedAlbum === album ? 'selected' : ''
+      return (
+        <li className={`album ${className}`}
+          key={album.title}
+          style={{backgroundImage: `url(${album.cover})`}}
+          onClick={() => { this.handleClick(album) }}>
+          <p>{album.title}</p>
+        </li>
+      )
+    })
+  }
+
+
+  renderAddToAlbum() {
+    if(!this.props.emptyAlbums) {
+      return (
+        <div className="addToAlbum">
+          <h2>Add {this.state.items.length} items to an album</h2>
+          <ul>
+            {this.renderAlbumsList()}
+          </ul>
+          <a className='button' onClick={() => { this.addToAlbum() }}>Add to album</a>
+        </div>
+      )
+    }
+  }
+
+
   render () {
     return (
       <div className='addView'>
         {this.renderTitle()}
         {this.renderCreate()}
+        {this.renderAddToAlbum()}
       </div>
     )
   }

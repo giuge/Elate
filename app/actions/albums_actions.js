@@ -87,6 +87,23 @@ class AlbumsActions {
     })
   }
 
+
+  /**
+   * Add items to an existing album
+   * @param: {Object} the album
+   * @param: {Array} an array of media
+   */
+  addToAlbum(album, medias) {
+    return (dispatch => {
+      let itemsIDs = medias.map(media => media._id)
+
+      db.get(album._id).then(doc => {
+        doc.items = _.union(doc.items, itemsIDs)
+        db.put(doc).then(dispatch(doc)).catch(err => { console.log(err) })
+      })
+    })
+  }
+
 }
 
 

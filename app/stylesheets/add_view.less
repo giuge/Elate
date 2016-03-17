@@ -18,7 +18,7 @@
 
   .newAlbum {
     padding: 15px;
-    
+
     input {
       display: inline-block;
       padding: 5px;
@@ -30,6 +30,51 @@
       height: 32px;
       margin-right: 15px;
       text-indent: 5px;
+    }
+  }
+
+  .addToAlbum {
+    ul {
+      padding: 0 8px;
+      margin: 0;
+
+      li {
+        display: inline-block;
+        list-style: none;
+        width: 22.3%;
+        margin: 15px 10px 35px 10px;
+        vertical-align: middle;
+        height: 150px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-clip: content-box;
+        background-size: cover;
+        position: relative;
+
+        &.selected {
+          box-shadow: 0px 0px 0px 1px #1E1E1E, 0px 0px 0px 3px rgba(0,181,255,1);
+        }
+
+        p {
+          display: inline-block;
+          font-weight: 100;
+          font-size: 12px;
+          color: #ffffff;
+          text-align: left;
+          position: absolute;
+          bottom: -30px;
+          margin: 0;
+          padding: 5px 0;
+          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    .button {
+      margin: 20px 15px 15px 15px;
     }
   }
 }

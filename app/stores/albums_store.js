@@ -14,6 +14,7 @@ class AlbumsStore {
       handleCreateAlbum: AlbumsActions.CREATE_ALBUM,
       handleDeleteAlbum: AlbumsActions.DELETE_ALBUM,
       handleRemoveFromAlbum: AlbumsActions.REMOVE_FROM_ALBUM,
+      handleAddToAlbum: AlbumsActions.ADD_TO_ALBUM,
       handleShowSingleAlbum: AlbumsActions.SHOW_SINGLE_ALBUM,
       handleHideSingleAlbum: AlbumsActions.HIDE_SINGLE_ALBUM
     })
@@ -30,14 +31,7 @@ class AlbumsStore {
 
   handleShowSingleAlbum(album) {
     let {library} = LibraryStore.getState()
-    let items = []
-
-    library.forEach(item => {
-      for(let i in album.items) {
-        if(item._id == album.items[i])
-        items.push(item)
-      }
-    })
+    let items = library.filter(item => album.items.indexOf(item._id) != -1)
 
     this.setState({
       showSingleAlbum: true,
@@ -99,6 +93,19 @@ class AlbumsStore {
         })
       })
     }
+  }
+
+
+  handleAddToAlbum(album) {
+    let index = _.findIndex(this.state.albums, o => { return o._id === album._id })
+    let newAlbums = update(this.state.albums, {$splice: [[index, 1, album]]})
+
+    this.setState({
+      albums: newAlbums
+    })
+
+    this.handleShowSingleAlbum(album)
+
   }
 
 }
