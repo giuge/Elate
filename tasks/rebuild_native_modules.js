@@ -1,4 +1,4 @@
- // Rebuilds native node modules for Electron.
+// Rebuilds native node modules for Electron.
 // More: https://github.com/atom/electron/blob/master/docs/tutorial/using-native-node-modules.md
 
 'use strict'
