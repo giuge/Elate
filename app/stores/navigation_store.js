@@ -6,17 +6,17 @@ class NavigationStore {
 
   constructor() {
     this.bindListeners({
-      handleGoBack: NavigationActions.GO_BACK,
-      handleGoForward: NavigationActions.GO_FORWARD,
+      onGoBack: NavigationActions.GO_BACK,
+      onGoForward: NavigationActions.GO_FORWARD,
 
-      handleShowFavorites: NavigationActions.SHOW_FAVORITES,
-      handleShowAllMedia: NavigationActions.SHOW_ALL_MEDIA,
-      handleShowAlbums: NavigationActions.SHOW_ALBUMS,
-      handleShowShare: NavigationActions.SHOW_SHARE,
-      handleShowAdd: NavigationActions.SHOW_ADD,
+      onShowFavorites: NavigationActions.SHOW_FAVORITES,
+      onShowAllMedia: NavigationActions.SHOW_ALL_MEDIA,
+      onShowAlbums: NavigationActions.SHOW_ALBUMS,
+      onShowShare: NavigationActions.SHOW_SHARE,
+      onShowAdd: NavigationActions.SHOW_ADD,
 
-      handlePreviewItem: NavigationActions.PREVIEW_ITEM,
-      handleHidePreview: NavigationActions.HIDE_PREVIEW
+      onPreviewItem: NavigationActions.PREVIEW_ITEM,
+      onHidePreview: NavigationActions.HIDE_PREVIEW
     })
 
     this.state = {
@@ -41,7 +41,7 @@ class NavigationStore {
   }
 
 
-  handleShowFavorites() {
+  onShowFavorites() {
     this.setState({
       showFavorites: true,
       showAllMedia: false,
@@ -53,7 +53,7 @@ class NavigationStore {
   }
 
 
-  handleShowAllMedia() {
+  onShowAllMedia() {
     this.setState({
       showAllMedia: true,
       showFavorites: false,
@@ -65,7 +65,7 @@ class NavigationStore {
   }
 
 
-  handleShowAlbums() {
+  onShowAlbums() {
     this.setState({
       showAlbums: true,
       showAllMedia: false,
@@ -77,7 +77,7 @@ class NavigationStore {
   }
 
 
-  handleShowShare() {
+  onShowShare() {
     this.setState({
       showShare: true,
       showAlbums: false,
@@ -88,7 +88,7 @@ class NavigationStore {
   }
 
 
-  handleShowAdd() {
+  onShowAdd() {
     this.setState({
       showAdd: true,
       showAlbums: false,
@@ -99,7 +99,7 @@ class NavigationStore {
   }
 
 
-  handleGoBack() {
+  onGoBack() {
     if(this.state.navigationIndex - 1 < 0) return
 
     let navigationIndex = this.state.navigationIndex - 1
@@ -110,7 +110,7 @@ class NavigationStore {
   }
 
 
-  handleGoForward() {
+  onGoForward() {
     if(this.state.navigationIndex + 1 >= this.state.navigationStack.length) return
 
     let navigationIndex = this.state.navigationIndex + 1
@@ -121,11 +121,11 @@ class NavigationStore {
   }
 
 
-  handlePreviewItem(previewItem) {
+  onPreviewItem(previewItem) {
     this.setState({previewItem})
   }
 
-  handleHidePreview() {
+  onHidePreview() {
     this.setState({previewItem: null})
   }
 

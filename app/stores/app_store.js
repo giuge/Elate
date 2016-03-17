@@ -6,7 +6,7 @@ class AppStore {
 
   constructor() {
     this.bindListeners({
-      handleIsSyncing: AppActions.IS_SYNCING
+      onIsSyncing: AppActions.IS_SYNCING
     })
 
     this.state = {
@@ -15,7 +15,7 @@ class AppStore {
   }
 
 
-  handleIsSyncing(bool) {
+  onIsSyncing(bool) {
     this.setState({
       isSyncingDB: bool
     })

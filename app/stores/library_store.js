@@ -9,10 +9,10 @@ class LibraryStore {
 
   constructor() {
     this.bindListeners({
-      handleLoadDatabase: LibraryActions.LOAD_DATABASE,
-      handleSaveAfterImport: LibraryActions.SAVE_AFTER_IMPORT,
-      handleAddToFavorites: LibraryActions.ADD_TO_FAVORITES,
-      handleDeleteMedia: LibraryActions.DELETE_MEDIA
+      onLoadDatabase: LibraryActions.LOAD_DATABASE,
+      onSaveAfterImport: LibraryActions.SAVE_AFTER_IMPORT,
+      onAddToFavorites: LibraryActions.ADD_TO_FAVORITES,
+      onDeleteMedia: LibraryActions.DELETE_MEDIA
     })
 
     this.state = {
@@ -24,7 +24,7 @@ class LibraryStore {
   }
 
 
-  handleLoadDatabase(library) {
+  onLoadDatabase(library) {
     let favorites = library.filter(x => x.isFavorite === true)
     let emptyFavorites = favorites.length <= 0 ? emptyFavorites = true : emptyFavorites = false
     let emptyLibrary = library.length <= 0 ? emptyLibrary = true : emptyLibrary = false
@@ -33,14 +33,14 @@ class LibraryStore {
   }
 
 
-  handleSaveAfterImport(library) {
+  onSaveAfterImport(library) {
     let emptyLibrary = library.length <= 0 ? emptyLibrary = true : emptyLibrary = false
 
     this.setState({library, emptyLibrary})
   }
 
 
-  handleDeleteMedia(media) {
+  onDeleteMedia(media) {
     let library = _.difference(this.state.library, media)
     let favorites = this.state.favorites
 
@@ -55,7 +55,7 @@ class LibraryStore {
   }
 
 
-  handleAddToFavorites(media) {
+  onAddToFavorites(media) {
     let data = this.state.library
     let index = data.findIndex(x => x._id == media._id)
 

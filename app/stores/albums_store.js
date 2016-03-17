@@ -10,13 +10,13 @@ class AlbumsStore {
 
   constructor() {
     this.bindListeners({
-      handleGetAlbums: AlbumsActions.GET_ALBUMS,
-      handleCreateAlbum: AlbumsActions.CREATE_ALBUM,
-      handleDeleteAlbum: AlbumsActions.DELETE_ALBUM,
-      handleRemoveFromAlbum: AlbumsActions.REMOVE_FROM_ALBUM,
-      handleAddToAlbum: AlbumsActions.ADD_TO_ALBUM,
-      handleShowSingleAlbum: AlbumsActions.SHOW_SINGLE_ALBUM,
-      handleHideSingleAlbum: AlbumsActions.HIDE_SINGLE_ALBUM
+      onGetAlbums: AlbumsActions.GET_ALBUMS,
+      onCreateAlbum: AlbumsActions.CREATE_ALBUM,
+      onDeleteAlbum: AlbumsActions.DELETE_ALBUM,
+      onRemoveFromAlbum: AlbumsActions.REMOVE_FROM_ALBUM,
+      onAddToAlbum: AlbumsActions.ADD_TO_ALBUM,
+      onShowSingleAlbum: AlbumsActions.SHOW_SINGLE_ALBUM,
+      onHideSingleAlbum: AlbumsActions.HIDE_SINGLE_ALBUM
     })
 
     this.state = {
@@ -29,7 +29,7 @@ class AlbumsStore {
   }
 
 
-  handleShowSingleAlbum(album) {
+  onShowSingleAlbum(album) {
     let {library} = LibraryStore.getState()
     let items = library.filter(item => album.items.indexOf(item._id) != -1)
 
@@ -41,7 +41,7 @@ class AlbumsStore {
   }
 
 
-  handleHideSingleAlbum() {
+  onHideSingleAlbum() {
     this.setState({
       showSingleAlbum: false,
       selectedAlbum: null,
@@ -50,7 +50,7 @@ class AlbumsStore {
   }
 
 
-  handleGetAlbums(albums) {
+  onGetAlbums(albums) {
     let emptyAlbums
     albums.length > 0 ? emptyAlbums = false : emptyAlbums = true
 
@@ -58,7 +58,7 @@ class AlbumsStore {
   }
 
 
-  handleCreateAlbum(album) {
+  onCreateAlbum(album) {
     this.setState({
       albums: [...this.state.albums, album],
       emptyAlbums: false
@@ -66,7 +66,7 @@ class AlbumsStore {
   }
 
 
-  handleDeleteAlbum(album) {
+  onDeleteAlbum(album) {
     let index = this.state.albums.indexOf(album)
 
     this.setState({
@@ -79,7 +79,7 @@ class AlbumsStore {
   }
 
 
-  handleRemoveFromAlbum(album) {
+  onRemoveFromAlbum(album) {
     let index = _.findIndex(this.state.albums, o => { return o._id === album._id })
     let newAlbums = update(this.state.albums, {$splice: [[index, 1, album]]})
 
@@ -96,7 +96,7 @@ class AlbumsStore {
   }
 
 
-  handleAddToAlbum(album) {
+  onAddToAlbum(album) {
     let index = _.findIndex(this.state.albums, o => { return o._id === album._id })
     let newAlbums = update(this.state.albums, {$splice: [[index, 1, album]]})
 
@@ -104,8 +104,7 @@ class AlbumsStore {
       albums: newAlbums
     })
 
-    this.handleShowSingleAlbum(album)
-
+    this.onShowSingleAlbum(album)
   }
 
 }
