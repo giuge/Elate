@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import KeyboardManager from './keyboard_manager'
+import KeyboardManager from './../lib/keyboard_manager'
 import PreviewView from './preview_view'
 import MediaList from './media_list'
 import AlbumsEmpty from './albums_empty'

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-import KeyboardManager from './keyboard_manager'
+import KeyboardManager from './../lib/keyboard_manager'
 import PreviewView from './preview_view'
 import LibraryEmpty from './library_empty'
 import MediaList from './media_list'
