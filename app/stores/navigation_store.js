@@ -143,10 +143,13 @@ class NavigationStore {
   onHidePreview() {
     if(this.state.showSingleAlbum) {
       this.setState({
+        previewItem: null,
         canGoBack: this.state.canGoBack.filter(x => x != 'showSingleAlbum')
       })
+    } else {
+      this.setState({previewItem: null})
+      this.resetNavigationStack()
     }
-    this.setState({previewItem: null})
   }
 
 
