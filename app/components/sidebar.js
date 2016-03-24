@@ -3,7 +3,6 @@ import { remote } from 'electron'
 
 import NavigationActions from './../actions/navigation_actions'
 import SelectionActions from './../actions/selection_actions'
-import AlbumsActions from './../actions/albums_actions'
 
 
 const Sidebar = (props) => {
@@ -56,7 +55,7 @@ const Sidebar = (props) => {
         </li>
 
         <li className={props.showAlbums ? 'active' : ''}
-          onClick={() => { NavigationActions.showAlbums(); AlbumsActions.hideSingleAlbum(); prepareForView() }}>
+          onClick={() => { NavigationActions.showAlbums(); NavigationActions.hideSingleAlbum(); prepareForView() }}>
           <img src='assets/albums.svg'/>Albums
         </li>
       </ul>

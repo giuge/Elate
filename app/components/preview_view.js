@@ -42,7 +42,10 @@ export default class PreviewView extends Component {
   }
 
 
+  // Issue when component is unmounting and we try to set state
   componentWillUnmount() {
+    try { this.req.abort() } catch(e) { }
+
     window.removeEventListener('keydown', this.handleKeyDown)
   }
 

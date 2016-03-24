@@ -1,5 +1,6 @@
 import alt from './../lib/alt'
 import NavigationActions from './../actions/navigation_actions'
+import LibraryStore from './library_store'
 
 
 class NavigationStore {
@@ -12,6 +13,7 @@ class NavigationStore {
       onShowFavorites: NavigationActions.SHOW_FAVORITES,
       onShowAllMedia: NavigationActions.SHOW_ALL_MEDIA,
       onShowAlbums: NavigationActions.SHOW_ALBUMS,
+      onShowSingleAlbum: NavigationActions.SHOW_SINGLE_ALBUM,
       onShowShare: NavigationActions.SHOW_SHARE,
       onShowAdd: NavigationActions.SHOW_ADD,
 
@@ -28,7 +30,11 @@ class NavigationStore {
       showAlbums: false,
       showShare: false,
       showAdd: false,
-      previewItem: null
+      previewItem: null,
+
+      showSingleAlbum: false,
+      selectedAlbum: null,
+      albumItems: null
     }
   }
 
@@ -64,7 +70,34 @@ class NavigationStore {
       showFavorites: false,
       showShare: false,
       showAdd: false,
-      previewItem: null
+      previewItem: null,
+
+      showSingleAlbum: false,
+      selectedAlbum: null,
+      albumItems: null
+    })
+  }
+
+
+  onShowSingleAlbum(album) {
+    this.setBack(this.state)
+
+    let {library} = LibraryStore.getState()
+    let items = library.filter(item => album.items.indexOf(item._id) != -1)
+
+    this.setState({
+      showSingleAlbum: true,
+      selectedAlbum: album,
+      albumItems: items
+    })
+  }
+
+
+  onHideSingleAlbum() {
+    this.setState({
+      showSingleAlbum: false,
+      selectedAlbum: null,
+      albumItems: null
     })
   }
 
@@ -78,7 +111,11 @@ class NavigationStore {
       showAllMedia: false,
       showFavorites: false,
       showAdd: false,
-      previewItem: null
+      previewItem: null,
+
+      showSingleAlbum: false,
+      selectedAlbum: null,
+      albumItems: null
     })
   }
 
@@ -104,12 +141,17 @@ class NavigationStore {
 
 
   onHidePreview() {
+    if(this.state.showSingleAlbum) {
+      this.setState({
+        canGoBack: this.state.canGoBack.filter(x => x != 'showSingleAlbum')
+      })
+    }
     this.setState({previewItem: null})
   }
 
 
   onGoBack() {
-    switch(this.state.canGoBack) {
+    switch(this.state.canGoBack.slice(-1)[0]) {
       case 'showAdd':
         this.onShowAdd()
         this.resetNavigationStack()
@@ -117,6 +159,12 @@ class NavigationStore {
       case 'showAlbums':
         this.onShowAlbums()
         this.resetNavigationStack()
+        break
+      case 'showSingleAlbum':
+        this.onHidePreview()
+        this.setState({
+          canGoBack: this.state.canGoBack.filter(x => x != 'showSingleAlbum')
+        })
         break
       case 'showAllMedia':
         this.onShowAllMedia()
@@ -138,11 +186,11 @@ class NavigationStore {
 
 
   setBack(oldState) {
-    let oldPage = Object.keys(oldState).filter(x => {
+    let oldPages = Object.keys(oldState).filter(x => {
       if(oldState[`${x}`] === true) return x
     })
 
-    this.setState({canGoBack: `${oldPage[0]}`})
+    this.setState({canGoBack: oldPages})
   }
 
 

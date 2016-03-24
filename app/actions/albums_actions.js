@@ -21,18 +21,6 @@ class AlbumsActions {
   }
 
 
-  // Shows the content of an album
-  showSingleAlbum(album) {
-    return album
-  }
-
-
-  // Doesn't show any album
-  hideSingleAlbum() {
-    return true
-  }
-
-
   /**
    * Creates an album
    * @param: {String} the album name

@@ -9,6 +9,7 @@ import connectToStores from 'alt-utils/lib/connectToStores'
 import AlbumsStore from './../stores/albums_store'
 import AlbumsActions from './../actions/albums_actions'
 import SelectionActions from './../actions/selection_actions'
+import NavigationActions from './../actions/navigation_actions'
 
 
 export default class AlbumsView extends Component {
@@ -49,7 +50,7 @@ export default class AlbumsView extends Component {
 
 
   handleDoubleClick(album) {
-    AlbumsActions.showSingleAlbum(album)
+    NavigationActions.showSingleAlbum(album)
   }
 
 

@@ -2,9 +2,8 @@ import _ from 'lodash'
 import alt from './../lib/alt'
 import update from 'react-addons-update'
 
-import LibraryStore from './library_store'
 import AlbumsActions from './../actions/albums_actions'
-
+import NavigationActions from './../actions/navigation_actions'
 
 class AlbumsStore {
 
@@ -14,39 +13,13 @@ class AlbumsStore {
       onCreateAlbum: AlbumsActions.CREATE_ALBUM,
       onDeleteAlbum: AlbumsActions.DELETE_ALBUM,
       onRemoveFromAlbum: AlbumsActions.REMOVE_FROM_ALBUM,
-      onAddToAlbum: AlbumsActions.ADD_TO_ALBUM,
-      onShowSingleAlbum: AlbumsActions.SHOW_SINGLE_ALBUM,
-      onHideSingleAlbum: AlbumsActions.HIDE_SINGLE_ALBUM
+      onAddToAlbum: AlbumsActions.ADD_TO_ALBUM
     })
 
     this.state = {
       albums: [],
-      emptyAlbums: false,
-      showSingleAlbum: false,
-      selectedAlbum: null,
-      albumItems: null
+      emptyAlbums: false
     }
-  }
-
-
-  onShowSingleAlbum(album) {
-    let {library} = LibraryStore.getState()
-    let items = library.filter(item => album.items.indexOf(item._id) != -1)
-
-    this.setState({
-      showSingleAlbum: true,
-      selectedAlbum: album,
-      albumItems: items
-    })
-  }
-
-
-  onHideSingleAlbum() {
-    this.setState({
-      showSingleAlbum: false,
-      selectedAlbum: null,
-      albumItems: null
-    })
   }
 
 
@@ -104,7 +77,7 @@ class AlbumsStore {
       albums: newAlbums
     })
 
-    this.onShowSingleAlbum(album)
+    //this.onShowSingleAlbum(album)
   }
 
 }

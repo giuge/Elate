@@ -51,7 +51,10 @@ export default class MainWindow extends Component {
     else if(this.props.showAlbums) {
       return <AlbumsView
         previewItem={this.props.previewItem}
-        selectedItems={this.props.selectedItems} />
+        selectedItems={this.props.selectedItems}
+        showSingleAlbum={this.props.showSingleAlbum}
+        selectedAlbum={this.props.selectedAlbum}
+        albumItems={this.props.albumItems} />
     }
     else if(this.props.showShare) {
       return <ShareView selectedItems={this.props.selectedItems} />
